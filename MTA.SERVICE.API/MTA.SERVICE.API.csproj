@@ -188,7 +188,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Api\HTDM\DmMenuController.cs" />
-    <Compile Include="Api\HTDM\DmNguoiDungController.cs" />
     <Compile Include="Api\SharedController.cs" />
     <Compile Include="App_Start\UnityApiConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />

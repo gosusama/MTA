@@ -37,3 +37,15 @@ D:\MTA\MTA\MTA.ENTITY\bin\Debug\EntityFramework.xml
 D:\MTA\MTA\MTA.ENTITY\bin\Debug\EntityFramework.SqlServer.xml
 D:\MTA\MTA\MTA.ENTITY\obj\Debug\MTA.ENTITY.exe
 D:\MTA\MTA\MTA.ENTITY\obj\Debug\MTA.ENTITY.pdb
+D:\MTA.WEB\MTA\MTA.ENTITY\bin\Debug\MTA.ENTITY.exe.config
+D:\MTA.WEB\MTA\MTA.ENTITY\obj\Debug\MTA.ENTITY.exe
+D:\MTA.WEB\MTA\MTA.ENTITY\obj\Debug\MTA.ENTITY.pdb
+D:\MTA.WEB\MTA\MTA.ENTITY\bin\Debug\MTA.ENTITY.exe
+D:\MTA.WEB\MTA\MTA.ENTITY\bin\Debug\MTA.ENTITY.pdb
+D:\MTA.WEB\MTA\MTA.ENTITY\bin\Debug\EntityFramework.dll
+D:\MTA.WEB\MTA\MTA.ENTITY\bin\Debug\EntityFramework.SqlServer.dll
+D:\MTA.WEB\MTA\MTA.ENTITY\bin\Debug\EntityFramework.xml
+D:\MTA.WEB\MTA\MTA.ENTITY\bin\Debug\EntityFramework.SqlServer.xml
+D:\MTA.WEB\MTA\MTA.ENTITY\obj\Debug\MTA.ENTITY.csprojResolveAssemblyReference.cache
+D:\MTA.WEB\MTA\MTA.ENTITY\obj\Debug\MTA.ENTITY.Migrations.init.resources
+D:\MTA.WEB\MTA\MTA.ENTITY\obj\Debug\MTA.ENTITY.csproj.GenerateResource.Cache

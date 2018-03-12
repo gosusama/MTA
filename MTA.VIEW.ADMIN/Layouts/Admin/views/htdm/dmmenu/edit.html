@@ -17,7 +17,7 @@
                 </div>
                 <div class="col-lg-6">
                     <label>Menu ID Cha</label>
-                    <input type="text" class="form-control" ng-model="target.menuIdCha" name="_menucha" ng-maxlength="200">
+                    <input type="text" class="form-control" ng-model="target.menuIdCha" name="_menucha" ng-maxlength="200" ng-blur="selectedMenu(target.menuIdCha)">
                     <span style="color:red" ng-show="_form._menucha.$invalid">
                         <span>Nhập quá kí tự</span>
                     </span>

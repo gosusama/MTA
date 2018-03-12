@@ -165,7 +165,6 @@
     <Content Include="Layouts\Admin\config\config.js" />
     <Content Include="Layouts\Admin\controllers\auth\auth-controller.js" />
     <Content Include="Layouts\Admin\controllers\htdm\dmmenu_ctrl.js" />
-    <Content Include="Layouts\Admin\controllers\htdm\dmNguoiDungController.js" />
     <Content Include="Layouts\Admin\controllers\layouts\header-controller.js" />
     <Content Include="Layouts\Admin\controllers\layouts\home-controller.js" />
     <Content Include="Layouts\Admin\controllers\layouts\layout-controller.js" />
@@ -364,13 +363,6 @@
     <Content Include="Layouts\Admin\views\htdm\dmmenu\edit.html" />
     <Content Include="Layouts\Admin\views\htdm\dmmenu\index.html" />
     <Content Include="Layouts\Admin\views\htdm\dmmenu\selectData.html" />
-    <Content Include="Layouts\Admin\views\htdm\dmNguoiDung\add.html" />
-    <Content Include="Layouts\Admin\views\htdm\dmNguoiDung\authGrant.html" />
-    <Content Include="Layouts\Admin\views\htdm\dmNguoiDung\delete.html" />
-    <Content Include="Layouts\Admin\views\htdm\dmNguoiDung\details.html" />
-    <Content Include="Layouts\Admin\views\htdm\dmNguoiDung\index.html" />
-    <Content Include="Layouts\Admin\views\htdm\dmNguoiDung\selectData.html" />
-    <Content Include="Layouts\Admin\views\htdm\dmNguoiDung\update.html" />
     <Content Include="Layouts\Admin\views\layouts\footer.html" />
     <Content Include="Layouts\Admin\views\layouts\header.html" />
     <Content Include="Layouts\Admin\views\layouts\home.html" />
@@ -509,6 +501,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Layouts\Admin\views\htdm\dmNguoiDung\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>

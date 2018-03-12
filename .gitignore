@@ -1,0 +1,7 @@
+
+*.exe
+.vs/config/applicationhost.config
+.vs/MTA/v14/.suo
+*.cache
+*.csproj
+*.txt
