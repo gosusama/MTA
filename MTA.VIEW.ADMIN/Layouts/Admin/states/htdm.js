@@ -16,6 +16,19 @@
 		    },
 		    moduleUrl: controlUrl+"dmmenu_ctrl"
 		},
+        {
+            name: 'NguoiDung',
+            url: '/NguoiDung',
+            parent: 'layout',
+            abstract: false,
+            views: {
+                'viewMain@root': {
+                    templateUrl: layoutUrl + "dmNguoiDung/index.html",
+                    controller: "dmNguoiDungController as ctrl"
+                }
+            },
+            moduleUrl: controlUrl + "dmNguoiDungController"
+        },
     ];
     return states;
 });
