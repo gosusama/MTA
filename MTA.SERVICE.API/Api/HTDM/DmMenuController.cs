@@ -92,6 +92,7 @@ namespace MTA.SERVICE.API.Api.HTDM
                 var item = _service.Update(instance);
                 _service.UnitOfWork.Save();
                 result.Status = true;
+                result.Message = "Sửa thành công";
                 result.Data = item;
                 return Ok(result);
             }

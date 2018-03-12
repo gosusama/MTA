@@ -1,0 +1,63 @@
+﻿<div>
+    <div class="modal-header">
+        <h3 class="modal-title">{{title()}}  {{lbl.lblCreate}}</h3>
+        <div class="button-close" ng-click="cancel()">
+            <i class="glyphicon glyphicon-remove x-close"></i>
+        </div>
+    </div>
+    <div class="modal-body">
+        <form role="form" name="_form">
+            <div class="row form-group">
+                <div class="col-lg-6">
+                    <label>Mã nhân viên</label><span style="color: red"> (1*)</span>
+                    <input type="text" class="form-control" ng-model="target.maNhanVien" name="_maNhanVien" maxlength="50" disabled>
+
+                </div>
+                <div class="col-lg-6">
+                    <label>Tên nhân viên</label><span style="color: red"> (2*)</span>
+                    <input type="text" class="form-control" ng-model="target.tenNhanVien" name="_tenNhanVien" maxlength="200" disabled>
+
+                </div>
+                <div class="col-lg-6">
+                    <label>Số điện thoại</label>
+                    <input type="text" class="form-control" ng-model="target.soDienThoai" name="_soDienThoai" maxlength="20" disabled>
+
+                </div>
+                <div class="col-lg-6">
+                    <label>Số chứng minh thư</label>
+                    <input type="text" class="form-control" ng-model="target.chungMinhThu" name="_chungMinhThu" maxlength="20" disabled>
+
+                </div>
+                <div class="col-lg-6">
+                    <label>Giới tính : &nbsp;</label>
+                    <label ng-show="target.gioiTinh == 1">Nam</label>
+                    <label ng-show="target.gioiTinh == 0" >Nữ</label>
+                </div>
+            </div>
+            <div class="row form-group">
+                <div class="col-lg-12">
+                    <label>Trạng thái</label>
+                    <select class="form-control" ng-model="target.trangThai"  ng-options="opt.Value as opt.Text for opt in tempData('status')" disabled></select>
+                </div>
+            </div>
+
+            <div class="row form-group">
+                <div class="col-lg-12">
+                    <label>Tên đăng nhập</label><span style="color: red"> (1*)</span>
+                    <input type="text" class="form-control" ng-model="target.username" name="_Username" disabled>
+
+                </div>
+            </div>
+
+            <div class="row form-group">
+                <div class="col-lg-12">
+                    <label><input type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="target.level" disabled>Admin</label>
+                </div>
+            </div>
+
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button prevent-default class="btn btn-default" ng-click="cancel()">{{config.label.btnCancel}}</button>
+    </div>
+</div>
