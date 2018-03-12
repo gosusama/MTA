@@ -1,0 +1,29 @@
+﻿
+/* Set padding to keep content from hitting the edges */
+
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 280px;
+}
+
+.navbar-default{
+    font-family: Arial;
+}
+
+li a{
+	color: white;
+	font:bold;
+}
+
+body {
+    background-image: url('../SOURCE/background.bmp');
+}

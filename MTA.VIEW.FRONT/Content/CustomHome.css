@@ -1,0 +1,61 @@
+﻿
+.bodyHome {
+    margin-left: 100px;
+    margin-right: 100px;
+    margin-top: 20px;
+    background-color: lightyellow;
+}
+
+.boundCaro {
+    height: 300px;
+    margin-left: 100px;
+    margin-right: 100px;
+    padding-top:20px;
+    margin-bottom: 20px;
+}
+
+#homeCarousel {
+    /*height: 150px;*/
+}
+
+.itemCaro {
+    height: 300px;
+}
+
+.imgCaro {
+    max-height: 300px;
+    width: 100%
+}
+
+.contentNews {
+    padding-left: 200px;
+    padding-right: 200px;
+    max-width: 70%;
+}
+
+.itemNews {
+    max-width: 35%;
+    margin-left: 20px;
+}
+
+.imgNews {
+    max-height: 200px;
+    max-width: 200px;
+    margin-bottom: 10px
+}
+
+.imgNotifi {
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 10px
+}
+
+.mid {
+    position: static;
+    float: left;
+}
+
+.favorNews {
+    margin-top:30px;
+}
+

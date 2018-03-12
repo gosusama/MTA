@@ -1,0 +1,229 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+@using MTA.FRONT.Models.DatabaseContext;
+
+@{
+    int length = Convert.ToInt16(ViewData["length"]);
+}
+<div class="">
+    <div class="bodyHome">
+        <div class="boundCaro">
+            <div id="homeCarousel" class="carousel slide homeCarousel" data-ride="carousel">
+                <!-- Wrapper for slides -->
+                <div class="carousel-inner">
+                    @foreach (var lst in ViewData["img"] as List<Media>)
+                    {
+                    <div class="item itemCaro">
+                        <img class="imgCaro" src="@lst.Link" alt="@lst.Ten_Media">
+                    </div>
+                    }
+                </div>
+
+                <!-- Left and right controls -->
+                <a class="left carousel-control" href="#myCarousel" data-slide="prev" onclick="plusSlides(-1)">
+                    <span class="glyphicon glyphicon-chevron-left"></span>
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a class="right carousel-control" href="#myCarousel" data-slide="next" onclick="plusSlides(1)">
+                    <span class="glyphicon glyphicon-chevron-right"></span>
+                    <span class="sr-only">Next</span>
+                </a>
+            </div>
+        </div>
+        <div class="boundNews container">
+            <hr style="border:solid 1px;"/>
+            <div class="col-md-8 container-fluid">
+                <div>
+                    <h3>Tin tức</h3>
+                </div>
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <img class="imgNews" src="~/SOURCE/a45z8lx5.bmp"/>
+                            <a>Lễ ra quân huấn luyện và phát động phong trào thi đua Quyết thắng năm 2018</a>
+                        </div>
+                        <div class="col-md-4">
+                            <img class="imgNews" src="~/SOURCE/a45z8lx5.bmp" />
+                            <a>Lễ ra quân huấn luyện và phát động phong trào thi đua Quyết thắng năm 2018</a>
+                        </div>
+                        <div class="col-md-4">
+                            <img class="imgNews" src="~/SOURCE/a45z8lx5.bmp" />
+                            <a>Lễ ra quân huấn luyện và phát động phong trào thi đua Quyết thắng năm 2018</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 favorNews">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        Tin tức nổi bật
+                    </div>
+                    <div class="panel-body">
+                        <a href="">Chi bộ Bộ môn Tên lửa tổ chức Đại hội nhiệm kỳ 2018 – 2020</a><br />
+                        <a>Chi bộ Bộ môn Tên lửa tổ chức Đại hội nhiệm kỳ 2018 – 2020</a><br />
+                        <a>Chi bộ Bộ môn Tên lửa tổ chức Đại hội nhiệm kỳ 2018 – 2020</a><br />
+                        <a>Chi bộ Bộ môn Tên lửa tổ chức Đại hội nhiệm kỳ 2018 – 2020</a>
+                        <a>Chi bộ Bộ môn Tên lửa tổ chức Đại hội nhiệm kỳ 2018 – 2020</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <hr style="border:solid 1px;" />
+            <div style="padding-left: 15px;">
+                <h3>Thông báo</h3>
+            </div>
+            <div class="col-lg-6">
+                <img class="imgNotifi" src="~/SOURCE/a45z8lx5.bmp" style="margin-bottom:10px"/>
+                <a style="font-size:16px">Lễ ra quân huấn luyện và phát động phong trào thi đua Quyết thắng năm 2018</a>
+            </div>
+            <div class="col-lg-3">
+                <ul class="list-group">
+                    <li class="list-group-item">
+                        <a style="color: dodgerblue">Lễ ra quân huấn luyện và phát động phong trào thi đua Quyết thắng năm 2018</a>
+                    </li>
+                    <li class="list-group-item">
+                        <a style="color: dodgerblue">Lễ ra quân huấn luyện và phát động phong trào thi đua Quyết thắng năm 2018</a>
+                    </li>
+                    <li class="list-group-item">
+                        <a style="color: dodgerblue">Lễ ra quân huấn luyện và phát động phong trào thi đua Quyết thắng năm 2018</a>
+                    </li>
+                    <li class="list-group-item">
+                        <a style="color: dodgerblue">Lễ ra quân huấn luyện và phát động phong trào thi đua Quyết thắng năm 2018</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-lg-3">
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        Sự kiện sắp diễn ra
+                    </div>
+                    <div class="panel-body">
+                        <a href="">Chi bộ Bộ môn Tên lửa tổ chức Đại hội nhiệm kỳ 2018 – 2020</a><br />
+                        <a>Chi bộ Bộ môn Tên lửa tổ chức Đại hội nhiệm kỳ 2018 – 2020</a><br />
+                        <a>Chi bộ Bộ môn Tên lửa tổ chức Đại hội nhiệm kỳ 2018 – 2020</a><br />
+                        <a>Chi bộ Bộ môn Tên lửa tổ chức Đại hội nhiệm kỳ 2018 – 2020</a>
+                        <a>Chi bộ Bộ môn Tên lửa tổ chức Đại hội nhiệm kỳ 2018 – 2020</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <hr style="border:solid 1px;" />
+            <div style="padding-left: 15px;">
+                <h3>Tuyển sinh</h3>
+            </div>
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-8 container-fluid">
+                                <img src="~/SOURCE/lakq1olp.bmp" />
+                            </div>
+                            <div class="col-md-4 container-fluid">
+                                <h3 style="margin-top: 0px;">Đại học</h3>
+                                <p>Ngày 20/12, Bộ môn Xây dựng Nhà và Công trình công nghiệp - Viện Kỹ thuật  Công trình đặc biệt đã tổ chức seminar luận văn cao học cho học viên cao học Khóa 28A - Chuyên ngành Kỹ thuật Xây dựng Công trình đặc biệt</p>
+                                <a>Xem chi tiết >>></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-6">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-8 container-fluid">
+                                <img src="~/SOURCE/lakq1olp.bmp" />
+                            </div>
+                            <div class="col-md-4 container-fluid">
+                                <h3 style="margin-top: 0px;">Thông tin tuyển sinh</h3>
+                                <p>Ngày 20/12, Bộ môn Xây dựng Nhà và Công trình công nghiệp - Viện Kỹ thuật  Công trình đặc biệt đã tổ chức seminar luận văn cao học cho học viên cao học Khóa 28A - Chuyên ngành Kỹ thuật Xây dựng Công trình đặc biệt</p>
+                                <a>Xem chi tiết >>></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <hr style="border:solid 1px;" />
+            <div style="padding-left: 15px;">
+                <h3>Hoạt động sinh viên</h3>
+                <div class="row">
+                    <div class="col-lg-4">
+                        <img class="imgNotifi" src="~/SOURCE/61n137do.bmp" />
+                        <p>Thực hiện Quyết định số 4565/QĐ-BCT ngày 07 tháng 12 năm 2017 của Bộ trưởng Bộ Công Thương, chiều 18/12, tại Trụ sở Bộ Công thương số 54 Hai Bà Trưng, Hà Nội</p><br />
+                        <ul>
+                            <li>
+                                <a style="color:green" href="">Nghiệm thu cấp Nhà nước đề tài mã số ĐT.08.14/NLSH</a>
+                            </li>
+                            <li>
+                                <a style="color:green" href="">Nghiệm thu cấp Nhà nước đề tài mã số ĐT.08.14/NLSH</a>
+                            </li>
+                            <li>
+                                <a style="color:green" href="">Nghiệm thu cấp Nhà nước đề tài mã số ĐT.08.14/NLSH</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-lg-4">
+                        <img class="imgNotifi" src="~/SOURCE/61n137do.bmp" />
+                        <p>Thực hiện Quyết định số 4565/QĐ-BCT ngày 07 tháng 12 năm 2017 của Bộ trưởng Bộ Công Thương, chiều 18/12, tại Trụ sở Bộ Công thương số 54 Hai Bà Trưng, Hà Nội</p><br />
+                        <ul>
+                            <li>
+                                <a style="color:green" href="">Nghiệm thu cấp Nhà nước đề tài mã số ĐT.08.14/NLSH</a>
+                            </li>
+                            <li>
+                                <a style="color:green" href="">Nghiệm thu cấp Nhà nước đề tài mã số ĐT.08.14/NLSH</a>
+                            </li>
+                            <li>
+                                <a style="color:green" href="">Nghiệm thu cấp Nhà nước đề tài mã số ĐT.08.14/NLSH</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-lg-4">
+                        <img class="imgNotifi" src="~/SOURCE/61n137do.bmp" />
+                        <p>Thực hiện Quyết định số 4565/QĐ-BCT ngày 07 tháng 12 năm 2017 của Bộ trưởng Bộ Công Thương, chiều 18/12, tại Trụ sở Bộ Công thương số 54 Hai Bà Trưng, Hà Nội</p><br />
+                        <ul>
+                            <li>
+                                <a style="color:green" href="">Nghiệm thu cấp Nhà nước đề tài mã số ĐT.08.14/NLSH</a>
+                            </li>
+                            <li>
+                                <a style="color:green" href="">Nghiệm thu cấp Nhà nước đề tài mã số ĐT.08.14/NLSH</a>
+                            </li>
+                            <li>
+                                <a style="color:green" href="">Nghiệm thu cấp Nhà nước đề tài mã số ĐT.08.14/NLSH</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+    <script>
+        var slideIndex = 0;
+        showSlides(slideIndex);
+
+        function plusSlides(n) {
+            showSlides(slideIndex += n);
+        }
+
+        function currentSlide(n) {
+            showSlides(slideIndex = n);
+        }
+
+        function showSlides(n) {
+            var i;
+            var slides = document.getElementsByClassName("item");
+            if (n > slides.length - 1) { slideIndex = 0 }
+            if (n < 0) { slideIndex = slides.length - 1 }
+            for (i = 0; i < slides.length; i++) {
+                slides[i].className = slides[i].className.replace(" active", "");
+            }
+            slides[slideIndex].className += " active";
+        }
+    </script>
+</div>

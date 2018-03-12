@@ -1,0 +1,151 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{C4DB8416-5C07-41AE-8033-3AE92A6F4E6B}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>MTA.SERVICE</RootNamespace>
+    <AssemblyName>MTA.SERVICE</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AutoMapper, Version=4.2.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.4.2.1\lib\net45\AutoMapper.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Linq.Dynamic, Version=1.0.6132.35681, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Linq.Dynamic.1.0.7\lib\net40\System.Linq.Dynamic.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Runtime.Caching" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Authorize\AuDonVi\AuDonViService.cs" />
+    <Compile Include="Authorize\AuDonVi\AuDonViVm.cs" />
+    <Compile Include="Authorize\AuMenu\AuMenuService.cs" />
+    <Compile Include="Authorize\AuMenu\AuMenuVm.cs" />
+    <Compile Include="Authorize\AuNguoiDungNhomQuyen\AuNguoiDungNhomQuyenService.cs" />
+    <Compile Include="Authorize\AuNguoiDungNhomQuyen\AuNguoiDungNhomQuyenVm.cs" />
+    <Compile Include="Authorize\AuNguoiDungQuyen\AuNguoiDungQuyenService.cs" />
+    <Compile Include="Authorize\AuNguoiDungQuyen\AuNguoiDungQuyenVm.cs" />
+    <Compile Include="Authorize\AuNguoiDung\AuNguoiDungService.cs" />
+    <Compile Include="Authorize\AuNguoiDung\AuNguoiDungVm.cs" />
+    <Compile Include="Authorize\AuNhomQuyenChucNang\AuNhomQuyenChucNangService.cs" />
+    <Compile Include="Authorize\AuNhomQuyenChucNang\AuNhomQuyenChucNangVm.cs" />
+    <Compile Include="Authorize\AuNhomQuyen\AuNhomQuyenService.cs" />
+    <Compile Include="Authorize\AuNhomQuyen\AuNhomQuyenVm.cs" />
+    <Compile Include="Authorize\SharedService.cs" />
+    <Compile Include="AutoMapperConfig.cs" />
+    <Compile Include="BuildQuery\IConverter.cs" />
+    <Compile Include="BuildQuery\Implimentations\QueryBuilder.cs" />
+    <Compile Include="BuildQuery\Implimentations\QueryFilterBase.cs" />
+    <Compile Include="BuildQuery\Implimentations\QueryFilterLinQ.cs" />
+    <Compile Include="BuildQuery\Implimentations\QueryFilterParam.cs" />
+    <Compile Include="BuildQuery\Implimentations\QueryFilterParamSQL.cs" />
+    <Compile Include="BuildQuery\Implimentations\QueryFilterSQL.cs" />
+    <Compile Include="BuildQuery\Implimentations\QueryOrder.cs" />
+    <Compile Include="BuildQuery\IQueryBuilder.cs" />
+    <Compile Include="BuildQuery\IQueryFilter.cs" />
+    <Compile Include="BuildQuery\IQueryFilterParam.cs" />
+    <Compile Include="BuildQuery\IQueryOrder.cs" />
+    <Compile Include="BuildQuery\Log\LogObj.cs" />
+    <Compile Include="BuildQuery\Log\LogState.cs" />
+    <Compile Include="BuildQuery\Message\MessageObj.cs" />
+    <Compile Include="BuildQuery\Result\FilterObj.cs" />
+    <Compile Include="BuildQuery\Result\PagedObj.cs" />
+    <Compile Include="BuildQuery\Result\ResultObj.cs" />
+    <Compile Include="BuildQuery\Result\Types\ResultState.cs" />
+    <Compile Include="BuildQuery\Types\FilterMethod.cs" />
+    <Compile Include="BuildQuery\Types\OrderMethod.cs" />
+    <Compile Include="DataDto.cs" />
+    <Compile Include="Helper\ChoiceObj.cs" />
+    <Compile Include="Helper\ClassHelper.cs" />
+    <Compile Include="Helper\JObjectClient.cs" />
+    <Compile Include="Helper\MD5Encrypt.cs" />
+    <Compile Include="Helper\MemoryCacheHelper.cs" />
+    <Compile Include="Helper\RequestStringObj.cs" />
+    <Compile Include="Helper\RoleState.cs" />
+    <Compile Include="Helper\StateInfoObj.cs" />
+    <Compile Include="Helper\TransferObj.cs" />
+    <Compile Include="IRepository.cs" />
+    <Compile Include="IService.cs" />
+    <Compile Include="IUnitOfWork.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repository.cs" />
+    <Compile Include="ServiceBase.cs" />
+    <Compile Include="Services\DataInfoServiceBase.cs" />
+    <Compile Include="Services\DetailInfoServiceBase.cs" />
+    <Compile Include="Services\EntityServiceBase.cs" />
+    <Compile Include="Services\IDataInfoService.cs" />
+    <Compile Include="Services\IDataSearch.cs" />
+    <Compile Include="Services\IDetailInfoServiceBase.cs" />
+    <Compile Include="Services\IEntityService.cs" />
+    <Compile Include="UnitOfWork.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MTA.ENTITY\MTA.ENTITY.csproj">
+      <Project>{b1828aa4-0857-41b8-a57d-5346077ba0fe}</Project>
+      <Name>MTA.ENTITY</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Authorize\Utils\" />
+    <Folder Include="NV\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
