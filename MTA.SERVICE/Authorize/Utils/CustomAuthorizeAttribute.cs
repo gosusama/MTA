@@ -43,7 +43,7 @@ namespace MTA.SERVICE.Authorize.Utils
             if (username.Equals("admin") && authorize) return true;
             bool check = false;
             RoleState roleState = Get(_unitCode, username, State);
-            if (!string.IsNullOrEmpty(roleState?.STATE))
+            if (!string.IsNullOrEmpty( roleState?.STATE))
             {
                 switch (Method)
                 {
