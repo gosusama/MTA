@@ -75,7 +75,9 @@
             </thead>
             <tbody>
                 <tr ng-show="isLoading">
-                    <td colspan="8"><my-loading></my-loading></td>
+                    <td colspan="6" style="background-color: #e2e2e2;">
+                        <p>Không có dữ liệu</p>
+                    </td>
                 </tr>
                 <tr class="even pointer" ng-repeat="item in data | orderBy:sortType:sortReverse" ng-dblclick="details(item)">
                     <td>{{$index + 1}}</td>

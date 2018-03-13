@@ -37,15 +37,25 @@
                 <div class="col-lg-6">
                     <label>Giới tính</label>
                     <div class="radio">
-                        <label><input type="radio" ng-model="target.gioiTinh" name="_gioiTinh" value="1" checked>Nam</label>
-                        <label><input type="radio" ng-model="target.gioiTinh" name="_gioiTinh" value="0">Nữ</label>
+                        <label><input type="radio" ng-model="target.gioiTinh" name="_gioiTinh" ng-value="1">Nam</label>
+                        <label><input type="radio" ng-model="target.gioiTinh" name="_gioiTinh" ng-value="0">Nữ</label>
                     </div>
+                </div>
+                <div class="col-lg-6">
+                    <label>Chức vụ :</label><br />
+                    <label>
+                        <input type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="target.level">Admin
+                    </label>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <label>
+                        <input type="checkbox" ng-true-value="2" ng-false-value="0" ng-model="target.level">Quản trị viên
+                    </label>
                 </div>
             </div>
             <div class="row form-group">
                 <div class="col-lg-12">
                     <label>Trạng thái</label>
-                    <select class="form-control" ng-model="target.trangThai" ng-init="target.trangThai = 10" ng-options="opt.value as opt.text for opt in tempData('status')"></select>
+                    <select class="form-control" ng-model="target.trangThai" ng-init="target.trangThai = 10" ng-options="opt.Value as opt.Text for opt in tempData('status')"></select>
                 </div>
             </div>
             <div class="row form-group">
@@ -63,11 +73,6 @@
                         <span ng-show="_form._Password.$error.required">Không được để trống</span>
                         <span ng-show="_form._Password.$error.pattern">Mật khẩu phải có 8 ký tự trở lên bắt buộc phải có số, ký tự đặc biệt!</span>
                     </span>
-                </div>
-            </div>
-            <div class="row form-group">
-                <div class="col-lg-6">
-                    <label><input type="checkbox" ng-true-value="1" ng-false-value="0" ng-model="target.level">Quản trị viên</label>
                 </div>
             </div>
         </form>

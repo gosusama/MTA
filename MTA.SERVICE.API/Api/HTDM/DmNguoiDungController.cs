@@ -153,5 +153,36 @@ namespace MTA.SERVICE.API.Api.HTDM
                 return InternalServerError();
             }
         }
+
+        [HttpPut]
+        [ResponseType(typeof(void))]
+        [Route("Edit/{id?}")]
+        public async Task<IHttpActionResult> Put(string id, AU_NGUOIDUNG instance)
+        {
+            var result = new TransferObj<AU_NGUOIDUNG>();
+            if (id != instance.Id)
+            {
+                result.Status = false;
+                result.Message = "Id không hợp lệ";
+                return Ok(result);
+            }
+
+            try
+            {
+                instance.Password = MD5Encrypt.MD5Hash(instance.Password);
+                var item = _service.Update(instance);
+                _service.UnitOfWork.Save();
+                result.Status = true;
+                result.Message = "Sửa thành công";
+                result.Data = item;
+                return Ok(result);
+            }
+            catch (Exception e)
+            {
+                result.Status = false;
+                result.Message = e.Message;
+                return Ok(result);
+            }
+        }
     }
 }

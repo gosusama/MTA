@@ -22,7 +22,7 @@
                 $http.get(serviceUrl + '/GetCurrentUser').success(callback);
             },
             update: function (params) {
-                return $http.put(serviceUrl + '/Put/' + params.id, params);
+                return $http.put(serviceUrl + '/Edit/' + params.id, params);
             },
             deleteItem: function (params) {
                 return $http.delete(serviceUrl + '/Delete/' + params.id, params);
@@ -136,7 +136,6 @@
             };
 
             $scope.details = function (target) {
-                console.log('target',target);
                 var modalInstance = $uibModal.open({
                     backdrop : 'static',
                     size: 'md',
@@ -152,6 +151,23 @@
                     $log.info('Modal dismissed at: ' + new Date());
                 });
             };
+
+            $scope.update = function (target) {
+                var modalInstance = $uibModal.open({
+                    backdrop: 'static',
+                    size: 'md',
+                    templateUrl: configService.buildUrl('htdm/dmNguoiDung', 'update'),
+                    controller: 'dmNguoiDungEditController',
+                    resolve: {
+                        targetData: function () {
+                            return target;
+                        }
+                    }
+                });
+                modalInstance.result.then(function (updatedData) {
+                    $log.info('Modal dismissed at: ' + new Date());
+                });
+            }
         }]);
     app.controller('dmNguoiDungDetailsController', ['$scope', '$uibModalInstance', '$location', '$http', 'configService', 'dmNguoiDungService', 'tempDataService', '$filter', '$uibModal', '$log', 'ngNotify', 'targetData',
         function ($scope, $uibModalInstance, $location, $http, configService, service, tempDataService, $filter, $uibModal, $log, ngNotify,targetData) {
@@ -241,6 +257,52 @@
                 $uibModalInstance.dismiss('cancel');
             };
         }]);
+
+    app.controller('dmNguoiDungEditController', ['$scope', '$uibModalInstance', '$location', '$http', 'configService', 'dmNguoiDungService', 'tempDataService', '$filter', '$uibModal', '$log', 'ngNotify', 'targetData',
+       function ($scope, $uibModalInstance, $location, $http, configService, service, tempDataService, $filter, $uibModal, $log, ngNotify, targetData) {
+           $scope.config = angular.copy(configService);
+           $scope.paged = angular.copy(configService.pageDefault);
+           $scope.filtered = angular.copy(configService.filterDefault);
+           $scope.tempData = tempDataService.tempData;
+           targetData.userName = targetData.username;
+           $scope.target = angular.copy(targetData);
+           $scope.title = function () { return 'Cập nhập người dùng'; };
+           
+           $scope.enterUserNameProfiles = function (input) {
+               if (input) {
+                   service.checkUserNameExist(input).then(function (response) {
+                       console.log(response);
+                       if (response.data.status) {
+                           ngNotify.set("Đã tồn tại tên người dùng này !", { duration: 3000, type: 'error' });
+                       } else {
+                       }
+                   });
+               }
+           };
+           $scope.save = function () {
+               service.update($scope.target).then(function (response) {
+                   console.log('response',response );
+                       if (response.status && response.status === 200) {
+                           if (response.data.status) {
+                               console.log('Create  Successfully!');
+                               ngNotify.set("Cập nhập thành công", { type: 'success' });
+                               $uibModalInstance.close($scope.target);
+                           } else {
+
+                           }
+                       } else {
+                           console.log('ERROR: Update failed! ' + response.errorMessage);
+                           ngNotify.set(response.errorMessage, { duration: 3000, type: 'error' });
+                       }
+                   },
+                   function (response) {
+                       console.log('ERROR: Update failed! ' + response);
+                   });
+           };
+           $scope.cancel = function () {
+               $uibModalInstance.close();
+           };
+       }]); 
     return app;
 });
 console.log("OK");
