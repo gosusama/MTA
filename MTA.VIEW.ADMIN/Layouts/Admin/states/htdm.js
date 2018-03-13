@@ -30,6 +30,19 @@
             moduleUrl: controlUrl + "dmNguoiDungController"
         },
         {
+            name: 'dmGioiThieu',
+            url: '/dmGioiThieu',
+            parent: 'layout',
+            abstract: false,
+            views: {
+                'viewMain@root': {
+                    templateUrl: layoutUrl + "dmGioiThieu/index.html",
+                    controller: "dmGioiThieuController as ctrl"
+                }
+            },
+            moduleUrl: controlUrl + "dmGioiThieuController"
+        },
+        {
             name: 'NhomQuyen',
             url: '/NhomQuyen',
             parent: 'layout',

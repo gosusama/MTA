@@ -1,6 +1,6 @@
-﻿define(['ui-bootstrap','controllers/layouts/header-controller'], function () {
+﻿define(['ui-bootstrap'], function () {
     'use strict';
-    var app = angular.module('dmmenu_Module', ['ui.bootstrap','headerModule']);
+    var app = angular.module('dmmenu_Module', ['ui.bootstrap']);
     app.factory('dmmenu_Service', ['$http', 'configService', function ($http, configService) {
         var serviceUrl = configService.rootUrlWebApi + '/DM/Menu';
         var allMenu = [];
@@ -255,7 +255,7 @@
             $uibModalInstance.close();
         };
     }]);
-    app.controller('dmMenuCreateController', ['$scope', '$location', '$http', 'configService', 'dmmenu_Service', 'tempDataService', '$filter', '$uibModal', '$log', 'securityService', 'toaster', 'ngNotify', '$uibModalInstance',
+    app.controller('dmMenuCreateController',['$scope', '$location', '$http', 'configService', 'dmmenu_Service', 'tempDataService', '$filter', '$uibModal', '$log', 'securityService','toaster','ngNotify','$uibModalInstance',
         function ($scope, $location, $http, configService, service, tempDataService, $filter, $uibModal, $log, securityService, toaster,ngNotify,$uibModalInstance) {
             $scope.config = angular.copy(configService);
             $scope.tempData = tempDataService.tempData;

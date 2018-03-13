@@ -56,7 +56,11 @@ define(['angular', 'controllers/auth/auth-controller', 'controllers/htdm/dmmenu_
             });
             return result;
         };
-        $scope.loadMenu = function() {
+        function loadUser() {
+            $scope.currentUser = userService.GetCurrentUser();
+            if (!$scope.currentUser) {
+                $state.go('login');
+            }
             service.getMenu().then(function (response) {
                 if (response.status ==200 && response.data.data) {
                     $scope.lstMenu = angular.copy(response.data.data);
@@ -67,14 +71,7 @@ define(['angular', 'controllers/auth/auth-controller', 'controllers/htdm/dmmenu_
                 }
             }, function (response) {
             });
-        }
 
-        function loadUser() {
-            $scope.currentUser = userService.GetCurrentUser();
-            if (!$scope.currentUser) {
-                $state.go('login');
-            }
-            $scope.loadMenu();
         }
         loadUser();
         $scope.logOut = function () {
