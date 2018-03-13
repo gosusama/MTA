@@ -42,6 +42,19 @@
             },
             moduleUrl: controlUrl + "dmGioiThieuController"
         },
+        {
+            name: 'NhomQuyen',
+            url: '/NhomQuyen',
+            parent: 'layout',
+            abstract: false,
+            views: {
+                'viewMain@root': {
+                    templateUrl: layoutUrl + "dmNhomQuyen/index.html",
+                    controller: "dmNhomQuyenController as ctrl"
+                }
+            },
+            moduleUrl: controlUrl + "dmNhomQuyenController"
+        },
     ];
     return states;
 });
