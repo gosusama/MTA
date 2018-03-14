@@ -1,11 +1,6 @@
-﻿/*  
-* Người tạo : Phạm Tuấn Anh
-* View: BTS.SP.MART/views/htdm/AuNhomQuyen
-* Menu: Danh mục-> Danh mục nhóm quyền
-*/
-define(['ui-bootstrap'], function () {
+﻿define(['ui-bootstrap','controllers/htdm/dmNhomQuyenChucNang'], function () {
     'use strict';
-    var app = angular.module('dmNhomQuyenModule', ['ui.bootstrap']);
+    var app = angular.module('dmNhomQuyenModule', ['ui.bootstrap','dmNhomQuyenChucNangModule']);
     app.factory('dmNhomQuyenService', ['$http', 'configService', function ($http, configService) {
         var serviceUrl = configService.rootUrlWebApi + '/Dm/NhomQuyen';
         var result = {
@@ -116,8 +111,8 @@ define(['ui-bootstrap'], function () {
                 $uibModal.open({
                     backdrop: 'static',
                     size: 'md',
-                    templateUrl: configService.buildUrl('auth/AuNhomQuyen', 'detail'),
-                    controller: 'AuNhomQuyenDetailCtrl',
+                    templateUrl: configService.buildUrl('htdm/dmNhomQuyen', 'detail'),
+                    controller: 'dmNhomQuyenDetailController',
                     resolve: {
                         targetData: function () {
                             return item;
@@ -143,8 +138,8 @@ define(['ui-bootstrap'], function () {
                 var modalInstance = $uibModal.open({
                     backdrop: 'static',
                     size: 'md',
-                    templateUrl: configService.buildUrl('auth/AuNhomQuyen', 'edit'),
-                    controller: 'AuNhomQuyenEditCtrl',
+                    templateUrl: configService.buildUrl('htdm/dmNhomQuyen', 'edit'),
+                    controller: 'dmNhomQuyenEditController',
                     resolve: {
                         targetData: function () {
                             return item;
@@ -162,8 +157,8 @@ define(['ui-bootstrap'], function () {
                     backdrop: 'static',
                     size: 'lg',
                     windowClass: 'app-modal-window',
-                    templateUrl: configService.buildUrl('auth/AuNhomQuyenChucNang', 'config'),
-                    controller: 'AuNhomQuyenChucNangConfigCtrl',
+                    templateUrl: configService.buildUrl('htdm/dmNhomQuyen', 'config'),
+                    controller: 'dmNhomQuyenChucNangConfigCtrl',
                     resolve: {
                         targetData: function () {
                             return item;
@@ -197,8 +192,8 @@ define(['ui-bootstrap'], function () {
         }]);
 
     /* controller Details */
-    app.controller('AuNhomQuyenDetailCtrl', ['$scope', '$uibModalInstance', '$location', '$http', 'configService', 'AuNhomQuyenService', 'tempDataService', '$filter', '$uibModal', '$log', 'targetData', 'ngNotify', 'AuNhomQuyenChucNangChucNangService',
-        function ($scope, $uibModalInstance, $location, $http, configService, service, tempDataService, $filter, $uibModal, $log, targetData, ngNotify, serviceAuNhomQuyenChucNang) {
+    app.controller('dmNhomQuyenDetailController', ['$scope', '$uibModalInstance', '$location', '$http', 'configService', 'dmNhomQuyenService', 'tempDataService', '$filter', '$uibModal', '$log', 'targetData', 'ngNotify', 'dmNhomQuyenChucNangService', 'toaster',
+        function ($scope, $uibModalInstance, $location, $http, configService, service, tempDataService, $filter, $uibModal, $log, targetData, ngNotify, dmNhomQuyenChucNangService,toaster) {
             $scope.config = {
                 label: angular.copy(configService.label)
             };
@@ -206,7 +201,7 @@ define(['ui-bootstrap'], function () {
             $scope.tempData = tempDataService.tempData;
             //load danh muc
             function loadData() {
-                serviceAuNhomQuyenChucNang.getByMaNhomQuyen(targetData.manhomquyen).then(function (successRes) {
+                dmNhomQuyenChucNangService.getByMaNhomQuyen(targetData.manhomquyen).then(function (successRes) {
                     if (successRes && successRes.status == 200) {
                         $scope.data = successRes.data.data;
                     } else {
@@ -252,7 +247,7 @@ define(['ui-bootstrap'], function () {
         }]);
 
     /* controller Create */
-    app.controller('AuNhomQuyenEditCtrl', ['$scope', '$uibModalInstance', '$location', '$http', 'configService', 'AuNhomQuyenService', 'tempDataService', '$filter', '$uibModal', '$log', 'targetData', 'ngNotify', 'toaster',
+    app.controller('dmNhomQuyenEditController', ['$scope', '$uibModalInstance', '$location', '$http', 'configService', 'dmNhomQuyenService', 'tempDataService', '$filter', '$uibModal', '$log', 'targetData', 'ngNotify', 'toaster',
         function ($scope, $uibModalInstance, $location, $http, configService, service, tempDataService, $filter, $uibModal, $log, targetData, ngNotify, toaster) {
             $scope.config = {
                 label: angular.copy(configService.label)

@@ -27,9 +27,10 @@
             <div class="row form-group">
                 <div class="col-lg-6">
                     <label>Menu ID</label><span style="color: red"> (3*)</span>
-                    <input type="text" class="form-control" ng-model="target.menuId" maxlength="200" name="_menuid" required>
-                    <span style="color:red" ng-show="_form._menuid.$dirty && _form._menuid.$invalid">
-                        <span ng-show="_form._menuid.$error.required">Không được để trống</span>
+                    <input type="text" id="menuId" class="form-control" ng-model="target.menuId" maxlength="200" name="_menuid" ng-blur="checkExistID(target.menuId)" required>
+                    <span style="color:red" ng-show="(_form._menuid.$dirty && _form._menuid.$invalid) || isExist">
+                        <span ng-show="_form._menuid.$error.required ">Không được để trống</span>
+                        <span ng-if="isExist">Đã tồn tại Menu ID </span>
                     </span>
                 </div>
                 <div class="col-lg-6">

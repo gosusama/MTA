@@ -35,13 +35,19 @@
             },
             update: function (params) {
                 return $http.put(serviceUrl + '/edit/' + params.id, params)
-            }
+            },
+            checkExistID: function (code) {
+                return $http.get(serviceUrl + '/CheckExistID/'+code);
+            },
+            getAllForConfigNhomQuyen: function (params) {
+                return $http.get(serviceUrl + '/GetAllForConfigNhomQuyen/' + params);
+            },
         }
         return result;
     }]);
     /* controller list */
-    app.controller('dmMenuCtr', ['$scope', '$location', '$http', 'configService', 'dmmenu_Service', 'tempDataService', '$filter', '$uibModal', '$log', 'securityService','toaster',
-        function ($scope, $location, $http, configService, service, tempDataService, $filter, $uibModal, $log, securityService, toaster) {
+    app.controller('dmMenuCtr', ['$scope', '$location', '$http', 'configService', 'dmmenu_Service', 'tempDataService', '$filter', '$uibModal', '$log', 'securityService','toaster','$state',
+        function ($scope, $location, $http, configService, service, tempDataService, $filter, $uibModal, $log, securityService, toaster,$state) {
             $scope.config = angular.copy(configService);
             $scope.paged = angular.copy(configService.pageDefault);
             $scope.filtered = angular.copy(configService.paramDefault);
@@ -54,7 +60,6 @@
                     if (successRes && successRes.status === 200 && successRes.data.data.data) {
                         $scope.isLoading = false;
                         $scope.data = successRes.data.data.data;
-                        console.log($scope.data);
                         angular.extend($scope.paged, successRes.data.data);
                     }
                 }, function (errorRes) {
@@ -119,6 +124,7 @@
                     resolve: {}
                 });
                 modalInstance.result.then(function (updatedData) {
+                    $state.reload();
                     $scope.refresh();
                 }, function () {
                     $log.info('Modal dismissed at: ' + new Date());
@@ -139,6 +145,7 @@
                     }
                 });
                 modalInstance.result.then(function (updatedData) {
+                    $state.reload();
                     $scope.refresh();
                 }, function () {
                     $log.info('Modal dismissed at: ' + new Date());
@@ -159,6 +166,7 @@
                     }
                 });
                 modalInstance.result.then(function (updatedData) {
+                    $state.reload();
                     $scope.refresh();
                 }, function () {
                     $log.info('Modal dismissed at: ' + new Date());
@@ -177,7 +185,6 @@
                     }
                 });
                 modalInstance.result.then(function (updatedData) {
-                    $scope.refresh();
                 }, function () {
                     $log.info('Modal dismissed at: ' + new Date());
                 });
@@ -251,18 +258,26 @@
                     console.log('errorRes', errorRes);
                 });
         };
+        $scope.checkExistID = function (target) {
+            service.checkExistID(target).then(function (reponse) {
+                if (reponse.data) {
+                    $scope.isExist = true;
+                    document.getElementById('menuId').focus();
+                }
+            });
+        };
         $scope.cancel = function () {
             $uibModalInstance.close();
         };
     }]);
-    app.controller('dmMenuCreateController',['$scope', '$location', '$http', 'configService', 'dmmenu_Service', 'tempDataService', '$filter', '$uibModal', '$log', 'securityService','toaster','ngNotify','$uibModalInstance',
-        function ($scope, $location, $http, configService, service, tempDataService, $filter, $uibModal, $log, securityService, toaster,ngNotify,$uibModalInstance) {
+    app.controller('dmMenuCreateController',['$scope', '$location', '$http', 'configService', 'dmmenu_Service', 'tempDataService', '$filter', '$uibModal', '$log', 'securityService','toaster','ngNotify','$uibModalInstance','$document',
+        function ($scope, $location, $http, configService, service, tempDataService, $filter, $uibModal, $log, securityService, toaster,ngNotify,$uibModalInstance,$document) {
             $scope.config = angular.copy(configService);
             $scope.tempData = tempDataService.tempData;
             $scope.target = {};
             $scope.isLoading = false;
             $scope.title = function () { return 'Thêm mới menu'; };           
-            
+            $scope.isExist = false;
             $scope.addNewItem = function (code) {
                 var modalInstance = $uibModal.open({
                     backdrop: 'static',
@@ -285,6 +300,15 @@
 
                 });
             }
+
+            $scope.checkExistID = function (target) {
+                service.checkExistID(target).then(function(reponse){
+                    if (reponse.data) {
+                        $scope.isExist = true;
+                        document.getElementById('menuId').focus();
+                    }
+                });
+            };
 
             $scope.save = function () {
                 service.post($scope.target).then(function (successRes) {
