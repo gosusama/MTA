@@ -20,7 +20,7 @@ namespace MTA.SERVICE.API.Provider
     {
         public override async Task GrantResourceOwnerCredentials(OAuthGrantResourceOwnerCredentialsContext context)
         {
-            context.OwinContext.Response.Headers.Add("Access-Control-Allow-Origin", new[] { "*" });
+            //context.OwinContext.Response.Headers.Add("Access-Control-Allow-Origin", new[] { "*" });
             MTADbContext db = new MTADbContext();
             Mapper.CreateMap<AU_NGUOIDUNG, AuNguoiDungVm.CurrentUser>();
             AuNguoiDungVm.CurrentUser result = null;
