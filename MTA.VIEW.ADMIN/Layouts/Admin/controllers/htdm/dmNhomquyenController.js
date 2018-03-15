@@ -77,12 +77,12 @@
                 });
             }
             loadAccessList();
-            $scope.displayHepler = function (paraValue, moduleName) {
-                var data = $filter('filter')($scope.tempData(moduleName), { value: paraValue }, true);
-                if (data && data.length === 1) {
-                    return data[0].text;
+            $scope.displayHelper = function (module, value) {
+                var data = $filter('filter')($scope.tempData(module), { Value: value }, true);
+                if (data.length === 1) {
+                    return data[0].Text;
                 } else {
-                    return paraValue;
+                    return value;
                 }
             }
             $scope.setPage = function (pageNo) {

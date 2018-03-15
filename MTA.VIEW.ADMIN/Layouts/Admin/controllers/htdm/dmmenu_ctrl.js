@@ -42,6 +42,9 @@
             getAllForConfigNhomQuyen: function (params) {
                 return $http.get(serviceUrl + '/GetAllForConfigNhomQuyen/' + params);
             },
+            getAllForConfigQuyen: function (data) {
+                return $http.get(serviceUrl + '/GetAllForConfigQuyen/'+data);
+            }
         }
         return result;
     }]);

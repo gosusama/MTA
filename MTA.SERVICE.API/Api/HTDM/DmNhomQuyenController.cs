@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
 
@@ -143,6 +144,15 @@ namespace MTA.SERVICE.API.Api.HTDM
                     result.Message = e.Message;
                 }
             }
+            return Ok(result);
+        }
+        [HttpGet]
+        [Route("GetNhomQuyenConfig/{username}")]
+        public async Task<IHttpActionResult> GetNhomQuyenConfig(string username)
+        {
+            var _unitCode = _service.GetCurrentUnitCode();
+            var result = await _service.GetNhomQuyenConfigByUsername(_unitCode, username);
+
             return Ok(result);
         }
     }

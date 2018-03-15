@@ -62,7 +62,7 @@
             <div class="row form-group">
                 <div class="col-lg-6">
                     <label>Tên đăng nhập</label><span style="color: red"> (1*)</span>
-                    <input type="text" class="form-control" ng-model="target.userName" name="_Username" ng-blur="enterUserNameProfiles(target.userName)" required>
+                    <input id="userName" type="text" class="form-control" ng-model="target.userName" name="_Username" ng-blur="enterUserNameProfiles(target.userName)" required>
                     <span style="color:red" ng-show="_form._Username.$dirty && _form._Username.$invalid">
                         <span ng-show="_form._Username.$error.required">Không được để trống</span>
                     </span>
