@@ -81,6 +81,19 @@
             },
             moduleUrl: controlUrl + "dmTinTucController"
         },
+        {
+            name: 'dmDaoTao',
+            url: '/dmDaoTao',
+            parent: 'layout',
+            abstract: false,
+            views: {
+                'viewMain@root': {
+                    templateUrl: layoutUrl + "dmDaoTao/index.html",
+                    controller: "dmDaoTaoController as ctrl"
+                }
+            },
+            moduleUrl: controlUrl + "dmDaoTaoController"
+        },
     ];
     return states;
 });
