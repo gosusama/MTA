@@ -167,5 +167,54 @@ namespace MTA.SERVICE.API.Api.HTDM
             else
                 return null;
         }
+
+        [HttpGet]
+        [Route("CheckExistID/{code}")]
+        public bool CheckExistID(string code)
+        {
+            var menu = _service.Repository.DbSet.Where(x => x.MenuId.Equals(code)).FirstOrDefault();
+            return menu != null ? true : false;
+        }
+
+        [HttpGet]
+        [Route("GetAllForConfigQuyen/{username}")]
+        public IHttpActionResult GetAllForConfigQuyen(string username)
+        {
+            var _unitCode = _service.GetCurrentUnitCode();
+            if (string.IsNullOrEmpty(username)) return BadRequest();
+            var result = new TransferObj<List<AU_MENU>>();
+            try
+            {
+                var data = _service.GetAllForConfigQuyen(username, _unitCode);
+                result.Status = true;
+                result.Data = data;
+            }
+            catch (Exception ex)
+            {
+                result.Status = false;
+                result.Message = ex.Message;
+            }
+            return Ok(result);
+        }
+        [HttpGet]
+        [Route("GetAllForConfigNhomQuyen/{manhomquyen}")]
+        public IHttpActionResult GetAllForConfig(string manhomquyen)
+        {
+            var _unitCode = _service.GetCurrentUnitCode();
+            if (string.IsNullOrEmpty(manhomquyen)) return BadRequest();
+            var result = new TransferObj<List<AU_MENU>>();
+            try
+            {
+                var data = _service.GetAllForConfigNhomQuyen(manhomquyen, _unitCode);
+                result.Status = true;
+                result.Data = data;
+            }
+            catch (Exception ex)
+            {
+                result.Status = false;
+                result.Message = ex.Message;
+            }
+            return Ok(result);
+        }
     }
 }

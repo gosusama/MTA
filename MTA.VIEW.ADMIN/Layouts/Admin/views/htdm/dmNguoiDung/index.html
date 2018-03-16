@@ -65,11 +65,13 @@
         </table>
     </div>
     <div class="panel-footer">
-        <uib-pagination class="no-margin-vertical pagination-sm" ng-model="paged.currentPage"
-                        ng-change="pageChanged()"
-                        items-per-page="paged.itemsPerPage" ng-show="paged.totalItems > 0" total-items="paged.totalItems" max-size="paged.pageSize"
-                        boundary-links="true" num-pages="paged.totalPage"
-                        previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;">
-        </uib-pagination>
+        <div style="text-align: right;">
+            <uib-pagination class="no-margin-vertical pagination-sm" ng-model="paged.currentPage"
+                            ng-change="pageChanged()"
+                            items-per-page="paged.itemsPerPage" ng-show="paged.totalItems > 0" total-items="paged.totalItems" max-size="paged.pageSize"
+                            boundary-links="true" num-pages="paged.totalPage"
+                            previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;">
+            </uib-pagination>
+        </div>
     </div>
 </div>

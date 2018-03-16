@@ -65,7 +65,7 @@
                     <td>{{item.manhomquyen}}</td>
                     <td>{{item.tennhomquyen}}</td>
                     <td>{{item.mota}}</td>
-                    <td>{{item.trangthai | status}}</td>
+                    <td>{{displayHelper('status',item.trangthai)}}</td>
                     <td style="text-align: center;">
                         <a class="fa fa-search" ng-click="detail(item)" ng-if="accessList.view" tabindex="Xem"></a>&nbsp;&nbsp;
                         <a class="fa fa-pencil" ng-click="edit(item)" ng-if="accessList.edit" title="Sửa"></a>&nbsp;&nbsp;

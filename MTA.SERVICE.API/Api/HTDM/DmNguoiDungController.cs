@@ -1,6 +1,7 @@
 ﻿using BTS.API.SERVICE.Helper;
 using MTA.ENTITY.Authorize;
 using MTA.SERVICE.Authorize.AuNguoiDung;
+using MTA.SERVICE.Authorize.Utils;
 using MTA.SERVICE.BuildQuery;
 using MTA.SERVICE.BuildQuery.Query.Types;
 using MTA.SERVICE.Helper;
@@ -99,7 +100,7 @@ namespace MTA.SERVICE.API.Api.HTDM
         }
         [HttpPost]
         [ResponseType(typeof(AU_NGUOIDUNG))]
-        [Route("Post")]
+        [CustomAuthorize(Method = "THEM", State = "sys_User")]
         public async Task<IHttpActionResult> Post(AU_NGUOIDUNG instance)
         {
             var result = new TransferObj<AU_NGUOIDUNG>();
@@ -134,7 +135,7 @@ namespace MTA.SERVICE.API.Api.HTDM
         }
         [HttpDelete]
         [ResponseType(typeof(AU_NGUOIDUNG))]
-        [Route("Delete/{id?}")]
+        [CustomAuthorize(Method = "XOA", State = "sys_User")]
         public async Task<IHttpActionResult> Delete(string id)
         {
             AU_NGUOIDUNG instance = await _service.Repository.FindAsync(id);
@@ -156,7 +157,7 @@ namespace MTA.SERVICE.API.Api.HTDM
 
         [HttpPut]
         [ResponseType(typeof(void))]
-        [Route("Edit/{id?}")]
+        [CustomAuthorize(Method = "SUA", State = "sys_User")]
         public async Task<IHttpActionResult> Put(string id, AU_NGUOIDUNG instance)
         {
             var result = new TransferObj<AU_NGUOIDUNG>();
@@ -183,6 +184,38 @@ namespace MTA.SERVICE.API.Api.HTDM
                 result.Message = e.Message;
                 return Ok(result);
             }
+        }
+        [HttpGet]
+        [ResponseType(typeof(AU_NGUOIDUNG))]
+        [CustomAuthorize(Method = "XEM", State = "sys_User")]
+        public IHttpActionResult Get(string id)
+        {
+            var instance = _service.FindById(id);
+            if (instance == null)
+            {
+                return NotFound();
+            }
+            return Ok(instance);
+        }
+        [Route("GetTargetUser/{id}")]
+        [ResponseType(typeof(AU_NGUOIDUNG))]
+        public IHttpActionResult GetTargetUser(string id)
+        {
+            var instance = _service.Repository.DbSet.Where(x => x.Id == id).Select(x => new { x.MaNhanVien, x.SoDienThoai, x.TenNhanVien }).FirstOrDefault();
+            if (instance == null)
+            {
+                return NotFound();
+            }
+            return Ok(instance);
+        }
+        //----------
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                _service.Repository.DataContext.Dispose();
+            }
+            base.Dispose(disposing);
         }
     }
 }

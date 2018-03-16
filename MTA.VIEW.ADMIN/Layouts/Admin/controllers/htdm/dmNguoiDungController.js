@@ -1,6 +1,6 @@
-﻿define(['ui-bootstrap'], function () {
+﻿define(['ui-bootstrap','controllers/htdm/dmNguoiDungQuyenController','controllers/htdm/dmNguoiDungNhomQuyenController'], function () {
     'use strict';
-    var app = angular.module('dmNguoiDungModule', ['ui.bootstrap']);
+    var app = angular.module('dmNguoiDungModule', ['ui.bootstrap', 'dmNguoiDungQuyenModule','dmNguoiDungNhomQuyenModule']);
     app.factory('dmNguoiDungService', ['$http', 'configService', function ($http, configService) {
         var serviceUrl = configService.rootUrlWebApi + '/DM/NguoiDung';
         var allMenu = [];
@@ -22,10 +22,10 @@
                 $http.get(serviceUrl + '/GetCurrentUser').success(callback);
             },
             update: function (params) {
-                return $http.put(serviceUrl + '/Edit/' + params.id, params);
+                return $http.put(serviceUrl + '/Put/' + params.id, params);
             },
             deleteItem: function (params) {
-                return $http.delete(serviceUrl + '/Delete/' + params.id, params);
+                return $http.delete(serviceUrl + '/' + params.id, params);
             },
             checkUserNameExist: function (params) {
                 return $http.get(serviceUrl + '/CheckUserNameExist/' + params);
@@ -40,8 +40,8 @@
         return result;
     }]);
     /* controller list */
-    app.controller('dmNguoiDungController', ['$scope', '$location', '$http', 'configService', 'dmNguoiDungService', 'tempDataService', '$filter', '$uibModal', '$log', 'securityService', 'toaster',
-        function ($scope, $location, $http, configService, service, tempDataService, $filter, $uibModal, $log, securityService, toaster) {
+    app.controller('dmNguoiDungController', ['$scope', '$location', '$http', 'configService', 'dmNguoiDungService', 'tempDataService', '$filter', '$uibModal', '$log', 'securityService', 'toaster','dmNguoiDungQuyenService','dmNguoiDungNhomQuyenService',
+    function ($scope, $location, $http, configService, service, tempDataService, $filter, $uibModal, $log, securityService, toaster,serviceAuNguoiDungQuyen,serviceNguoiDungNhomQuyen) {
             $scope.config = angular.copy(configService);
             $scope.paged = angular.copy(configService.pageDefault);
             $scope.filtered = angular.copy(configService.filterDefault);
@@ -168,6 +168,36 @@
                     $log.info('Modal dismissed at: ' + new Date());
                 });
             }
+
+
+            $scope.addVaiTro = function (item) {
+                $uibModal.open({
+                    backdrop: 'static',
+                    size: 'md',
+                    templateUrl: configService.buildUrl('htdm/dmNguoiDung', 'addGroupRole'),
+                    controller: 'dmNguoiDungNhomQuyenCreateCtrl',
+                    resolve: {
+                        targetData: function () {
+                            return item;
+                        }
+                    }
+                });
+            };
+
+            $scope.addQuyen = function (item) {
+                $uibModal.open({
+                    backdrop: 'static',
+                    size: 'lg',
+                    windowClass: 'app-modal-window',
+                    templateUrl: configService.buildUrl('htdm/dmNguoiDung', 'addRole'),
+                    controller: 'dmNguoiDungQuyenCreateCtrl',
+                    resolve: {
+                        targetData: function () {
+                            return item;
+                        }
+                    }
+                });
+            };
         }]);
     app.controller('dmNguoiDungDetailsController', ['$scope', '$uibModalInstance', '$location', '$http', 'configService', 'dmNguoiDungService', 'tempDataService', '$filter', '$uibModal', '$log', 'ngNotify', 'targetData',
         function ($scope, $uibModalInstance, $location, $http, configService, service, tempDataService, $filter, $uibModal, $log, ngNotify,targetData) {
@@ -230,6 +260,7 @@
                     service.checkUserNameExist(input).then(function (response) {
                         console.log(response);
                         if (response.data.status) {
+                            document.getElementById('userName').focus();
                             ngNotify.set("Đã tồn tại tên người dùng này !", { duration: 3000, type: 'error' });
                             $scope.isExist = true;
                         } else {

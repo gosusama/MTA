@@ -55,6 +55,19 @@
             },
             moduleUrl: controlUrl + "dmNhomQuyenController"
         },
+        {
+            name: 'DanhSachDonVi',
+            url: '/DanhSachDonVi',
+            parent: 'layout',
+            abstract: false,
+            views: {
+                'viewMain@root': {
+                    templateUrl: layoutUrl + "dmDonVi/index.html",
+                    controller: "dmDonVi_ctrl as ctrl"
+                }
+            },
+            moduleUrl: controlUrl + "dmDonViController"
+        },
     ];
     return states;
 });

@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
 
@@ -112,6 +113,47 @@ namespace MTA.SERVICE.API.Api.HTDM
             {
                 return InternalServerError();
             }
+        }
+        [ResponseType(typeof(void))]
+        [HttpPut]
+        [Route("Update/{id}")]
+        [CustomAuthorize(Method = "SUA", State = "auGroup")]
+        public IHttpActionResult Update(string id, AU_NHOMQUYEN instance)
+        {
+            var _unitCode = _service.GetCurrentUnitCode();
+            var result = new TransferObj<AU_NHOMQUYEN>();
+            if (id != instance.Id)
+            {
+                result.Status = false;
+                result.Message = "Id không hợp lệ";
+            }
+            else
+            {
+                try
+                {
+                    instance.UnitCode = _unitCode;
+                    var item = _service.Update(instance);
+                    _service.UnitOfWork.Save();
+                    result.Status = true;
+                    result.Message = "Cập nhật thành công.";
+                    result.Data = item;
+                }
+                catch (Exception e)
+                {
+                    result.Status = false;
+                    result.Message = e.Message;
+                }
+            }
+            return Ok(result);
+        }
+        [HttpGet]
+        [Route("GetNhomQuyenConfig/{username}")]
+        public async Task<IHttpActionResult> GetNhomQuyenConfig(string username)
+        {
+            var _unitCode = _service.GetCurrentUnitCode();
+            var result = await _service.GetNhomQuyenConfigByUsername(_unitCode, username);
+
+            return Ok(result);
         }
     }
 }
