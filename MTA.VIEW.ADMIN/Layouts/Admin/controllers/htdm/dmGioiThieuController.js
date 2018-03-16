@@ -1,6 +1,6 @@
-﻿define(['ui-bootstrap'], function () {
+﻿define(['ui-bootstrap','controllers/nv/mediaController'], function () {
     'use strict';
-    var app = angular.module('dmGioiThieu_Module', ['ui.bootstrap']);
+    var app = angular.module('dmGioiThieu_Module', ['ui.bootstrap', 'mediaModule']);
 
     app.factory('dmGioiThieu_Service', ['$http', 'configService', function ($http, configService) {
         var serviceUrl = configService.rootUrlWebApi + '/DM/GioiThieu';
@@ -19,6 +19,9 @@
             },
             update: function (params) {
                 return $http.put(serviceUrl + '/edit/' + params.id, params)
+            },
+            getNewInstance: function () {
+                return $http.get(serviceUrl + '/getNewInstance');
             }
         }
         return result;
@@ -46,24 +49,24 @@
                 });
             };
             filterData();
-            //function loadAccessList() {
-            //    securityService.getAccessList('auGioiThieu').then(function (successRes) {
-            //        if (successRes && successRes.status === 200) {
-            //            $scope.accessList = successRes.data;
-            //            if (!$scope.accessList.view) {
-            //                toaster.pop('error', "Lỗi:", "Không có quyền truy cập !");
-            //            } else {
-            //                filterData();
-            //            }
-            //        } else {
-            //            toaster.pop('error', "Lỗi:", "Không có quyền truy cập !");
-            //        }
-            //    }, function (errorRes) {
-            //        toaster.pop('error', "Lỗi:", "Không có quyền truy cập !");
-            //        $scope.accessList = null;
-            //    });
-            //}
-            //loadAccessList();
+            function loadAccessList() {
+                securityService.getAccessList('auGioiThieu').then(function (successRes) {
+                    if (successRes && successRes.status === 200) {
+                        $scope.accessList = successRes.data;
+                        if (!$scope.accessList.view) {
+                            toaster.pop('error', "Lỗi:", "Không có quyền truy cập !");
+                        } else {
+                            filterData();
+                        }
+                    } else {
+                        toaster.pop('error', "Lỗi:", "Không có quyền truy cập !");
+                    }
+                }, function (errorRes) {
+                    toaster.pop('error', "Lỗi:", "Không có quyền truy cập !");
+                    $scope.accessList = null;
+                });
+            }
+            loadAccessList();
 
             /* Function Select page */
             $scope.displayHelper = function (module, value) {
@@ -180,6 +183,16 @@
             $scope.title = function () { return 'Thêm mới danh mục giới thiệu'; };
             $scope.target.ngayTao = new Date();
             $scope.target.manguoitao = userService.GetCurrentUser();
+            $scope.target.ten_Media = [];
+
+            function filterData() {
+                service.getNewInstance().then(function (response){
+                    if (response && response.status == 200) {
+                        $scope.target.ma_Dm = response.data;
+                    }
+                });
+            }
+            filterData();
             
             $scope.uploadFile = function (input) {
                 if (input.files && input.files.length > 0) {
@@ -206,23 +219,23 @@
             };
             function saveImage() {
                 $scope.target.file = $scope.lstFile;
+                $scope.target.loaiMedia = 0;
                 upload.upload({
-                    url: configService.rootUrlWebApi + '/DM/GioiThieu/Upload',
+                    url: configService.rootUrlWebApi + '/NV/Media/Upload',
                     data: $scope.target
                 }).then(function (response) {
                     if (response.status) {
-                        $scope.target.anh = response.data.data;
                     }
                     else {
                         toaster.pop('error', "Lỗi:", "Không lưu được ảnh! Có thể đã trùng!");
                     }                   
                 });
             }
+
             $scope.save = function () {
                 if ($scope.lstFile && $scope.lstFile.length) {
                     saveImage();
                 }
-                console.log($scope.target);
                 
                 service.post($scope.target).then(function (successRes) {
                     
@@ -233,9 +246,9 @@
                         ngNotify.set(successRes.data.message, { duration: 3000, type: 'error' });
                     }
                 },
-                    function (errorRes) {
-                        console.log('errorRes', errorRes);
-                    });
+                function (errorRes) {
+                    console.log('errorRes', errorRes);
+                });
             };
 
             $scope.cancel = function () {
@@ -243,13 +256,24 @@
             };
         }]);
 
-    app.controller('dmGioiThieuDetailsController', ['$scope', '$uibModalInstance', '$location', '$http', 'configService', 'dmGioiThieu_Service', 'tempDataService', '$filter', '$uibModal', '$log', 'ngNotify', 'targetData',
-        function ($scope, $uibModalInstance, $location, $http, configService, service, tempDataService, $filter, $uibModal, $log, ngNotify, targetData) {
+    app.controller('dmGioiThieuDetailsController', ['$scope', '$uibModalInstance', '$location', '$http', 'configService', 'dmGioiThieu_Service', 'tempDataService', '$filter', '$uibModal', '$log', 'ngNotify', 'targetData','mediaService',
+        function ($scope, $uibModalInstance, $location, $http, configService, service, tempDataService, $filter, $uibModal, $log, ngNotify, targetData,mediaService) {
             $scope.config = angular.copy(configService);
             $scope.tempData = tempDataService.tempData;
-            $scope.target = targetData;
+            $scope.target = angular.copy(targetData);
             $scope.isLoading = false;
             $scope.title = function () { return 'Thông tin danh mục giới thiệu'; };
+            function filterData(){
+                mediaService.getImgForByCodeParent($scope.target.ma_Dm).then(function (response) {
+                    console.log('response', response);
+                    if (response.data && response.status == 200)
+                    {
+                        $scope.lstImagesSrc = response.data;
+                    }
+                });
+            }
+            filterData();
+
             $scope.cancel = function () {
                 $uibModalInstance.close();
             };            
