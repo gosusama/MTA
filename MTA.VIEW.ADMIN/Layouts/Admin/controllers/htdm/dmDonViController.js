@@ -25,7 +25,7 @@
             },
             buildCodeByParent: function (parent) {
                 //tạo mã cửa hàng từ mã đơn vị
-                return $http.get(serviceUrl + '/BuildCodeByParent/' + parent);
+                return $http.get(serviceUrl + '/NewIdDonViCon/' + parent);
             },
             getAll_DonVi: function () {
                 return $http.get(serviceUrl + '/GetSelectDataByUnitCode');
@@ -142,7 +142,7 @@
                 var modalInstance = $uibModal.open({
                     backdrop: 'static',
                     size: 'lg',
-                    templateUrl: configService.buildUrl('auth/dmDonVi', 'update'),
+                    templateUrl: configService.buildUrl('htdm/dmDonVi', 'update'),
                     controller: 'dmDonViEditController',
                     resolve: {
                         targetData: function () {
@@ -159,10 +159,10 @@
 
             /* Function Details Item */
             $scope.details = function (target) {
-                var modalInstance = $uibModal.open({
+                var modalInstance = $uibModal.open( {
                     backdrop: 'static',
                     size: 'lg',
-                    templateUrl: configService.buildUrl('auth/dmDonVi', 'details'),
+                    templateUrl: configService.buildUrl('htdm/dmDonVi', 'details'),
                     controller: 'dmDonViDetailsController',
                     resolve: {
                         targetData: function () {
@@ -181,7 +181,7 @@
             $scope.deleteItem = function (event, target) {
                 var modalInstance = $uibModal.open({
                     backdrop: 'static',
-                    templateUrl: configService.buildUrl('auth/dmDonVi', 'delete'),
+                    templateUrl: configService.buildUrl('htdm/dmDonVi', 'delete'),
                     controller: 'dmDonViDeleteController',
                     resolve: {
                         targetData: function () {
@@ -199,7 +199,7 @@
             $scope.addChild = function (target) {
                 var modalInstance = $uibModal.open({
                     backdrop: 'static',
-                    templateUrl: configService.buildUrl('auth/dmDonVi', 'addChild'),
+                    templateUrl: configService.buildUrl('htdm/dmDonVi', 'addChild'),
                     controller: 'dmDonViAddChildController',
                     resolve: {
                         targetData: function () {
@@ -366,7 +366,7 @@
                     }
                 });
             }
-            $scope.title = function () { return 'Tạo cửa hàng thuộc đơn vị ' + "[" + $scope.target.maDonVi + "]"; };
+            $scope.title = function () { return 'Tạo đơn vị con thuộc đơn vị ' + "[" + $scope.target.maDonVi + "]"; };
             $scope.displayHepler = function (paraValue, moduleName) {
                 var data = $filter('filter')($scope.tempData(moduleName), { value: paraValue }, true);
                 if (data && data.length === 1) {

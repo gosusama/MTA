@@ -78,7 +78,9 @@ namespace MTA.SERVICE.API.Api.HTDM
             var result = new TransferObj<AU_DONVI>();
             try
             {
+                Mapper.CreateMap<AuDonViVm.Dto, AU_DONVI>();
                 var instance = Mapper.Map<AuDonViVm.Dto, AU_DONVI>(postObj);
+                instance.TrangThai = 10;
                 var item = _service.Insert(instance, false);
                 _service.UnitOfWork.Save();
                 result.Status = true;
@@ -255,6 +257,13 @@ namespace MTA.SERVICE.API.Api.HTDM
         public string GetNewCode()
         {
             return _service.NewIdDonViCha();
+        }
+
+        [Route("NewIdDonViCon/{parent}")]
+        [HttpGet]
+        public string NewIdDonViCon(string parent)
+        {
+            return _service.NewIdDonViCon(parent);
         }
     }
 }

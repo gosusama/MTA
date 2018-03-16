@@ -10,7 +10,7 @@
             <div class="row form-group">
                 <div class="col-lg-12">
                     <label>Mã đơn vị</label><span style="color: red"> (1*)</span>
-                    <input type="text" class="form-control" ng-model="target.maDonVi" name="_code" maxlength="50" required>
+                    <input type="text" class="form-control" ng-model="target.maDonVi" name="_code" maxlength="50" readonly>
                     <span style="color: red" ng-show="_form._code.$dirty && _form._code.$invalid">
                         <span ng-show="_form._code.$error.required">Mã đơn vị không được để trống</span>
                     </span>

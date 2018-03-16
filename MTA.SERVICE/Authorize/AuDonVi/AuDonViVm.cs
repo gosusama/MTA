@@ -106,10 +106,6 @@ namespace MTA.SERVICE.Authorize.AuDonVi
             {
                 MaDonVi = summary;
                 TenDonVi = summary;
-                DiaChi = summary;
-                Email = summary;
-                TenCuaHang = summary;
-                MaCuaHang = summary;
             }
         }
         public class Dto

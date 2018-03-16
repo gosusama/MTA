@@ -11,6 +11,7 @@ namespace MTA.SERVICE.Authorize.AuDonVi
     public interface IAuDonViService : IDataInfoService<AU_DONVI>
     {
         string NewIdDonViCha();
+        string NewIdDonViCon(string parent);
         List<ChoiceObj> GetSelectSort();
     }
     public class AuDonViService : DataInfoServiceBase<AU_DONVI>, IAuDonViService
@@ -50,7 +51,7 @@ namespace MTA.SERVICE.Authorize.AuDonVi
             try
             {
                 int i = 0;
-                if(data == null)
+                if (data == null)
                 {
                     return "DV1";
                 }
@@ -60,7 +61,30 @@ namespace MTA.SERVICE.Authorize.AuDonVi
                     return "DV" + (++i).ToString();
                 }
             }
-            catch (Exception) {
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
+        public string NewIdDonViCon(string parent)
+        {
+            var data = UnitOfWork.Repository<AU_DONVI>().DbSet.Where(x => x.MaDonViCha == parent).OrderByDescending(x => x.MaDonVi).Select(x => x.MaDonVi).FirstOrDefault();
+            try
+            {
+                int i = 0;
+                if (data == null)
+                {
+                    return (parent + "-DVC1");
+                }
+                else
+                {
+                    i = Convert.ToInt16(data.Remove(0, data.Length - 1));
+                    return (parent + "-DVC" + (++i).ToString());
+                }
+            }
+            catch (Exception)
+            {
                 return null;
             }
         }
@@ -68,5 +92,6 @@ namespace MTA.SERVICE.Authorize.AuDonVi
         {
             return x => x.MaDonVi == instance.MaDonVi;
         }
+
     }
 }
