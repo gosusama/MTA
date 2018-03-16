@@ -240,7 +240,8 @@
 
             $scope.save = function () {
                 $scope.target.isGenCode = $scope.isGenCode;
-                service.post($scope.target).then(function (successRes) {
+                console.log('$scope.target', $scope.target);
+                service.post($scope.target).then(function (successRes) {                   
                     if (successRes && successRes.status === 201 && successRes.data) {
                         ngNotify.set("Thêm mới thành công", { type: 'success' });
                         $uibModalInstance.close($scope.target);

@@ -54,6 +54,7 @@ namespace MTA.SERVICE.API.Api.HTDM
             var result = new TransferObj<AU_DONVI>();
             try
             {
+                instance.TrangThai = 10;
                 var item = _service.Insert(instance);
                 _service.UnitOfWork.Save();
                 result.Status = true;
