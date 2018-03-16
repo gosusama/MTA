@@ -4,8 +4,6 @@
 
     app.factory('dmTinTuc_Service', ['$http', 'configService', function ($http, configService) {
         var serviceUrl = configService.rootUrlWebApi + '/DM/TinTuc';
-        var allTinTuc = [];
-        var selectedData = [];
         var result = {
             post: function (data) {
                 console.log('data', data);
@@ -281,6 +279,32 @@
         $scope.cancel = function () {
             $uibModalInstance.close();
         };
+    }]);
+
+    app.controller('dmTinTucDeleteController', ['$scope', '$uibModalInstance', '$location', '$http', 'configService', 'dmTinTuc_Service', 'tempDataService', '$filter', '$uibModal', '$log', 'targetData', 'ngNotify',
+    function ($scope, $uibModalInstance, $location, $http, configService, service, tempDataService, $filter, $uibModal, $log, targetData, ngNotify) {
+        $scope.config = angular.copy(configService);
+        $scope.targetData = angular.copy(targetData);
+        $scope.isLoading = false;
+        $scope.title = function () { return 'Xoá tin tức'; };
+        $scope.save = function () {
+            service.deleteItem($scope.targetData).then(function (successRes) {
+                if (successRes && successRes.status === 200) {
+                    ngNotify.set('Xóa thành công', { type: 'success' });
+                    $uibModalInstance.close($scope.target);
+                } else {
+                    console.log('deleteItem successRes ', successRes);
+                    ngNotify.set(successRes.data.message, { duration: 3000, type: 'error' });
+                }
+            },
+                function (errorRes) {
+                    console.log('errorRes', errorRes);
+                });
+        };
+        $scope.cancel = function () {
+            $uibModalInstance.close();
+        };
+
     }]);
     return app;
 });
