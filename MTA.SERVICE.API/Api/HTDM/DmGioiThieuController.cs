@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
 
-namespace MTA.SERVICE.API.Api
+namespace MTA.SERVICE.API.Api.HTDM
 {
     [RoutePrefix("api/DM/GioiThieu")]
     [Route("{id?}")]
