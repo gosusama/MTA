@@ -1,12 +1,14 @@
 ﻿using Microsoft.Practices.Unity;
 using MTA.ENTITY;
 using MTA.ENTITY.Authorize;
+using MTA.ENTITY.NV;
 using MTA.SERVICE.API.Api;
 using MTA.SERVICE.API.Utils;
 using MTA.SERVICE.Authorize;
 using MTA.SERVICE.Authorize.AuMenu;
 using MTA.SERVICE.Authorize.AuNguoiDung;
 using MTA.SERVICE.Authorize.AuNhomQuyen;
+using MTA.SERVICE.NV;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,6 +34,9 @@ namespace MTA.SERVICE.API.App_Start
 
             container.RegisterType<IRepository<AU_NHOMQUYEN>, Repository<AU_NHOMQUYEN>>(new HierarchicalLifetimeManager());
             container.RegisterType<IAuNhomQuyenService, AuNhomQuyenService>(new HierarchicalLifetimeManager());
+
+            container.RegisterType<IRepository<Dm_GioiThieu>, Repository<Dm_GioiThieu>>(new HierarchicalLifetimeManager());
+            container.RegisterType<IDmGioiThieuService, DmGioiThieuService>(new HierarchicalLifetimeManager());
 
             config.DependencyResolver = new UnityResolver(container);
         }

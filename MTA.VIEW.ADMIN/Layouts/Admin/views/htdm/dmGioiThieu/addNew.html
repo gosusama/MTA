@@ -1,0 +1,89 @@
+﻿<style>
+    .img-preview {
+        border: 1px solid #000;
+        border-radius: 5px;
+        height: 150px;
+        width: auto;
+        margin: 0 10px;
+    }
+</style>
+<div>
+    <div class="modal-header">
+        <h3 class="modal-title">{{title()}}  {{lbl.lblCreate}}</h3>
+        <div class="button-close" ng-click="cancel()">
+            <i class="glyphicon glyphicon-remove x-close"></i>
+        </div>
+    </div>
+    <div class="modal-body">
+        <form role="form" name="_form">
+            <uib-tabset active="active">
+                <uib-tab index="0" heading="Thông tin hàng hóa">
+                    <div class="row form-group">
+                        <div class="col-lg-3">
+                            <label>Mã</label><span style="color: red">(*)</span>
+                            <input class="form-control edit-width-select" ng-model="target.ma_Dm">
+                        </div>
+                        <div class="col-lg-3">
+                            <label>Mã cha</label><span style="color: red">(*)</span>
+                            <input class="form-control edit-width-select" ng-model="target.ma_Cha">
+                        </div>
+                        <div class="col-lg-6">
+                            <label>Tên</label>
+                            <input type="text" class="form-control" ng-model="target.ten_Dm">
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col-lg-3">
+                            <label>Loại danh mục</label><span style="color: red">(*)</span>&nbsp;&nbsp;&nbsp;
+                            <input type="number" class="form-control" ng-model="target.loai_Dm" maxlength="50" required>
+                        </div>
+                        <div class="col-lg-3">
+                            <label>Độ ưu tiên</label><span style="color: red">(*)</span>&nbsp;&nbsp;&nbsp;
+                            <input type="number" class="form-control" ng-model="target.doUuTien" maxlength="50" required>
+                        </div>
+                    </div>
+                </uib-tab>
+                <uib-tab index="1" heading="Nội dung">
+                    <panel-body>
+                        <textarea ckeditor ng-model="target.noiDung"></textarea>
+                    </panel-body>
+                </uib-tab>
+                <uib-tab index="2" heading="Chi tiết nội dung">
+                    <panel-body>
+                        <textarea ckeditor ng-model="target.chiTietNoiDung"></textarea>
+                    </panel-body>
+                </uib-tab>
+                <uib-tab index="3" heading="Hình ảnh">
+                    <panel-body>
+                        <div class="row form-group">
+                            <div class="col-md-12">
+                                <label>
+                                    <span style="padding-right: 10px;">Hình ảnh</span>
+                                    <input id="file-input-upload" onchange="angular.element(this).scope().uploadFile(this)" accept="image/*" class="form-control" text="Chọn ảnh" type="file" placeholder="Tải ảnh" multiple />
+                                </label>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-md-12">
+
+                                <div class="preview " ng-repeat="image in lstImagesSrc track by $index" style="float: right; float: left; margin: 5px; height: 200px; width: 200px; border: 1px solid #000; border-radius: 5px;">
+                                    <div style="width: 200px; height: 150px; overflow: hidden; border-bottom: 1px solid #000;">
+                                        <img rel="popover" ng-src="{{image}}" width="200" height="150" />
+                                    </div>
+                                    <div style="width: 200px; height: 50px; text-align: center; padding: 8px;">
+                                        <button class="form-control" style="margin: auto" ng-click="deleteImage($index)">Remove image {{$index+1}}</button>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </panel-body>
+                </uib-tab>               
+            </uib-tabset>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button prevent-default type="submit" class="btn btn-primary" ng-disabled="_form.$invalid" ng-click="save()">{{config.label.btnSubmit}}</button>
+        <button prevent-default class="btn btn-default" ng-click="cancel()">{{config.label.btnCancel}}</button>
+    </div>
+</div>

@@ -24,10 +24,13 @@ define([
 	'services/interceptorService',
     'services/configService',
     'services/tempDataService',
-    'filters/common'
+    'filters/common',
+    'ng-ckeditor',
+    'fileUpload',
+    'ng-file-upload',
 ], function (jquery, angular, state_htdm) {
     'use strict';
-    var app = angular.module('myApp', ['oc.lazyLoad', 'ui.router', 'InterceptorModule', 'LocalStorageModule', 'ui.bootstrap', 'configModule', 'tempDataModule', 'angular-loading-bar', 'ngAnimate', 'ngSanitize', 'common-filter', 'ngResource', 'smart-table', 'angular.filter', 'ngTable', 'angular-cache', 'ngNotify', 'toaster']);
+    var app = angular.module('myApp', ['oc.lazyLoad', 'ui.router', 'InterceptorModule', 'LocalStorageModule', 'ui.bootstrap', 'configModule', 'tempDataModule', 'angular-loading-bar', 'ngAnimate', 'ngSanitize', 'common-filter', 'ngResource', 'smart-table', 'angular.filter', 'ngTable', 'angular-cache', 'ngNotify', 'toaster', 'ngCkeditor', 'angularFileUpload', 'ngFileUpload']);
     app.run(['ngTableDefaults', 'ngNotify', function (ngTableDefaults, ngNotify) {
         ngTableDefaults.params.count = 5;
         ngTableDefaults.settings.counts = [];

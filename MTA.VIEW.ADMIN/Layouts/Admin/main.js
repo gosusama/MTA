@@ -18,6 +18,10 @@ require.config({
         'ngTable': 'utils/ng-table.min',
         'ngNotify': 'utils/ng-notify/ng-notify.min',
         'toaster': 'utils/toaster/toaster.min',
+        'ckeditor': 'utils/ckeditor/ckeditor',
+        'ng-ckeditor': 'utils/ckeditor/ng-ckeditor',
+        'fileUpload': 'lib/angular-file-upload.min',
+        'ng-file-upload': 'utils/ng-file-upload-all.min',
     },
     shim: {
         'jquery': {
@@ -42,6 +46,10 @@ require.config({
         'ngTable': ['angular'],
         'ngNotify': ['angular'],
         'toaster': ['angular'],
+        'ckeditor': ['angular'],
+        'ng-ckeditor': ['angular'],
+        'fileUpload': ['angular'],
+        'ng-file-upload': ['angular'],
     },
     waitSeconds: 0
 });
