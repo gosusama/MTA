@@ -14,32 +14,34 @@
             <i class="glyphicon glyphicon-remove x-close"></i>
         </div>
     </div>
-    <div class="modal-body">
+    <div style="width:100% ; background: #F3F3F3; margin-top:5px;">
         <form role="form" name="_form">
             <uib-tabset active="active">
                 <uib-tab index="0" heading="Thông tin hàng hóa">
-                    <div class="row form-group">
-                        <div class="col-lg-3">
+                    <div class="row form-group" style="margin-top:5px;">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-3">
                             <label>Mã</label><span style="color: red">(*)</span>
                             <input class="form-control edit-width-select" ng-model="target.ma_Dm" disabled>
                         </div>
-                        <div class="col-lg-3">
+                        <div class="col-md-3">
                             <label>Mã cha</label><span style="color: red">(*)</span>
                             <input class="form-control edit-width-select" ng-model="target.ma_Cha">
                         </div>
-                        <div class="col-lg-6">
-                            <label>Tên</label>
-                            <input type="text" class="form-control" ng-model="target.ten_Dm">
+                        <div class="col-md-3">
+                            <label>Độ ưu tiên</label><span style="color: red">(*)</span>&nbsp;&nbsp;&nbsp;
+                            <input type="number" class="form-control" ng-model="target.doUuTien" maxlength="50" required>
                         </div>
                     </div>
                     <div class="row form-group">
-                        <div class="col-lg-3">
-                            <label>Loại danh mục</label><span style="color: red">(*)</span>&nbsp;&nbsp;&nbsp;
-                            <input type="number" class="form-control" ng-model="target.loai_Dm" maxlength="50">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-6">
+                            <label>Tên giới thiệu</label>
+                            <input type="text" class="form-control" ng-model="target.ten_Dm">
                         </div>
-                        <div class="col-lg-3">
-                            <label>Độ ưu tiên</label><span style="color: red">(*)</span>&nbsp;&nbsp;&nbsp;
-                            <input type="number" class="form-control" ng-model="target.doUuTien" maxlength="50">
+                        <div class="col-md-3">
+                            <label>Loại danh mục</label><span style="color: red">(*)</span>&nbsp;&nbsp;&nbsp;
+                            <input type="number" class="form-control" ng-model="target.loai_Dm" maxlength="50" required>
                         </div>
                     </div>
                 </uib-tab>
@@ -55,41 +57,24 @@
                 </uib-tab>
                 <uib-tab index="3" heading="Hình ảnh">
                     <panel-body>
-                        <div class="row form-group">
-                            <div class="col-md-6">
-                                <label>
-                                    <span style="padding-right: 10px;">Hình ảnh</span>
-                                    <input id="file-input-upload" onchange="angular.element(this).scope().uploadFile(this)" accept="image/*" class="form-control" text="Chọn ảnh" type="file" placeholder="Tải ảnh" multiple />
-                                </label>
+                        <div class="row form-group" style="margin-top:20px">
+                            <div class="col-md-3" style="text-align:right; font-weight: bold;font-size:20px; color:red">
+                                Chọn hình ảnh
                             </div>
-                            <div class="col-md-6">
-                                <label>
-                                    <span style="padding-right: 10px;">Avatar</span>
-                                    <input id="file-input-ava" onchange="angular.element(this).scope().uploadAvatar(this)" accept="image/*" class="form-control" text="Chọn ảnh" type="file" placeholder="Tải ảnh" />
-                                </label>
+                            <div class="col-md-9" style="width:300px;">
+                                <input id="file-input-upload" onchange="angular.element(this).scope().uploadFile(this)" accept="image/*" class="form-control" text="Chọn ảnh" type="file" placeholder="Tải ảnh" multiple />
                             </div>
+
                         </div>
                         <div class="row form-group">
-                            <div class="col-md-6">
-
-                                <div class="preview " ng-repeat="image in lstImagesSrc track by $index" style="float: right; float: left; margin: 5px; height: 200px; width: 200px; border: 1px solid #000; border-radius: 5px;">
-                                    <div style="width: 200px; height: 150px; overflow: hidden; border-bottom: 1px solid #000;">
-                                        <img rel="popover" ng-src="{{image}}" width="200" height="150" />
+                            <div class="col-md-12" style="padding-left:100px;">
+                                <div class="preview" ng-repeat="image in lstImagesSrc track by $index" style="float: left; float: left; margin: 5px; height: 230px; width: 200px; border-radius: 5px; background-color:white;">
+                                    <div style="width: 200px; height: 150px; overflow: hidden;" class="img-thumbnail">
+                                        <img rel="popover" ng-src="{{image.link}}" width="200" height="150" />
                                     </div>
                                     <div style="width: 200px; height: 50px; text-align: center; padding: 8px;">
-                                        <button class="form-control" style="margin: auto" ng-click="deleteImage($index)">Remove image {{$index+1}}</button>
-                                    </div>
-                                </div>
-
-                            </div>
-                            <div class="col-md-6">
-
-                                <div class="preview " ng-if="fileAvatar.src" style="float: right; float: left; margin: 5px; height: 200px; width: 200px; border: 1px solid #000; border-radius: 5px;">
-                                    <div style="width: 200px; height: 150px; overflow: hidden; border-bottom: 1px solid #000;">
-                                        <img rel="popover" ng-src="{{fileAvatar.src}}" width="200" height="150" />
-                                    </div>
-                                    <div style="width: 200px; height: 50px; text-align: center; padding: 8px;">
-                                        <button class="form-control" style="margin: auto" ng-click="deleteAvatar()">Remove avatar</button>
+                                        <button class="form-control btn btn-primary" style="margin: auto" ng-click="deleteImage($index)">Xóa ảnh</button>
+                                        <input style="margin-top:2px;" class="form-control" placeholder="Nhập tên ảnh" ng-model="image.ten_Media" />
                                     </div>
                                 </div>
                             </div>

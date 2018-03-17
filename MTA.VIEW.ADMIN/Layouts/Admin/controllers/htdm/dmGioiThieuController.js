@@ -41,7 +41,6 @@
                     if (successRes && successRes.status === 200 && successRes.data.data.data) {
                         $scope.isLoading = false;
                         $scope.data = successRes.data.data.data;
-                        console.log($scope.data);
                         angular.extend($scope.paged, successRes.data.data);
                     }
                 }, function (errorRes) {
@@ -114,7 +113,6 @@
 
             /* Function Edit Item */
             $scope.update = function (target) {
-                console.log('target',target);
                 var modalInstance = $uibModal.open({
                     backdrop: 'static',
                     templateUrl: configService.buildUrl('htdm/dmGioiThieu', 'edit'),
@@ -134,7 +132,6 @@
 
             /* Function Delete Item */
             $scope.deleteItem = function (event , target) {
-                console.log('target',target);
                 var modalInstance = $uibModal.open({
                     backdrop: 'static',
                     templateUrl: configService.buildUrl('htdm/dmGioiThieu', 'delete'),
@@ -184,7 +181,6 @@
             $scope.target.ngayTao = new Date();
             $scope.target.manguoitao = userService.GetCurrentUser();
             $scope.target.ten_Media = [];
-
             function filterData() {
                 service.getNewInstance().then(function (response){
                     if (response && response.status == 200) {
@@ -195,18 +191,24 @@
             filterData();
             
             $scope.uploadFile = function (input) {
+                console.log(input.files);
                 if (input.files && input.files.length > 0) {
                     angular.forEach(input.files, function (file) {
-                        $scope.lstFile.push(file);
-                        $timeout(function () {
-                            var fileReader = new FileReader();
-                            fileReader.readAsDataURL(file);
-                            fileReader.onload = function (e) {
-                                $timeout(function () {
-                                    $scope.lstImagesSrc.push(e.target.result);
-                                });
-                            }
-                        });
+                        if (file.size < 3072000) {
+                            $scope.lstFile.push(file);
+                            $timeout(function () {
+                                var fileReader = new FileReader();
+                                fileReader.readAsDataURL(file);
+                                fileReader.onload = function (e) {
+                                    $timeout(function () {
+                                        $scope.lstImagesSrc.push(e.target.result);
+                                    });
+                                }
+                            });
+                        }
+                        else {
+                            ngNotify.set("Kích thước ảnh quá lớn !", { duration: 3000, type: 'error' });
+                        }
                     });
                 }
             };
@@ -279,14 +281,56 @@
             };            
         }]);
 
-    app.controller('dmGioiThieuEditController', ['$scope', '$uibModalInstance', '$location', '$http', 'configService', 'dmGioiThieu_Service', 'tempDataService', '$filter', '$uibModal', '$log', 'ngNotify', 'targetData',
-    function ($scope, $uibModalInstance, $location, $http, configService, service, tempDataService, $filter, $uibModal, $log, ngNotify, targetData) {
+    app.controller('dmGioiThieuDeleteController', ['$scope', '$uibModalInstance', '$location', '$http', 'configService', 'dmGioiThieu_Service', 'tempDataService', '$filter', '$uibModal', '$log', 'ngNotify', 'targetData',
+       function ($scope, $uibModalInstance, $location, $http, configService, service, tempDataService, $filter, $uibModal, $log, ngNotify, targetData) {
+           $scope.config = angular.copy(configService);
+           $scope.tempData = tempDataService.tempData;
+           $scope.target = angular.copy(targetData);
+
+           $scope.save = function () {
+               service.deleteItem($scope.target).then(function (reponse) {
+                   if (reponse && reponse.status === 200) {
+                       ngNotify.set('Xóa thành công', { type: 'success' });
+                       $uibModalInstance.close($scope.target);
+                   } else {
+                       ngNotify.set(reponse.data.message, { duration: 3000, type: 'error' });
+                   }
+                   },
+                    function (errorRes) {
+                        console.log('errorRes', errorRes);
+                    });
+           }
+
+           $scope.cancel = function () {
+               $uibModalInstance.close();
+           };
+       }]);
+
+    app.controller('dmGioiThieuEditController', ['$scope', '$uibModalInstance', '$location', '$http', 'configService', 'dmGioiThieu_Service', 'tempDataService', '$filter', '$uibModal', '$log', 'ngNotify', 'targetData', 'mediaService',
+    function ($scope, $uibModalInstance, $location, $http, configService, service, tempDataService, $filter, $uibModal, $log, ngNotify, targetData ,mediaService) {
         $scope.config = angular.copy(configService);
         $scope.tempData = tempDataService.tempData;
         $scope.target = angular.copy(targetData);
         $scope.isLoading = false;
         $scope.title = function () { return 'Cập nhật danh mục giới thiệu'; };
 
+        function filterData(){
+            mediaService.getImgForByCodeParent($scope.target.ma_Dm).then(function (response) {
+                console.log('response', response);
+                if (response.data && response.status == 200)
+                {
+                    $scope.lstImagesSrc = response.data;
+                }
+            });
+        }
+        filterData();
+        $scope.deleteImage = function (index) {
+            $scope.lstImagesSrc.splice(index, 1);
+            $scope.lstFile.splice(index, 1);
+            if ($scope.lstFile.length < 1) {
+                angular.element("#file-input-upload").val(null);
+            }
+        };
         $scope.save = function () {
             service.update($scope.target).then(function (successRes) {
                 console.log('successRes', successRes);

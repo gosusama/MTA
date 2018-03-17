@@ -64,9 +64,10 @@
                             <div class="col-md-9" style="width:300px;">                              
                                 <input id="file-input-upload" onchange="angular.element(this).scope().uploadFile(this)" accept="image/*" class="form-control" text="Chọn ảnh" type="file" placeholder="Tải ảnh" multiple />
                             </div>
+                            
                         </div>
-                        <div class="row form-group">
-                            <div class="col-md-12">
+                        <div class="row form-group" >
+                            <div class="col-md-12" style="padding-left:100px;">
                                 <div class="preview" ng-repeat="image in lstImagesSrc track by $index" style="float: left; float: left; margin: 5px; height: 230px; width: 200px; border-radius: 5px; background-color:white;">
                                     <div style="width: 200px; height: 150px; overflow: hidden;" class="img-thumbnail">
                                         <img rel="popover" ng-src="{{image}}" width="200" height="150" />

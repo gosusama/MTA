@@ -60,14 +60,15 @@
                 <uib-tab index="3" heading="Hình ảnh">
                     <panel-body>
                         <div class="row form-group">
-                            <div class="col-md-12">
-                                <div class="preview" ng-repeat="image in lstImagesSrc track by $index" style="float: left; float: left; margin: 5px; height: 230px; width: 200px; border-radius: 5px; background-color:white;">
+                            <div class="col-md-12" style="padding-left:100px;">
+                                <div class="preview" ng-repeat="image in lstImagesSrc track by $index" style="float: left; float: left; margin: 5px; height: 200px; width: 200px; border-radius: 5px; background-color:white;padding-left:15px;">
                                     <div style="width: 200px; height: 150px; overflow: hidden;" class="img-thumbnail">
-                                        <img rel="popover" src="{{image.link}}" width="200" height="150" />
+                                        <img rel="popover" ng-src="{{image.link}}" width="200" height="150" />
                                     </div>
                                     <div style="width: 200px; height: 50px; text-align: center; padding: 8px;">
-                                        <!--<button class="form-control btn btn-primary" style="margin: auto" ng-click="deleteImage($index)">Xóa ảnh</button>-->
-                                        <input style="margin-top:2px;" class="form-control" placeholder="Nhập tên ảnh" ng-model="image.ten_Media" disabled/>
+                                        <button class="btn btn-primary" type="button" disabled style="max-width:170px;min-width:170px;">
+                                            {{image.ten_Media}}
+                                        </button>
                                     </div>
                                 </div>
                             </div>

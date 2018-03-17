@@ -136,7 +136,6 @@
 
             /* Function Edit Item */
             $scope.update = function (target) {
-                console.log('target',target);
                 var modalInstance = $uibModal.open({
                     backdrop: 'static',
                     templateUrl: configService.buildUrl('htdm/dmmenu', 'edit'),
@@ -157,7 +156,6 @@
 
             /* Function Delete Item */
             $scope.deleteItem = function (event , target) {
-                console.log('target',target);
                 var modalInstance = $uibModal.open({
                     backdrop: 'static',
                     templateUrl: configService.buildUrl('htdm/dmmenu', 'delete'),
@@ -225,7 +223,6 @@
                     ngNotify.set('Xóa thành công', { type: 'success' });
                     $uibModalInstance.close($scope.target);
                 } else {
-                    console.log('deleteItem successRes ', successRes);
                     ngNotify.set(successRes.data.message, { duration: 3000, type: 'error' });
                 }
             },
@@ -248,7 +245,6 @@
 
         $scope.save = function () {
             service.update($scope.target).then(function (successRes) {
-                console.log('successRes',successRes);
                 if (successRes && successRes.status === 200 && successRes.data.status) {
                     $uibModalInstance.close($scope.target);
                     ngNotify.set(successRes.data.message, { type: 'success' });
@@ -362,7 +358,6 @@
                     if (successRes && successRes.status === 200 && successRes.data.data.data) {
                         $scope.isLoading = false;
                         $scope.data = successRes.data.data.data;
-                        console.log($scope.data);
                         angular.extend($scope.paged, successRes.data.data);
                     }
                 }, function (errorRes) {

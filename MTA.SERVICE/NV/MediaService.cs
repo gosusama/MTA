@@ -22,12 +22,10 @@ namespace MTA.SERVICE.NV
         }
         public bool Upload(string unitCode)
         {
-
             string result = "";
             try
             {
                 string path =  WebConfigurationManager.AppSettings["rootPhysical"] + "\\Upload\\";
-
                 HttpRequest request = HttpContext.Current.Request;
                 var ma_Dm = request.Form["ma_Dm"];               
                 path += ma_Dm + "\\";
@@ -39,6 +37,7 @@ namespace MTA.SERVICE.NV
                 {
                     for (int i = 0; i < request.Files.Count; i++)
                     {
+                        result = "";
                         HttpPostedFile file = request.Files[i];
                         List<string> tmp = file.FileName.Split('.').ToList();
                         string extension = tmp[1];
@@ -49,7 +48,7 @@ namespace MTA.SERVICE.NV
                         result += path + fileName;
                         Media instance = new Media()
                         {
-                            Ma_Dm = getNewCode(),
+                            Ma_Dm = i.ToString()+"-"+getNewCode(),
                             Id = Guid.NewGuid().ToString(),
                             MaCha = ma_Dm,
                             Ten_Media = request.Form["ten_Media["+i+"]"],

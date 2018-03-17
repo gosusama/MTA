@@ -108,6 +108,28 @@ namespace MTA.SERVICE.API.Api
             }
         }
 
+        [HttpDelete]
+        [ResponseType(typeof(Dm_GioiThieu))]
+        [Route("DeleteItem/{id?}")]
+        public async Task<IHttpActionResult> Delete(string id)
+        {
+            Dm_GioiThieu instance = await _service.Repository.FindAsync(id);
+            if (instance == null)
+            {
+                return NotFound();
+            }
+            try
+            {
+                _service.Delete(instance.Id);
+                await _service.UnitOfWork.SaveAsync();
+                return Ok(instance);
+            }
+            catch (Exception)
+            {
+                return InternalServerError();
+            }
+        }
+
         [Route("Upload")]
         [AllowAnonymous]
         [HttpPost]
@@ -144,7 +166,7 @@ namespace MTA.SERVICE.API.Api
                 try
                 {
                     int i = Convert.ToInt16(str[1]);
-                    return Ok("GT_1" + (++i).ToString());
+                    return Ok("GT_" + (++i).ToString());
                 }
                 catch (Exception ex)
                 {
