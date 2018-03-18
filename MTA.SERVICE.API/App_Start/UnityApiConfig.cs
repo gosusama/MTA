@@ -58,6 +58,10 @@ namespace MTA.SERVICE.API.App_Start
             container.RegisterType<IRepository<Dm_GioiThieu>, Repository<Dm_GioiThieu>>(new HierarchicalLifetimeManager());
             container.RegisterType<IDmGioiThieuService, DmGioiThieuService>(new HierarchicalLifetimeManager());
 
+            container.RegisterType<IRepository<Media>, Repository<Media>>(new HierarchicalLifetimeManager());
+            container.RegisterType<IMediaService, MediaService>(new HierarchicalLifetimeManager());
+
+
             container.RegisterType<IRepository<Dm_TinTuc>, Repository<Dm_TinTuc>>(new HierarchicalLifetimeManager());
             container.RegisterType<IDmTinTucService, DmTinTucService>(new HierarchicalLifetimeManager());
 

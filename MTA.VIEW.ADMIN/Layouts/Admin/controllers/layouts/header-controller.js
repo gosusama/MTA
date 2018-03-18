@@ -62,7 +62,6 @@ define(['angular', 'controllers/auth/auth-controller', 'controllers/htdm/dmmenu_
                     $scope.lstMenu = angular.copy(response.data.data);
                     service.setData(response.data.data);
                     $scope.treeMenu = treeify($scope.lstMenu);
-                    console.log($scope.treeMenu.children);
                 } else {
                 }
             }, function (response) {

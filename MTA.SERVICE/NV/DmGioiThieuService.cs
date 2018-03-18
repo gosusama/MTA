@@ -14,7 +14,7 @@ namespace MTA.SERVICE.NV
 {
     public interface IDmGioiThieuService : IDataInfoService<Dm_GioiThieu>
     {
-        string UploadImage();
+        string Upload();
     }
 
     public class DmGioiThieuService : DataInfoServiceBase<Dm_GioiThieu>, IDmGioiThieuService
@@ -23,12 +23,12 @@ namespace MTA.SERVICE.NV
         {
 
         }
-        public string UploadImage()
+        public string Upload()
         {
-            string result = string.Empty; ;
+            string result = string.Empty;
             try
             {
-                string path = "C:\\Users\\Administrator\\Desktop\\MTA\\MTA\\MTA.VIEW.FRONT\\Upload\\";
+                string path = HttpContext.Current.Server.MapPath("~/Upload/");
 
                 HttpRequest request = HttpContext.Current.Request;
                 var ma_Dm = request.Form["ma_Dm"];

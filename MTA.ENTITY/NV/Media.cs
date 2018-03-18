@@ -15,6 +15,11 @@ namespace MTA.ENTITY.NV
         [Column("MA_DM")]
         [Required]
         public string Ma_Dm { get; set; }
+
+        [Column("MACHA")]
+        [StringLength(50)]
+        public string MaCha { get; set; }
+
         [Column("DOUUTIEN")]
         public int DoUuTien { get; set; }
 
@@ -27,9 +32,6 @@ namespace MTA.ENTITY.NV
         [Column("MANGUOITAO")]
         [StringLength(20)]
         public string Manguoitao { get; set; }
-        [Column("MA")]
-        [StringLength(50)]
-        public string Ma { get; set; }
 
         [Column("TEN_MEDIA")]
         [StringLength(100)]
@@ -43,7 +45,7 @@ namespace MTA.ENTITY.NV
         public bool? AnhBia { get; set; }
         
         [Column("LOAI_MEDIA")]
-        public byte Loai_Media { get; set; }
+        public int Loai_Media { get; set; }
         
     }
 }

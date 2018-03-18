@@ -1,5 +1,6 @@
 ﻿using BTS.API.SERVICE.Helper;
 using MTA.ENTITY.NV;
+using MTA.SERVICE.Authorize.Utils;
 using MTA.SERVICE.BuildQuery;
 using MTA.SERVICE.Helper;
 using MTA.SERVICE.NV;
@@ -86,7 +87,7 @@ namespace MTA.SERVICE.API.Api.HTDM
             if (id != instance.Id)
             {
                 result.Status = false;
-                result.Message = "Id không hợp lệ";
+                result.Message = "Id không hợp lệ !";
                 return Ok(result);
             }
 
@@ -95,7 +96,7 @@ namespace MTA.SERVICE.API.Api.HTDM
                 var item = _service.Update(instance);
                 _service.UnitOfWork.Save();
                 result.Status = true;
-                result.Message = "Sửa thành công";
+                result.Message = "Sửa thành công !";
                 result.Data = item;
                 return Ok(result);
             }
@@ -104,6 +105,28 @@ namespace MTA.SERVICE.API.Api.HTDM
                 result.Status = false;
                 result.Message = e.Message;
                 return Ok(result);
+            }
+        }
+
+        [HttpDelete]
+        [ResponseType(typeof(Dm_GioiThieu))]
+        [Route("DeleteItem/{id?}")]
+        public async Task<IHttpActionResult> Delete(string id)
+        {
+            Dm_GioiThieu instance = await _service.Repository.FindAsync(id);
+            if (instance == null)
+            {
+                return NotFound();
+            }
+            try
+            {
+                _service.Delete(instance.Id);
+                await _service.UnitOfWork.SaveAsync();
+                return Ok(instance);
+            }
+            catch (Exception)
+            {
+                return InternalServerError();
             }
         }
 
@@ -116,7 +139,7 @@ namespace MTA.SERVICE.API.Api.HTDM
             try
             {
                 result.Status = true;
-                result.Data = _service.UploadImage();
+                result.Data = _service.Upload();
                 return Ok(result);
             }
             catch (Exception e)
@@ -124,6 +147,31 @@ namespace MTA.SERVICE.API.Api.HTDM
                 result.Status = false;
                 result.Message = e.Message;
                 return Ok(result);
+            }
+        }
+
+        [HttpGet]
+        [Route("getNewInstance")]
+        public IHttpActionResult GetNewInstance()
+        {
+            string ma = _service.Repository.DbSet.OrderByDescending(x => x.Ma_Dm).Select(x => x.Ma_Dm).FirstOrDefault();
+            if (ma == null)
+            {
+                ma = "GT_1";
+                return Ok(ma);
+            }
+            else
+            {
+                string[] str = ma.Split('_');
+                try
+                {
+                    int i = Convert.ToInt16(str[1]);
+                    return Ok("GT_" + (++i).ToString());
+                }
+                catch (Exception ex)
+                {
+                    return NotFound();
+                }
             }
         }
     }

@@ -76,7 +76,6 @@ namespace MTA.SERVICE.Authorize.Utils
             {
                 roleState = new RoleState()
                 {
-                    Approve = true,
                     Delete = true,
                     Add = true,
                     STATE = "all",
