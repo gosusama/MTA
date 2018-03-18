@@ -9,7 +9,7 @@ namespace MTA.ENTITY.Migrations
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = false;
+            AutomaticMigrationsEnabled = true;
         }
 
         protected override void Seed(MTA.ENTITY.MTADbContext context)

@@ -9,6 +9,9 @@
             },
             getImgForByCodeParent : function(code){
                 return $http.get(serviceUrl + '/GetImgForByCodeParent/' + code);
+            },
+            deleteAllForCodeParent: function (code) {
+                return $http.get(serviceUrl + '/DeleteAllForCodeParent/' + code)
             }
         };
         return result

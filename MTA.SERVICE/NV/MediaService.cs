@@ -14,6 +14,7 @@ namespace MTA.SERVICE.NV
     public interface IMediaService : IDataInfoService<Media>
     {
         bool Upload(string unitCode);
+        bool DeleteFile(string path);
     }
     public class MediaService : DataInfoServiceBase<Media>, IMediaService
     {
@@ -89,6 +90,19 @@ namespace MTA.SERVICE.NV
                 string[] str = maCuoi.Split('_');
                 int temp = Convert.ToInt16(str[1]);
                 return "MD_" + (++temp).ToString();
+            }
+        }
+
+        public bool DeleteFile(string path)
+        {
+            try
+            {
+                File.Delete(path);
+                return true;
+            }
+            catch (Exception e)
+            {
+                return false;
             }
         }
     }

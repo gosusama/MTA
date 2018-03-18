@@ -68,13 +68,24 @@
                         </div>
                         <div class="row form-group">
                             <div class="col-md-12" style="padding-left:100px;">
-                                <div class="preview" ng-repeat="image in lstImagesSrc track by $index" style="float: left; float: left; margin: 5px; height: 230px; width: 200px; border-radius: 5px; background-color:white;">
+                                <div class="preview" ng-repeat="image in lstImages track by $index" style="float: left; float: left; margin: 5px; height: 230px; width: 200px; border-radius: 5px; background-color:white;">
                                     <div style="width: 200px; height: 150px; overflow: hidden;" class="img-thumbnail">
                                         <img rel="popover" ng-src="{{image.link}}" width="200" height="150" />
                                     </div>
                                     <div style="width: 200px; height: 50px; text-align: center; padding: 8px;">
-                                        <button class="form-control btn btn-primary" style="margin: auto" ng-click="deleteImage($index)">Xóa ảnh</button>
+                                        <button class="form-control btn btn-primary" style="margin: auto" ng-click="deleteImageOld($index)">Xóa ảnh</button>
                                         <input style="margin-top:2px;" class="form-control" placeholder="Nhập tên ảnh" ng-model="image.ten_Media" />
+                                    </div>
+                                </div>
+                                <div ng-show="isEdit">
+                                    <div class="preview" ng-repeat="image in lstImagesSrc track by $index" style="float: left; float: left; margin: 5px; height: 230px; width: 200px; border-radius: 5px; background-color:white;">
+                                        <div style="width: 200px; height: 150px; overflow: hidden;" class="img-thumbnail">
+                                            <img rel="popover" ng-src="{{image}}" width="200" height="150" />
+                                        </div>
+                                        <div style="width: 200px; height: 50px; text-align: center; padding: 8px;">
+                                            <button class="form-control btn btn-primary" style="margin: auto" ng-click="deleteImage($index)">Xóa ảnh</button>
+                                            <input style="margin-top:2px;" class="form-control" placeholder="Nhập tên ảnh" ng-model="target.ten_Media[$index]" />
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -85,6 +96,7 @@
         </form>
     </div>
     <div class="modal-footer">
-        <button class="btn btn-default" prevent-default title="back" ng-click="cancel()"><span class="glyphicon glyphicon-remove-circle"></span>&ensp;{{config.label.btnBack}}</button>
+        <button prevent-default type="submit" class="btn btn-primary" ng-disabled="!_form.$dirty" ng-click="save()">{{config.label.btnSubmit}}</button>
+        <button prevent-default class="btn btn-default" ng-click="cancel()">{{config.label.btnCancel}}</button>
     </div>
 </div>

@@ -105,7 +105,7 @@
                         </td>
                         <td style="width:200px !important;">{{item.ten_Dm}}</td>
                         <td>
-                            <span ng-bind-html="item.noiDung"></span>
+                            <span data-ng-bind-html="trustAsHtml(item.noiDung)"></span>
                         </td>
                         <td>{{item.ngaytao | date : "dd/MM/yyyy"}}</td>
                         <td class="table-control btn-group">

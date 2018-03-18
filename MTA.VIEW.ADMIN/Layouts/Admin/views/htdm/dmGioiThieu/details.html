@@ -48,13 +48,13 @@
                 <uib-tab index="1" heading="Nội dung">
                     <panel-body>
                         <!--<textarea ckeditor ng-model="target.noiDung" disabled></textarea>-->
-                        <div ng-bind-html="target.noiDung"></div>
+                        <div data-ng-bind-html="trustAsHtml(target.noiDung)"></div>
                     </panel-body>
                 </uib-tab>
                 <uib-tab index="2" heading="Chi tiết nội dung">
                     <panel-body>
                         <!--<textarea ckeditor ng-model="target.chiTietNoiDung" disabled></textarea>-->
-                        <div ng-bind-html="target.chiTietNoiDung"></div>
+                        <div data-ng-bind-html="trustAsHtml(target.chiTietNoiDung)"></div>
                     </panel-body>
                 </uib-tab>
                 <uib-tab index="3" heading="Hình ảnh">

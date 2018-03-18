@@ -9,6 +9,7 @@ using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
+using System.Web.Http.Description;
 
 namespace MTA.SERVICE.API.Api.NV
 {
@@ -53,7 +54,80 @@ namespace MTA.SERVICE.API.Api.NV
             }
             return CreatedAtRoute("DefaultApi", new { controller = this, id = instance.Id }, result);
         }
-        
+
+        [HttpPut]
+        [ResponseType(typeof(void))]
+        [Route("edit/{id?}")]
+        public async Task<IHttpActionResult> Put(string id, Media instance)
+        {
+            var result = new TransferObj<Media>();
+            if (id != instance.Id)
+            {
+                result.Status = false;
+                result.Message = "Id không hợp lệ";
+                return Ok(result);
+            }
+
+            try
+            {
+                var item = _service.Update(instance);
+                _service.UnitOfWork.Save();
+                result.Status = true;
+                result.Message = "Sửa thành công";
+                result.Data = item;
+                return Ok(result);
+            }
+            catch (Exception e)
+            {
+                result.Status = false;
+                result.Message = e.Message;
+                return Ok(result);
+            }
+        }
+
+        [HttpDelete]
+        [ResponseType(typeof(Media))]
+        [Route("DeleteItem/{id?}")]
+        public async Task<IHttpActionResult> Delete(string id)
+        {
+            Media instance = await _service.Repository.FindAsync(id);
+            if (instance == null)
+            {
+                return NotFound();
+            }
+            try
+            {
+                _service.Delete(instance.Id);
+                await _service.UnitOfWork.SaveAsync();
+                return Ok(instance);
+            }
+            catch (Exception)
+            {
+                return InternalServerError();
+            }
+        }
+
+        [Route("DeleteAllForCodeParent/{code}")]
+        [HttpGet]
+        public async Task<IHttpActionResult> DeleteAllForCode(string code)
+        {
+            var dataDelete = _service.Repository.DbSet.Where(x => x.MaCha.Equals(code)).ToList();
+            try
+            {
+                foreach (var item in dataDelete)
+                {
+                    _service.DeleteFile(item.Link);
+                    _service.Delete(item.Id);
+                    await _service.UnitOfWork.SaveAsync();                  
+                }
+                return Ok();
+            }
+            catch(Exception e)
+            {
+                return InternalServerError();
+            }
+        }
+
         [HttpGet]
         [Route("GetImgForByCodeParent/{code}")]
         public async Task<IHttpActionResult> GetImgForByCodeParent(string code)

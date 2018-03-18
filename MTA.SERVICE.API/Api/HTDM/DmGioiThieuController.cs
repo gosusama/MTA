@@ -87,7 +87,7 @@ namespace MTA.SERVICE.API.Api
             if (id != instance.Id)
             {
                 result.Status = false;
-                result.Message = "Id không hợp lệ";
+                result.Message = "Id không hợp lệ !";
                 return Ok(result);
             }
 
@@ -96,7 +96,7 @@ namespace MTA.SERVICE.API.Api
                 var item = _service.Update(instance);
                 _service.UnitOfWork.Save();
                 result.Status = true;
-                result.Message = "Sửa thành công";
+                result.Message = "Sửa thành công !";
                 result.Data = item;
                 return Ok(result);
             }
