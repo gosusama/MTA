@@ -33,7 +33,6 @@
             $scope.paged = angular.copy(configService.pageDefault);
             $scope.filtered = angular.copy(configService.paramDefault);
             $scope.tempData = tempDataService.tempData;
-            console.log('GioiThieu');
             function filterData() {
                 $scope.isLoading = true;
                 var postdata = { paged: $scope.paged, filtered: $scope.filtered };
@@ -271,7 +270,6 @@
             $scope.title = function () { return 'Thông tin danh mục giới thiệu'; };
             function filterData(){
                 mediaService.getImgForByCodeParent($scope.target.ma_Dm).then(function (response) {
-                    console.log('response', response);
                     if (response.data && response.status == 200)
                     {
                         $scope.lstImagesSrc = response.data;

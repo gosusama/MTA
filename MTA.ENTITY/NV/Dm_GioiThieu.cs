@@ -35,7 +35,7 @@ namespace MTA.ENTITY.NV
         public string TepDinhKem { get; set; }
 
         [Column("LOAI_DM")]
-        public int Loai_Dm { get; set; }
+        public int? Loai_Dm { get; set; }
 
         [Column("DOUUTIEN")]
         public int DoUuTien { get; set; }

@@ -17,31 +17,39 @@
     <div style="width:100% ; background: #F3F3F3; margin-top:5px;">
         <form role="form" name="_form">
             <uib-tabset active="active">
-                <uib-tab index="0" heading="Thông tin hàng hóa">
-                    <div class="row form-group" style="margin-top:5px;">
+                <uib-tab index="0" heading="Thông tin giới thiệu">
+                    <div class="row" style="margin-top:10px;">
                         <div class="col-md-1"></div>
-                        <div class="col-md-3">
-                            <label>Mã</label><span style="color: red">(*)</span>
+                        <div class="col-md-2" style="padding-top:4px;"><label>Mã giới thiệu : </label></div>
+                        <div class="col-md-3">                           
                             <input class="form-control edit-width-select" ng-model="target.ma_Dm" disabled>
-                        </div>
+                        </div>                
+                        <span style="color: red">(*)</span>     
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-2" style="padding-top:4px;"><label>Mã cha : </label></div>
                         <div class="col-md-3">
-                            <label>Mã cha</label><span style="color: red">(*)</span>
                             <input class="form-control edit-width-select" ng-model="target.ma_Cha">
                         </div>
-                        <div class="col-md-3">
-                            <label>Độ ưu tiên</label><span style="color: red">(*)</span>&nbsp;&nbsp;&nbsp;
-                            <input type="number" class="form-control" ng-model="target.doUuTien" maxlength="50" required>
-                        </div>
+                        <span style="color: red">(*)</span>
                     </div>
-                    <div class="row form-group">
+                    <br />
+                    <div class="row">
                         <div class="col-md-1"></div>
-                        <div class="col-md-6">
-                            <label>Tên giới thiệu</label>
-                            <input type="text" class="form-control" ng-model="target.ten_Dm">
+                        <div class="col-md-2" style="padding-top:4px;"><label>Độ ưu tiên : </label></div>
+                        <div class="col-md-3">                          
+                            <input type="number" class="form-control" ng-model="target.doUuTien" min="1" maxlength="50" required>
                         </div>
-                        <div class="col-md-3">
-                            <label>Loại danh mục</label><span style="color: red">(*)</span>&nbsp;&nbsp;&nbsp;
-                            <input type="number" class="form-control" ng-model="target.loai_Dm" maxlength="50" required>
+                        <span style="color: red">(*)</span>&nbsp;&nbsp;&nbsp;
+                    </div>
+                    <br />
+                    <div class="row form-group" style="margin-top:10px;">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-2" style="padding-top:4px;"><label>Tên giới thiệu :</label></div>
+                        <div class="col-md-6">                      
+                            <input type="text" class="form-control" ng-model="target.ten_Dm">
                         </div>
                     </div>
                 </uib-tab>

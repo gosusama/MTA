@@ -18,49 +18,61 @@
         <form role="form" name="_form">
             <uib-tabset active="active">
                 <uib-tab index="0" heading="Thông tin giới thiệu">
-                    <div class="row form-group" style="margin-top:5px;">
+                    <div class="row" style="margin-top:10px;">
                         <div class="col-md-1"></div>
+                        <div class="col-md-2" style="padding-top:4px;"><label>Mã giới thiệu : </label></div>
                         <div class="col-md-3">
-                            <label>Mã</label><span style="color: red">(*)</span>
                             <input class="form-control edit-width-select" ng-model="target.ma_Dm" disabled>
                         </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-2" style="padding-top:4px;"><label>Mã cha : </label></div>
                         <div class="col-md-3">
-                            <label>Mã cha</label><span style="color: red">(*)</span>
                             <input class="form-control edit-width-select" ng-model="target.ma_Cha" disabled>
                         </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-2" style="padding-top:4px;"><label>Độ ưu tiên : </label></div>
                         <div class="col-md-3">
-                            <label>Độ ưu tiên</label><span style="color: red">(*)</span>&nbsp;&nbsp;&nbsp;
-                            <input type="number" class="form-control" ng-model="target.doUuTien" maxlength="50" disabled>
+                            <input type="number" class="form-control" ng-model="target.doUuTien" min="1" maxlength="50" disabled>
                         </div>
                     </div>
-                    <div class="row form-group">
+                    <br />
+                    <div class="row form-group" style="margin-top:10px;">
                         <div class="col-md-1"></div>
+                        <div class="col-md-2" style="padding-top:4px;"><label>Tên giới thiệu :</label></div>
                         <div class="col-md-6">
-                            <label>Tên giới thiệu</label>
                             <input type="text" class="form-control" ng-model="target.ten_Dm" disabled>
-                        </div>
-                        <div class="col-md-3">
-                            <label>Loại danh mục</label><span style="color: red">(*)</span>&nbsp;&nbsp;&nbsp;
-                            <input type="number" class="form-control" ng-model="target.loai_Dm" maxlength="50" disabled>
                         </div>
                     </div>
                 </uib-tab>
                 <uib-tab index="1" heading="Nội dung">
                     <panel-body>
-                        <!--<textarea ckeditor ng-model="target.noiDung" disabled></textarea>-->
-                        <div data-ng-bind-html="trustAsHtml(target.noiDung)"></div>
+                            <!--<textarea ckeditor ng-model="target.noiDung" disabled></textarea>-->
+                            <div data-ng-bind-html="trustAsHtml(target.noiDung)"></div>
                     </panel-body>
                 </uib-tab>
                 <uib-tab index="2" heading="Chi tiết nội dung">
                     <panel-body>
-                        <!--<textarea ckeditor ng-model="target.chiTietNoiDung" disabled></textarea>-->
-                        <div data-ng-bind-html="trustAsHtml(target.chiTietNoiDung)"></div>
+                            <!--<textarea ckeditor ng-model="target.chiTietNoiDung" disabled></textarea>-->
+                            <div data-ng-bind-html="trustAsHtml(target.chiTietNoiDung)"></div>
                     </panel-body>
                 </uib-tab>
                 <uib-tab index="3" heading="Hình ảnh">
                     <panel-body>
-                        <div class="row form-group">
+                        <div class="row form-group">                          
                             <div class="col-md-12" style="padding-left:100px;">
+                                <div ng-show="!lstImageSrc">
+                                    <div class="panel-danger" style="width:300px;" >
+                                        <div class="panel-heading">
+                                            Không có ảnh !
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="preview" ng-repeat="image in lstImagesSrc track by $index" style="float: left; float: left; margin: 5px; height: 200px; width: 200px; border-radius: 5px; background-color:white;padding-left:15px;">
                                     <div style="width: 200px; height: 150px; overflow: hidden;" class="img-thumbnail">
                                         <img rel="popover" ng-src="{{image.link}}" width="200" height="150" />
