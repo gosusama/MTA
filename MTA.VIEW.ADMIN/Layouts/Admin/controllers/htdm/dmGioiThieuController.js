@@ -179,6 +179,7 @@
             $scope.target = {};
             $scope.lstFile = [];
             $scope.lstImagesSrc = [];
+            $scope.lstImagesSrcFromDb = [];
             $scope.isLoading = false;
             $scope.title = function () { return 'Thêm mới danh mục giới thiệu'; };
             $scope.target.ngayTao = new Date();

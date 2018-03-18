@@ -62,6 +62,12 @@ namespace MTA.SERVICE.API.App_Start
             container.RegisterType<IMediaService, MediaService>(new HierarchicalLifetimeManager());
 
 
+            container.RegisterType<IRepository<Dm_TinTuc>, Repository<Dm_TinTuc>>(new HierarchicalLifetimeManager());
+            container.RegisterType<IDmTinTucService, DmTinTucService>(new HierarchicalLifetimeManager());
+
+            container.RegisterType<IRepository<Dm_DaoTao>, Repository<Dm_DaoTao>>(new HierarchicalLifetimeManager());
+            container.RegisterType<IDmDaoTaoService, DmDaoTaoService>(new HierarchicalLifetimeManager());
+
             config.DependencyResolver = new UnityResolver(container);
         }
     }

@@ -68,6 +68,32 @@
             },
             moduleUrl: controlUrl + "dmDonViController"
         },
+        {
+            name: 'dmTinTuc',
+            url: '/dmTinTuc',
+            parent: 'layout',
+            abstract: false,
+            views: {
+                'viewMain@root': {
+                    templateUrl: layoutUrl + "dmTinTuc/index.html",
+                    controller: "dmTinTucController as ctrl"
+                }
+            },
+            moduleUrl: controlUrl + "dmTinTucController"
+        },
+        {
+            name: 'dmDaoTao',
+            url: '/dmDaoTao',
+            parent: 'layout',
+            abstract: false,
+            views: {
+                'viewMain@root': {
+                    templateUrl: layoutUrl + "dmDaoTao/index.html",
+                    controller: "dmDaoTaoController as ctrl"
+                }
+            },
+            moduleUrl: controlUrl + "dmDaoTaoController"
+        },
     ];
     return states;
 });
