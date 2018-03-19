@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using MTA.ENTITY.NV;
 using MTA.SERVICE.Helper;
-using MTA.SERVICE.NV;
+using MTA.SERVICE.DM;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -85,21 +85,21 @@ namespace MTA.SERVICE.API.Api.NV
             }
         }
 
-        [HttpDelete]
-        [ResponseType(typeof(Media))]
-        [Route("DeleteItem/{id?}")]
-        public async Task<IHttpActionResult> Delete(string id)
+        [HttpGet]
+        [Route("DeleteItem/{code}")]
+        public async Task<IHttpActionResult> Delete(string code)
         {
-            Media instance = await _service.Repository.FindAsync(id);
-            if (instance == null)
+            var dataDelete = _service.Repository.DbSet.Where(x => x.Ma_Dm.Equals(code)).FirstOrDefault();
+            if (dataDelete == null)
             {
                 return NotFound();
             }
             try
             {
-                _service.Delete(instance.Id);
+                _service.Delete(dataDelete.Id);
+                _service.DeleteFile(dataDelete.Link);
                 await _service.UnitOfWork.SaveAsync();
-                return Ok(instance);
+                return Ok();
             }
             catch (Exception)
             {
