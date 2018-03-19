@@ -22,6 +22,7 @@ require.config({
         'ng-ckeditor': 'utils/ckeditor/ng-ckeditor',
         'fileUpload': 'lib/angular-file-upload.min',
         'ng-file-upload': 'utils/ng-file-upload-all.min',
+        'ckfinder': 'ultils/ckfinder/ckfinder',
     },
     shim: {
         'jquery': {
@@ -50,6 +51,7 @@ require.config({
         'ng-ckeditor': ['angular'],
         'fileUpload': ['angular'],
         'ng-file-upload': ['angular'],
+        'ckfinder':['angular'],
     },
     waitSeconds: 0
 });
