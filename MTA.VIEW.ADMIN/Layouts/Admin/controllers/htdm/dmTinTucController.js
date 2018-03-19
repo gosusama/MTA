@@ -293,6 +293,7 @@
         $scope.lstFile = [];
         $scope.lstImagesSrc = [];
         $scope.lstImages = [];
+        var temp = {};
         $scope.isEdit = false;
         $scope.title = function () { return 'Cập nhật danh mục tin tức'; };
         function filterData() {
@@ -335,7 +336,8 @@
             }
         };
         $scope.deleteImageOld = function (index) {
-            $scope.lstImages.splice(index, 1);
+            temp = $scope.lstImages[index].ma_Dm;
+            $scope.lstImages.splice(index, 1);         
         };
         function saveImage() {
             $scope.target.file = $scope.lstFile;
@@ -354,7 +356,7 @@
         $scope.save = function () {
             console.log('$scope.lstFile.length', $scope.lstFile.length);
             if ($scope.temp.length != $scope.lstImages.length) {
-                mediaService.deleteAllForCodeParent($scope.target.ma_Dm).then(function (res) {
+                mediaService.deleteByCode(temp).then(function (res) {
                     if (res && res.status === 200) {
                         saveImage();
                     }
