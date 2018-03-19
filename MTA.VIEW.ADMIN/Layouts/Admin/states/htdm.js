@@ -94,6 +94,19 @@
             },
             moduleUrl: controlUrl + "dmDaoTaoController"
         },
+        {
+            name: 'dmNghienCuu',
+            url: '/NghienCuu',
+            parent: 'layout',
+            abstract: false,
+            views: {
+                'viewMain@root': {
+                    templateUrl: layoutUrl + "dmNghienCuu/index.html",
+                    controller: "dmNghienCuuController as ctrl"
+                }
+            },
+            moduleUrl: controlUrl + "dmNghienCuuController"
+        },
     ];
     return states;
 });

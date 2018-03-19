@@ -56,6 +56,9 @@
             $scope.filtered = angular.copy(configService.paramDefault);
             $scope.tempData = tempDataService.tempData;
             console.log('menu');
+            $scope.title = function () {
+                return 'Danh sách menu';
+            }
             function filterData() {
                 $scope.isLoading = true;
                 var postdata = { paged: $scope.paged, filtered: $scope.filtered };

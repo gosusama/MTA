@@ -33,6 +33,9 @@
             $scope.paged = angular.copy(configService.pageDefault);
             $scope.filtered = angular.copy(configService.paramDefault);
             $scope.tempData = tempDataService.tempData;
+            $scope.title = function () {
+                return 'Danh sách mục giới thiệu';
+            }
             function filterData() {
                 $scope.isLoading = true;
                 var postdata = { paged: $scope.paged, filtered: $scope.filtered };
@@ -50,7 +53,6 @@
                 return $sce.trustAsHtml(string);
             };
 
-            filterData();
             function loadAccessList() {
                 securityService.getAccessList('auGioiThieu').then(function (successRes) {
                     if (successRes && successRes.status === 200) {

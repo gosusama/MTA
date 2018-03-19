@@ -7,5 +7,8 @@ CKEDITOR.editorConfig = function( config ) {
 	config.language = 'vi';
 	config.toolbarCanCollapse = true;
 	config.extraPlugins = 'uploadimage';
-	config.filebrowserUploadUrl = "/BTS.SP.IFT.CMS/controllers/Upload.ashx?type=posts&singleUpload=1";
+	config.filebrowserBrowseUrl= '/Layouts/Admin/utils/ckfinder/ckfinder.html';
+	config.filebrowserUploadUrl = '/Layouts/Admin/utils/ckfinder/core/connector/aspx/connector.aspx?command=QuickUpload&type=Files';
+    config.filebrowserWindowWidth= '1000';
+    config.filebrowserWindowHeight= '700';
 };
