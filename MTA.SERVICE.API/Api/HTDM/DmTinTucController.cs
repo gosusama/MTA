@@ -127,5 +127,30 @@ namespace MTA.SERVICE.API.Api.HTDM
                 return InternalServerError();
             }
         }
+
+        [HttpGet]
+        [Route("getNewInstance")]
+        public IHttpActionResult GetNewInstance()
+        {
+            string ma = _service.Repository.DbSet.OrderByDescending(x => x.Ma_Dm).Select(x => x.Ma_Dm).FirstOrDefault();
+            if (ma == null)
+            {
+                ma = "TT_1";
+                return Ok(ma);
+            }
+            else
+            {
+                string[] str = ma.Split('_');
+                try
+                {
+                    int i = Convert.ToInt16(str[1]);
+                    return Ok("TT_" + (++i).ToString());
+                }
+                catch (Exception ex)
+                {
+                    return NotFound();
+                }
+            }
+        }
     }
 }
