@@ -8,7 +8,6 @@
         var selectedData = [];
         var result = {
             post: function (data) {
-                console.log('data', data);
                 return $http.post(serviceUrl + '/Insert', data);
             },
             postQuery: function (data) {
@@ -22,6 +21,9 @@
             },
             getNewInstance: function () {
                 return $http.get(serviceUrl + '/getNewInstance');
+            },
+            checkExistByCodeParent: function (code) {
+                return $http.get(serviceUrl + '/checkExist/' + code);
             }
         }
         return result;
@@ -195,13 +197,28 @@
                 });
             }
             filterData();
+
+            $scope.checkExist = function (code) {
+                if (code != "") {
+                    service.checkExistByCodeParent(code).then(function (response) {
+                        if (response.status === 200 && response.data == false) {
+                            $scope.isExist = true;
+                            document.getElementById('maCha').focus();
+                        } else {
+                            $scope.isExist = false;
+                        }
+                    });
+                }
+                else {
+                    $scope.isExist = false;
+                }
+            }
             
             $scope.uploadFile = function (input) {
-                console.log(input.files);
                 if (input.files && input.files.length > 0) {
                     angular.forEach(input.files, function (file) {
                         if (file.size < 3072000) {
-                            $scope.lstFile.push(file);
+                            $scope.lstFile.push(file);                          
                             $timeout(function () {
                                 var fileReader = new FileReader();
                                 fileReader.readAsDataURL(file);
@@ -342,6 +359,23 @@
             });
         }
         filterData();
+
+        $scope.checkExist = function (code) {
+            if (code != "") {
+                service.checkExistByCodeParent(code).then(function (response) {
+                    if (response.status === 200 && response.data == false) {
+                        $scope.isExist = true;
+                        document.getElementById('maCha').focus();
+                    } else {
+                        $scope.isExist = false;
+                    }
+                });
+            }
+            else {
+                $scope.isExist = false;
+            }
+        }
+
         $scope.uploadFile = function (input) {
             $scope.isEdit = true;
             if (input.files && input.files.length > 0) {
@@ -393,7 +427,7 @@
 
         $scope.save = function () {
             if ($scope.lstFile && $scope.lstFile.length) {
-                if ($scope.temp.length != $scope.lstImages.length) {
+                if (!angular.equals($scope.temp, $scope.lstFiles)) {
                     mediaService.deleteAllForCodeParent($scope.target.ma_Dm).then(function (res) {
                         if (res && res.status === 200) {
                             saveImage();

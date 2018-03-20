@@ -20,7 +20,7 @@
                 <uib-tab index="0" heading="Thông tin giới thiệu">
                     <div class="row" style="margin-top:10px;">
                         <div class="col-md-1"></div>
-                        <div class="col-md-2" style="padding-top:4px;"><label>Mã giới thiệu : </label></div>
+                        <div class="col-md-2" style="padding-top:4px;"><label>Mã nghiên cứu : </label></div>
                         <div class="col-md-3">
                             <input class="form-control edit-width-select" ng-model="target.ma_Dm" disabled>
                         </div>
@@ -47,7 +47,7 @@
                     <br />
                     <div class="row form-group" style="margin-top:10px;">
                         <div class="col-md-1"></div>
-                        <div class="col-md-2" style="padding-top:4px;"><label>Tên giới thiệu :</label></div>
+                        <div class="col-md-2" style="padding-top:4px;"><label>Tên đề tài :</label></div>
                         <div class="col-md-6">
                             <input type="text" class="form-control" ng-model="target.ten_Dm">
                         </div>
@@ -63,30 +63,29 @@
                         <textarea ckeditor ng-model="target.chiTietNoiDung"></textarea>
                     </panel-body>
                 </uib-tab>
-                <uib-tab index="3" heading="Hình ảnh">
+                <uib-tab index="3" heading="Tệp đính kèm">
                     <panel-body>
                         <div class="row form-group" style="margin-top:20px">
                             <div class="col-md-3" style="text-align:right; font-weight: bold;padding-top:5px;">
-                                Hình ảnh
+                                Tệp đính kèm : 
                             </div>
                             <div class="col-md-9" style="width:300px;">                              
-                                <input id="file-input-upload" onchange="angular.element(this).scope().uploadFile(this)" accept="image/*" class="form-control" text="Chọn ảnh" type="file" placeholder="Tải ảnh" multiple />
+                                <input id="file-input-upload" onchange="angular.element(this).scope().uploadFile(this)" accept="application/pdf,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" class="form-control" text="Chọn tệp" type="file" placeholder="Tải tệp" multiple />
                             </div>
-                            
-                        </div>
-                        <div class="row form-group" >
+                        </div>  
+                        <div class="row form-group">
                             <div class="col-md-12" style="padding-left:100px;">
-                                <div class="preview" ng-repeat="image in lstImagesSrc track by $index" style="float: left; float: left; margin: 5px; height: 230px; width: 200px; border-radius: 5px; background-color:white;">
-                                    <div style="width: 200px; height: 150px; overflow: hidden;" class="img-thumbnail">
-                                        <img rel="popover" ng-src="{{image}}" width="200" height="150" />
+                                <div class="preview" ng-repeat="item in lstFile track by $index" style="float: left; margin: 5px; border-radius: 5px; background-color:white;">
+                                    <div style="max-width: 400px; overflow: hidden; margin-top:5px;margin-left:20px;">
+                                        <span class="glyphicon glyphicon-folder-open" style="float: left;padding-top:5px;">&nbsp;&nbsp;</span>
+                                        <p style="float: left;font-size:15px;">{{item.name}}</p>
                                     </div>
-                                    <div style="width: 200px; height: 50px; text-align: center; padding: 8px;">
-                                        <button class="form-control btn btn-primary" style="margin: auto" ng-click="deleteImage($index)">Xóa ảnh</button>
-                                        <input style="margin-top:2px;" class="form-control" placeholder="Nhập tên ảnh" ng-model="target.ten_Media[$index]"/>
+                                    <div style="width: 200px; text-align: center; padding: 8px;">
+                                        <button class="form-control btn btn-primary" style="margin: auto" ng-click="deleteFile($index)">Xóa tệp</button>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div>                      
                     </panel-body>
                 </uib-tab>               
             </uib-tabset>
