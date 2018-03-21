@@ -9,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MTA.SERVICE.NV
+namespace MTA.SERVICE.DM
 {
     public class DmGioiThieuVm
     {

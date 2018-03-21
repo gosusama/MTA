@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Configuration;
 
-namespace MTA.SERVICE.NV
+namespace MTA.SERVICE.DM
 {
     public interface IDmGioiThieuService : IDataInfoService<Dm_GioiThieu>
     {

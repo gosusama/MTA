@@ -184,10 +184,22 @@
     <Content Include="Global.asax" />
     <Content Include="scripts\ai.0.22.9-build00167.js" />
     <Content Include="scripts\ai.0.22.9-build00167.min.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Api\HTDM\DmDaoTaoController.cs" />
+    <Compile Include="Api\HTDM\DmDonViController.cs" />
+    <Compile Include="Api\HTDM\DmGioiThieuController.cs" />
     <Compile Include="Api\HTDM\DmMenuController.cs" />
+    <Compile Include="Api\HTDM\DmNguoiDungController.cs" />
+    <Compile Include="Api\HTDM\DmNguoiDungNhomQuyenController.cs" />
+    <Compile Include="Api\HTDM\DmNguoiDungQuyenController.cs" />
+    <Compile Include="Api\HTDM\DmNhomQuyenChucNangController.cs" />
+    <Compile Include="Api\HTDM\DmNhomQuyenController.cs" />
+    <Compile Include="Api\HTDM\DmTinTucController.cs" />
+    <Compile Include="Api\NV\MediaController.cs" />
     <Compile Include="Api\SharedController.cs" />
     <Compile Include="App_Start\UnityApiConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />

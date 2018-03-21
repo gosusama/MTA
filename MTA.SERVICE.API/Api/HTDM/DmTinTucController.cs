@@ -1,7 +1,7 @@
 ﻿using MTA.ENTITY.NV;
 using MTA.SERVICE.BuildQuery;
 using MTA.SERVICE.Helper;
-using MTA.SERVICE.NV;
+using MTA.SERVICE.DM;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;

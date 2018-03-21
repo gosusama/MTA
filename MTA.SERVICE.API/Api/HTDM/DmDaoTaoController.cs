@@ -1,7 +1,7 @@
 ﻿using MTA.ENTITY.NV;
 using MTA.SERVICE.BuildQuery;
 using MTA.SERVICE.Helper;
-using MTA.SERVICE.NV;
+using MTA.SERVICE.DM;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -125,6 +125,31 @@ namespace MTA.SERVICE.API.Api.HTDM
             catch (Exception e)
             {
                 return InternalServerError();
+            }
+        }
+
+        [HttpGet]
+        [Route("getNewInstance")]
+        public IHttpActionResult GetNewInstance()
+        {
+            string ma = _service.Repository.DbSet.OrderByDescending(x => x.Ma_Dm).Select(x => x.Ma_Dm).FirstOrDefault();
+            if (ma == null)
+            {
+                ma = "DT_1";
+                return Ok(ma);
+            }
+            else
+            {
+                string[] str = ma.Split('_');
+                try
+                {
+                    int i = Convert.ToInt16(str[1]);
+                    return Ok("DT_" + (++i).ToString());
+                }
+                catch (Exception ex)
+                {
+                    return NotFound();
+                }
             }
         }
     }
