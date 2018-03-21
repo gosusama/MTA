@@ -41,7 +41,10 @@
                         </div>
                         <div class="col-md-3">
                             <label>Loại danh mục</label><span style="color: red">(*)</span>&nbsp;&nbsp;&nbsp;
-                            <input type="number" class="form-control" ng-model="target.loai_Dm" maxlength="50" required>
+                            <select class="form-control" ng-model="target.loai_Dm" required>
+                                <option value="-1" selected="selected">-Chọn loại danh mục-</option>
+                                <option ng-repeat="opt in listDanhMuc" value="{{opt.value}}">{{opt.text}}</option>
+                            </select>
                         </div>
                     </div>
                 </uib-tab>

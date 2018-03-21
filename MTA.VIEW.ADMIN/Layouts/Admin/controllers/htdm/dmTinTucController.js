@@ -182,6 +182,7 @@
             $scope.target.ngayTao = new Date();
             $scope.target.manguoitao = userService.GetCurrentUser();
             $scope.target.ten_Media = [];
+            $scope.target.loai_Dm = "-1";
             function filterData() {
                 service.getNewInstance().then(function (response) {
                     if (response && response.status == 200) {
@@ -190,7 +191,36 @@
                 });
             }
             filterData();
-
+            $scope.listDanhMuc = [
+                {
+                    value: '0',
+                    text: "Tin tức sự kiện"
+                },
+                {
+                    value: '1',
+                    text: "Thông báo"
+                },
+                {
+                    value: '2',
+                    text: "Tin tức đào tạo"
+                },
+                {
+                    value: '3',
+                    text: "Tin tức sinh viên"
+                },
+                {
+                    value: '4',
+                    text: "Tin tức tuyển sinh"
+                },
+                {
+                    value: '5',
+                    text: "Tin tức sinh viên"
+                },
+                {
+                    value: '6',
+                    text: "Tin tức hợp tác"
+                }
+            ];
             $scope.uploadFile = function (input) {
                 console.log(input.files);
                 if (input.files && input.files.length > 0) {
@@ -264,6 +294,7 @@
             $scope.config = angular.copy(configService);
             $scope.tempData = tempDataService.tempData;
             $scope.target = angular.copy(targetData);
+            console.log('$scope.target', $scope.target);
             $scope.isLoading = false;
             function filterData() {
                 mediaService.getImgForByCodeParent($scope.target.ma_Dm).then(function (response) {
@@ -273,7 +304,36 @@
                     }
                 });
             };
-
+            $scope.listDanhMuc = [
+                {
+                    value: '0',
+                    text: "Tin tức sự kiện"
+                },
+                {
+                    value: '1',
+                    text: "Thông báo"
+                },
+                {
+                    value: '2',
+                    text: "Tin tức đào tạo"
+                },
+                {
+                    value: '3',
+                    text: "Tin tức sinh viên"
+                },
+                {
+                    value: '4',
+                    text: "Tin tức tuyển sinh"
+                },
+                {
+                    value: '5',
+                    text: "Tin tức sinh viên"
+                },
+                {
+                    value: '6',
+                    text: "Tin tức hợp tác"
+                }
+            ];
             $scope.trustAsHtml = function (string) {
                 return $sce.trustAsHtml(string);
             };
@@ -296,6 +356,36 @@
         var temp = {};
         $scope.isEdit = false;
         $scope.title = function () { return 'Cập nhật danh mục tin tức'; };
+        $scope.listDanhMuc = [
+                {
+                    value: '0',
+                    text: "Tin tức sự kiện"
+                },
+                {
+                    value: '1',
+                    text: "Thông báo"
+                },
+                {
+                    value: '2',
+                    text: "Tin tức đào tạo"
+                },
+                {
+                    value: '3',
+                    text: "Tin tức sinh viên"
+                },
+                {
+                    value: '4',
+                    text: "Tin tức tuyển sinh"
+                },
+                {
+                    value: '5',
+                    text: "Tin tức sinh viên"
+                },
+                {
+                    value: '6',
+                    text: "Tin tức hợp tác"
+                }
+        ];
         function filterData() {
             mediaService.getImgForByCodeParent($scope.target.ma_Dm).then(function (response) {
                 console.log('response', response);

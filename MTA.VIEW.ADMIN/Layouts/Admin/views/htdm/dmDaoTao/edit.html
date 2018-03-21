@@ -35,13 +35,16 @@
                     </div>
                     <div class="row form-group">
                         <div class="col-md-1"></div>
-                        <div class="col-md-3">
+                        <div class="col-md-6">
                             <label>Tên đào tạo</label>
                             <input type="text" class="form-control" ng-model="target.ten_Dm">
                         </div>
                         <div class="col-md-3">
                             <label>Loại danh mục</label><span style="color: red">(*)</span>&nbsp;&nbsp;&nbsp;
-                            <input type="number" class="form-control" ng-model="target.loai_Dm" maxlength="50" required>
+                            <select class="form-control" ng-model="target.loai_Dm" " required>
+                                <option type="number" value="-1" selected="selected">-Chọn loại danh mục-</option>
+                                <option type="number" ng-repeat="opt in listDanhMuc" value="{{opt.value}}">{{opt.text}}</option>
+                            </select>
                         </div>
                     </div>
                 </uib-tab>
