@@ -6,6 +6,7 @@ define([
 	'jquery',
     'angular',
     'states/htdm',
+    'states/nv',
     'config/config',
 	'ocLazyLoad',
 	'uiRouter',
@@ -28,7 +29,7 @@ define([
     'ng-ckeditor',
     'fileUpload',
     'ng-file-upload',
-], function (jquery, angular, state_htdm) {
+], function (jquery, angular, state_htdm , state_nv) {
     'use strict';
     var app = angular.module('myApp', ['oc.lazyLoad', 'ui.router', 'InterceptorModule', 'LocalStorageModule', 'ui.bootstrap', 'configModule', 'tempDataModule', 'angular-loading-bar', 'ngAnimate', 'ngSanitize', 'common-filter', 'ngResource', 'smart-table', 'angular.filter', 'ngTable', 'angular-cache', 'ngNotify', 'toaster', 'ngCkeditor', 'angularFileUpload', 'ngFileUpload']);
     app.run(['ngTableDefaults', 'ngNotify', function (ngTableDefaults, ngNotify) {
@@ -266,7 +267,7 @@ define([
 		    });
 		    
 		    var lststate = [];
-		    lststate = lststate.concat(state_htdm);
+		    lststate = lststate.concat(state_htdm).concat(state_nv);
 		    angular.forEach(lststate, function (state) {
 		        $stateProvider.state(state.name, {
 		            url: state.url,
