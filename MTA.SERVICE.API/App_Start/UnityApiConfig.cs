@@ -11,13 +11,13 @@ using MTA.SERVICE.Authorize.AuMenu;
 using MTA.SERVICE.Authorize.AuNguoiDung;
 using MTA.SERVICE.Authorize.AuNguoiDungNhomQuyen;
 using MTA.SERVICE.Authorize.AuNhomQuyen;
+using MTA.SERVICE.NV;
 using MTA.SERVICE.Authorize.AuNhomQuyenChucNang;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Http;
-using MTA.SERVICE.DM;
 
 namespace MTA.SERVICE.API.App_Start
 {

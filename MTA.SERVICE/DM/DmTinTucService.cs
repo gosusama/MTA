@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 
-namespace MTA.SERVICE.DM
+namespace MTA.SERVICE.NV
 {
     public interface IDmTinTucService : IDataInfoService<Dm_TinTuc>
     {

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Configuration;
 
-namespace MTA.SERVICE.DM
+namespace MTA.SERVICE.NV
 {
     public interface IMediaService : IDataInfoService<Media>
     {
