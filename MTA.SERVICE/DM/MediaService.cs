@@ -42,21 +42,23 @@ namespace MTA.SERVICE.NV
                         HttpPostedFile file = request.Files[i];
                         List<string> tmp = file.FileName.Split('.').ToList();
                         string extension = tmp[1];
+                        string[] name = request.Form["ten_Media[" + i + "]"].Split('.');
                         //file.ContentType
-                        string fileName = string.Format("{0}_{1}{2}{3}.{4}", request.Form["ten_Media[" + i + "]"], DateTime.Now.Minute, DateTime.Now.Second,
+                        string fileName = string.Format("{0}_{1}{2}{3}.{4}", name[0], DateTime.Now.Minute, DateTime.Now.Second,
                                                                                         DateTime.Now.Millisecond, extension);
                         file.SaveAs(path + fileName);
                         result += path + fileName;
                         Media instance = new Media()
                         {
-                            Ma_Dm = i.ToString()+"-"+getNewCode(),
+                            Ma_Dm = i.ToString() + "-" + getNewCode(),
                             Id = Guid.NewGuid().ToString(),
                             MaCha = ma_Dm,
-                            Ten_Media = request.Form["ten_Media["+i+"]"],
+                            Ten_Media = fileName,
                             DoUuTien = 100,
                             Loai_Media = Convert.ToByte(request.Form["loaiMedia"]),
                             Link = result,
                             UnitCode = unitCode,
+                            ICreateDate = DateTime.Now,
                         };
                         UnitOfWork.Repository<Media>().Insert(instance);
                     }

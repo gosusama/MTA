@@ -31,9 +31,9 @@
                         <div class="col-md-1"></div>
                         <div class="col-md-2" style="padding-top:4px;"><label>Mã cha : </label></div>
                         <div class="col-md-3">
-                            <input class="form-control edit-width-select" ng-model="target.ma_Cha">
+                            <input id="maCha" class="form-control edit-width-select" ng-model="target.ma_Cha" ng-blur="checkExist(target.ma_Cha)">
                         </div>
-                        <span style="color: red">(*)</span>
+                        <span ng-show="isExist" style="color: red">Mã cha không tồn tại !</span>
                     </div>
                     <br />
                     <div class="row">

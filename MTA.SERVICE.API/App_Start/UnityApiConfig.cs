@@ -18,6 +18,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Http;
+using MTA.SERVICE.DM;
 
 namespace MTA.SERVICE.API.App_Start
 {
@@ -67,6 +68,9 @@ namespace MTA.SERVICE.API.App_Start
 
             container.RegisterType<IRepository<Dm_DaoTao>, Repository<Dm_DaoTao>>(new HierarchicalLifetimeManager());
             container.RegisterType<IDmDaoTaoService, DmDaoTaoService>(new HierarchicalLifetimeManager());
+
+            container.RegisterType<IRepository<Dm_NghienCuu>, Repository<Dm_NghienCuu>>(new HierarchicalLifetimeManager());
+            container.RegisterType<IDmNghienCuuService, DmNghienCuuService>(new HierarchicalLifetimeManager());
 
             config.DependencyResolver = new UnityResolver(container);
         }

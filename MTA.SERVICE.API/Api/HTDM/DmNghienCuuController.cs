@@ -1,9 +1,7 @@
-﻿using BTS.API.SERVICE.Helper;
-using MTA.ENTITY.NV;
-using MTA.SERVICE.Authorize.Utils;
+﻿using MTA.ENTITY.NV;
 using MTA.SERVICE.BuildQuery;
+using MTA.SERVICE.DM;
 using MTA.SERVICE.Helper;
-using MTA.SERVICE.NV;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -16,37 +14,15 @@ using System.Web.Http.Description;
 
 namespace MTA.SERVICE.API.Api.HTDM
 {
-    [RoutePrefix("api/DM/GioiThieu")]
+    [RoutePrefix("api/DM/NghienCuu")]
     [Route("{id?}")]
     [Authorize]
-    public class DmGioiThieuController : ApiController
+    public class DmNghienCuuController : ApiController
     {
-        private readonly IDmGioiThieuService _service;
-        public DmGioiThieuController(IDmGioiThieuService service)
+        private readonly IDmNghienCuuService _service;
+        public DmNghienCuuController(IDmNghienCuuService service)
         {
             _service = service;
-        }
-
-        [HttpPost]
-        [ResponseType(typeof(Dm_GioiThieu))]
-        [Route("Insert")]
-        public async Task<IHttpActionResult> Post(Dm_GioiThieu instance)
-        {
-            var result = new TransferObj<Dm_GioiThieu>();
-            try
-            {
-                var item = _service.Insert(instance);
-                _service.UnitOfWork.Save();
-                result.Status = true;
-                result.Data = item;
-            }
-            catch (Exception e)
-            {
-                result.Status = false;
-                result.Message = e.Message;
-                return Ok(result);
-            }
-            return CreatedAtRoute("DefaultApi", new { controller = this, id = instance.Id }, result);
         }
 
         [Route("PostQuery")]
@@ -54,8 +30,8 @@ namespace MTA.SERVICE.API.Api.HTDM
         {
             var result = new TransferObj();
             var postData = ((dynamic)jsonData);
-            var filtered = ((JObject)postData.filtered).ToObject<FilterObj<DmGioiThieuVm.Search>>();
-            var paged = ((JObject)postData.paged).ToObject<PagedObj<Dm_GioiThieu>>();
+            var filtered = ((JObject)postData.filtered).ToObject<FilterObj<DmNghienCuuVm.Search>>();
+            var paged = ((JObject)postData.paged).ToObject<PagedObj<Dm_NghienCuu>>();
             var query = new QueryBuilder
             {
                 Take = paged.ItemsPerPage,
@@ -78,12 +54,33 @@ namespace MTA.SERVICE.API.Api.HTDM
             }
         }
 
+        [HttpPost]
+        [ResponseType(typeof(Dm_NghienCuu))]
+        [Route("Insert")]
+        public async Task<IHttpActionResult> Post(Dm_NghienCuu instance)
+        {
+            var result = new TransferObj<Dm_NghienCuu>();
+            try
+            {
+                var item = _service.Insert(instance);
+                _service.UnitOfWork.Save();
+                result.Status = true;
+                result.Data = item;
+            }
+            catch (Exception e)
+            {
+                result.Status = false;
+                result.Message = e.Message;
+                return Ok(result);
+            }
+            return CreatedAtRoute("DefaultApi", new { controller = this, id = instance.Id }, result);
+        }
         [HttpPut]
         [ResponseType(typeof(void))]
         [Route("edit/{id?}")]
-        public async Task<IHttpActionResult> Put(string id, Dm_GioiThieu instance)
+        public async Task<IHttpActionResult> Put(string id, Dm_NghienCuu instance)
         {
-            var result = new TransferObj<Dm_GioiThieu>();
+            var result = new TransferObj<Dm_NghienCuu>();
             if (id != instance.Id)
             {
                 result.Status = false;
@@ -109,11 +106,11 @@ namespace MTA.SERVICE.API.Api.HTDM
         }
 
         [HttpDelete]
-        [ResponseType(typeof(Dm_GioiThieu))]
+        [ResponseType(typeof(Dm_NghienCuu))]
         [Route("DeleteItem/{id?}")]
         public async Task<IHttpActionResult> Delete(string id)
         {
-            Dm_GioiThieu instance = await _service.Repository.FindAsync(id);
+            Dm_NghienCuu instance = await _service.Repository.FindAsync(id);
             if (instance == null)
             {
                 return NotFound();
@@ -129,27 +126,6 @@ namespace MTA.SERVICE.API.Api.HTDM
                 return InternalServerError();
             }
         }
-
-        [Route("Upload")]
-        [AllowAnonymous]
-        [HttpPost]
-        public async Task<IHttpActionResult> Upload()
-        {
-            var result = new TransferObj<string>();
-            try
-            {
-                result.Status = true;
-                result.Data = _service.Upload();
-                return Ok(result);
-            }
-            catch (Exception e)
-            {
-                result.Status = false;
-                result.Message = e.Message;
-                return Ok(result);
-            }
-        }
-
         [HttpGet]
         [Route("getNewInstance")]
         public IHttpActionResult GetNewInstance()
@@ -157,7 +133,7 @@ namespace MTA.SERVICE.API.Api.HTDM
             string ma = _service.Repository.DbSet.OrderByDescending(x => x.Ma_Dm).Select(x => x.Ma_Dm).FirstOrDefault();
             if (ma == null)
             {
-                ma = "GT_1";
+                ma = "NC_1";
                 return Ok(ma);
             }
             else
@@ -166,7 +142,7 @@ namespace MTA.SERVICE.API.Api.HTDM
                 try
                 {
                     int i = Convert.ToInt16(str[1]);
-                    return Ok("GT_" + (++i).ToString());
+                    return Ok("NC_" + (++i).ToString());
                 }
                 catch (Exception ex)
                 {
@@ -174,6 +150,7 @@ namespace MTA.SERVICE.API.Api.HTDM
                 }
             }
         }
+
         [HttpGet]
         [Route("checkExist/{code}")]
         public IHttpActionResult checkExist(string code)

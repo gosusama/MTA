@@ -42,7 +42,7 @@ namespace MTA.ENTITY.NV
         public string Link { get; set; }
 
         [Column("ANHBIA")]
-        public bool? AnhBia { get; set; }
+        public int? AnhBia { get; set; }
         
         [Column("LOAI_MEDIA")]
         public int Loai_Media { get; set; }

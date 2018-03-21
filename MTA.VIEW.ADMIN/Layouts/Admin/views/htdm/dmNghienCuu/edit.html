@@ -21,10 +21,10 @@
                     <div class="row" style="margin-top:10px;">
                         <div class="col-md-1"></div>
                         <div class="col-md-2" style="padding-top:4px;"><label>Mã giới thiệu : </label></div>
-                        <div class="col-md-3">
+                        <div class="col-md-3">                           
                             <input class="form-control edit-width-select" ng-model="target.ma_Dm" disabled>
-                        </div>
-                        <span style="color: red">(*)</span>
+                        </div>                
+                        <span style="color: red">(*)</span>     
                     </div>
                     <br />
                     <div class="row">
@@ -39,7 +39,7 @@
                     <div class="row">
                         <div class="col-md-1"></div>
                         <div class="col-md-2" style="padding-top:4px;"><label>Độ ưu tiên : </label></div>
-                        <div class="col-md-3">
+                        <div class="col-md-3">                          
                             <input type="number" class="form-control" ng-model="target.doUuTien" min="1" maxlength="50" required>
                         </div>
                         <span style="color: red">(*)</span>&nbsp;&nbsp;&nbsp;
@@ -48,7 +48,7 @@
                     <div class="row form-group" style="margin-top:10px;">
                         <div class="col-md-1"></div>
                         <div class="col-md-2" style="padding-top:4px;"><label>Tên giới thiệu :</label></div>
-                        <div class="col-md-6">
+                        <div class="col-md-6">                      
                             <input type="text" class="form-control" ng-model="target.ten_Dm">
                         </div>
                     </div>
@@ -63,37 +63,45 @@
                         <textarea ckeditor ng-model="target.chiTietNoiDung"></textarea>
                     </panel-body>
                 </uib-tab>
-                <uib-tab index="3" heading="Hình ảnh">
+                <uib-tab index="3" heading="Tệp đính kèm">
                     <panel-body>
                         <div class="row form-group" style="margin-top:20px">
-                            <div class="col-md-3" style="text-align:right; font-weight: bold;padding-top:5px;">
-                                Hình ảnh
+                            <div class="col-md-3" style="text-align:right; font-weight: bold;font-size:20px;">
+                                Chọn tệp :
                             </div>
-                            <div class="col-md-9" style="width:300px;">                              
-                                <input id="file-input-upload" onchange="angular.element(this).scope().uploadFile(this)" accept="image/*" class="form-control" text="Chọn ảnh" type="file" placeholder="Tải ảnh" multiple />
+                            <div class="col-md-9" style="width:300px;">
+                                <input id="file-input-upload" onchange="angular.element(this).scope().uploadFile(this)" accept="application/pdf,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" class="form-control" text="Chọn ảnh" type="file" placeholder="Tải ảnh" multiple />
                             </div>
-                            
-                        </div>
-                        <div class="row form-group" >
                             <div class="col-md-12" style="padding-left:100px;">
-                                <div class="preview" ng-repeat="image in lstImagesSrc track by $index" style="float: left; float: left; margin: 5px; height: 230px; width: 200px; border-radius: 5px; background-color:white;">
-                                    <div style="width: 200px; height: 150px; overflow: hidden;" class="img-thumbnail">
-                                        <img rel="popover" ng-src="{{image}}" width="200" height="150" />
+                                <div class="preview" ng-repeat="temp in lstFiles track by $index" style="float: left; float: left; margin: 5px; border-radius: 5px;">
+                                    <div style="background-color:white"  class="img-thumbnail">
+                                        <div style="overflow: hidden;">
+                                            <a href="{{temp.link}}" target="_blank">{{temp.ten_Media}}</a>
+                                        </div>
+                                        <div style="width: 200px; height: 50px; text-align: center; padding: 8px;">
+                                            <button class="form-control btn btn-primary" style="margin: auto" ng-click="deleteFileOld($index)">Xóa ảnh</button>
+                                        </div>
                                     </div>
-                                    <div style="width: 200px; height: 50px; text-align: center; padding: 8px;">
-                                        <button class="form-control btn btn-primary" style="margin: auto" ng-click="deleteImage($index)">Xóa ảnh</button>
-                                        <input style="margin-top:2px;" class="form-control" placeholder="Nhập tên ảnh" ng-model="target.ten_Media[$index]"/>
+                                </div>
+                                <div ng-show="isEdit">
+                                    <div class="preview" ng-repeat="item in lstFile track by $index" style="float: left; float: left; margin: 5px; border-radius: 5px;">
+                                        <div style="background-color:white" class="img-thumbnail">
+                                            <p style="float: left;font-size:15px;">{{item.name}}</p>
+                                            <div style="width: 200px; text-align: center; padding: 8px;">
+                                                <button class="form-control btn btn-primary" style="margin: auto" ng-click="deleteFile($index)">Xóa tệp</button>
+                                            </div>
+                                        </div>                                    
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div>                      
                     </panel-body>
-                </uib-tab>               
+                </uib-tab>
             </uib-tabset>
         </form>
     </div>
     <div class="modal-footer">
-        <button prevent-default type="submit" class="btn btn-primary" ng-disabled="_form.$invalid" ng-click="save()">{{config.label.btnSubmit}}</button>
+        <button prevent-default type="submit" class="btn btn-primary" ng-disabled="!_form.$dirty" ng-click="save()">{{config.label.btnSubmit}}</button>
         <button prevent-default class="btn btn-default" ng-click="cancel()">{{config.label.btnCancel}}</button>
     </div>
 </div>
