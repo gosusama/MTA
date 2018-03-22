@@ -20,26 +20,22 @@
                 <uib-tab index="0" heading="Thông tin đào tạo">
                     <div class="row form-group" style="margin-top:5px;">
                         <div class="col-md-1"></div>
-                        <div class="col-md-3">
+                        <div class="col-md-5">
                             <label>Mã</label><span style="color: red">(*)</span>
                             <input class="form-control" ng-model="target.ma_Dm" disabled>
                         </div>
-                        <div class="col-md-3">
-                            <label>Mã cha</label><span style="color: red">(*)</span>
-                            <input class="form-control" ng-model="target.ma_Cha">
-                        </div>
-                        <div class="col-md-3">
+                        <div class="col-md-5">
                             <label>Độ ưu tiên</label><span style="color: red">(*)</span>&nbsp;&nbsp;&nbsp;
                             <input type="number" class="form-control" ng-model="target.doUuTien" maxlength="50" required>
                         </div>
                     </div>
                     <div class="row form-group">
                         <div class="col-md-1"></div>
-                        <div class="col-md-6">
+                        <div class="col-md-5">
                             <label>Tên đào tạo</label>
                             <input type="text" class="form-control" ng-model="target.ten_Dm">
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-5">
                             <label>Loại danh mục</label><span style="color: red">(*)</span>&nbsp;&nbsp;&nbsp;
                             <select class="form-control" ng-model="target.loai_Dm" required>
                                 <option value="-1" selected="selected">-Chọn loại danh mục-</option>
