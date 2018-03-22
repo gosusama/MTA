@@ -191,6 +191,21 @@
             }
             filterData();
 
+            $scope.listDanhMuc = [
+                {
+                    value: "0",
+                    text: "Đào tạo hệ quân sự"
+                },
+                {
+                    value: "1",
+                    text: "Đào tạo hệ dân sự"
+                },
+                {
+                    value: "2",
+                    text: "Đào tạo sau đại học"
+                }
+            ];
+
             $scope.uploadFile = function (input) {
                 console.log(input.files);
                 if (input.files && input.files.length > 0) {
@@ -274,7 +289,20 @@
                     }
                 });
             };
-
+            $scope.listDanhMuc = [
+                {
+                    value: "0",
+                    text: "Đào tạo hệ quân sự"
+                },
+                {
+                    value: "1",
+                    text: "Đào tạo hệ dân sự"
+                },
+                {
+                    value: "2",
+                    text: "Đào tạo sau đại học"
+                }
+            ];
             $scope.trustAsHtml = function (string) {
                 return $sce.trustAsHtml(string);
             };
@@ -305,6 +333,20 @@
                 }
             });
         }
+        $scope.listDanhMuc = [
+                {
+                    value: "0",
+                    text: "Đào tạo hệ quân sự"
+                },
+                {
+                    value: "1",
+                    text: "Đào tạo hệ dân sự"
+                },
+                {
+                    value: "2",
+                    text: "Đào tạo sau đại học"
+                }
+        ];
         filterData();
         $scope.uploadFile = function (input) {
             $scope.isEdit = true;
