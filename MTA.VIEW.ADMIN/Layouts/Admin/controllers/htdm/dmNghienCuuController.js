@@ -1,6 +1,6 @@
-﻿define(['ui-bootstrap', 'controllers/nv/mediaController'], function () {
+﻿define(['ui-bootstrap', 'controllers/htdm/dmMediaController'], function () {
     'use strict';
-    var app = angular.module('dmNghienCuuModule', ['ui.bootstrap', 'mediaModule']);
+    var app = angular.module('dmNghienCuuModule', ['ui.bootstrap', 'dmMediaModule']);
     app.factory('dmNghienCuuService', ['$http', 'configService', function ($http, configService) {
         var serviceUrl = configService.rootUrlWebApi + '/DM/NghienCuu';
         var result = {
@@ -224,7 +224,7 @@
                             });
                         }
                         else {
-                            ngNotify.set("Kích thước ảnh quá lớn !", { duration: 3000, type: 'error' });
+                            ngNotify.set("Kích thước file quá lớn !", { duration: 3000, type: 'error' });
                         }
                     });
                 }
@@ -240,15 +240,16 @@
 
             function saveFile() {
                 $scope.target.file = $scope.lstFile;
-                $scope.target.loaiMedia = 2;
+                $scope.target.loai_Media == 3;
+                $scope.target.flag = 'Tep';
                 upload.upload({
-                    url: configService.rootUrlWebApi + '/NV/Media/Upload',
+                    url: configService.rootUrlWebApi + '/DM/Media/Upload',
                     data: $scope.target
                 }).then(function (response) {
                     if (response.status) {
                     }
                     else {
-                        toaster.pop('error', "Lỗi:", "Không lưu được ảnh! Có thể đã trùng!");
+                        toaster.pop('error', "Lỗi:", "Không lưu được file! Có thể đã trùng!");
                     }
                 });
             }
@@ -274,8 +275,8 @@
                 $uibModalInstance.close();
             };
         }]);
-    app.controller('dmNghienCuuDetailsController', ['$scope', '$uibModalInstance', '$location', '$http', 'configService', 'dmNghienCuuService', 'tempDataService', '$filter', '$uibModal', '$log', 'ngNotify', 'targetData', 'mediaService', '$sce',
-        function ($scope, $uibModalInstance, $location, $http, configService, service, tempDataService, $filter, $uibModal, $log, ngNotify, targetData, mediaService, $sce) {
+    app.controller('dmNghienCuuDetailsController', ['$scope', '$uibModalInstance', '$location', '$http', 'configService', 'dmNghienCuuService', 'tempDataService', '$filter', '$uibModal', '$log', 'ngNotify', 'targetData', '$sce', 'dmMediaService',
+        function ($scope, $uibModalInstance, $location, $http, configService, service, tempDataService, $filter, $uibModal, $log, ngNotify, targetData, $sce , mediaService) {
             $scope.config = angular.copy(configService);
             $scope.tempData = tempDataService.tempData;
             $scope.target = angular.copy(targetData);
@@ -299,7 +300,7 @@
             };
         }]);
 
-    app.controller('dmNghienCuuDeleteController', ['$scope', '$uibModalInstance', '$location', '$http', 'configService', 'dmNghienCuuService', 'tempDataService', '$filter', '$uibModal', '$log', 'ngNotify', 'targetData', 'mediaService', '$timeout',
+    app.controller('dmNghienCuuDeleteController', ['$scope', '$uibModalInstance', '$location', '$http', 'configService', 'dmNghienCuuService', 'tempDataService', '$filter', '$uibModal', '$log', 'ngNotify', 'targetData', 'dmMediaService', '$timeout',
        function ($scope, $uibModalInstance, $location, $http, configService, service, tempDataService, $filter, $uibModal, $log, ngNotify, targetData, mediaService, $timeout) {
            $scope.config = angular.copy(configService);
            $scope.tempData = tempDataService.tempData;
@@ -328,7 +329,7 @@
            };
        }]);
 
-    app.controller('dmNghienCuuEditController', ['$scope', '$uibModalInstance', '$location', '$http', 'configService', 'dmNghienCuuService', 'tempDataService', '$filter', '$uibModal', '$log', 'ngNotify', 'targetData', 'mediaService', 'Upload', '$timeout',
+    app.controller('dmNghienCuuEditController', ['$scope', '$uibModalInstance', '$location', '$http', 'configService', 'dmNghienCuuService', 'tempDataService', '$filter', '$uibModal', '$log', 'ngNotify', 'targetData', 'dmMediaService', 'Upload', '$timeout',
     function ($scope, $uibModalInstance, $location, $http, configService, service, tempDataService, $filter, $uibModal, $log, ngNotify, targetData, mediaService, upload, $timeout) {
         $scope.config = angular.copy(configService);
         $scope.tempData = tempDataService.tempData;
@@ -411,9 +412,10 @@
         };
         function saveFile() {
             $scope.target.file = $scope.lstFile;
-            $scope.target.loaiMedia = 2;
+            $scope.target.loai_Media == 3;
+            $scope.target.flag = 'Tep';
             upload.upload({
-                url: configService.rootUrlWebApi + '/NV/Media/Upload',
+                url: configService.rootUrlWebApi + '/DM/Media/Upload',
                 data: $scope.target
             }).then(function (response) {
                 if (response.status) {

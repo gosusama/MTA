@@ -16,6 +16,20 @@
                 Value: 0
             }
         ]);
+        profileCache.put('typeMedia', [
+            {
+                Text: 'Ảnh',
+                Value: 1
+            },
+            {
+                Text: 'Video',
+                Value: 2
+            },
+            {
+                Text: 'Tệp',
+                Value: 3
+            }
+        ]);
 
         var result = {
             dateFormat: 'dd/MM/yyyy',

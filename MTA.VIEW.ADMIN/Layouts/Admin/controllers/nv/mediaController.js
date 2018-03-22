@@ -2,7 +2,7 @@
     'use strict';
     var app = angular.module('mediaModule', ['ui.bootstrap']);
     app.factory('mediaService', ['$http', 'configService', function ($http, configService) {
-        var serviceUrl = configService.rootUrlWebApi + '/NV/Media';
+        var serviceUrl = configService.rootUrlWebApi + '/DM/Media';
         var result = {
             addNewMedia: function (instance) {
 

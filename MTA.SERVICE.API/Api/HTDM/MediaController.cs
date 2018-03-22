@@ -11,10 +11,13 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
 using MTA.SERVICE.NV;
+using Newtonsoft.Json.Linq;
+using MTA.ENTITY.Authorize;
+using MTA.SERVICE.BuildQuery;
 
-namespace MTA.SERVICE.API.Api.NV
+namespace MTA.SERVICE.API.Api.DM
 {
-    [RoutePrefix("api/NV/Media")]
+    [RoutePrefix("api/DM/Media")]
     [Route("{id?}")]
     [Authorize]
     public class MediaController : ApiController
@@ -23,6 +26,35 @@ namespace MTA.SERVICE.API.Api.NV
         public MediaController(IMediaService service)
         {
             _service = service;
+        }
+
+        [Route("postQuery")]
+        public async Task<IHttpActionResult> PostQuery(JObject jsonData)
+        {
+            var result = new TransferObj();
+            var postData = ((dynamic)jsonData);
+            var filtered = ((JObject)postData.filtered).ToObject<FilterObj<MediaVM.Search>>();
+            var paged = ((JObject)postData.paged).ToObject<PagedObj<Media>>();
+            var query = new QueryBuilder
+            {
+                Take = paged.ItemsPerPage,
+                Skip = paged.FromItem - 1,
+            };
+            try
+            {
+                var filterResult = _service.Filter(filtered, query);
+                if (!filterResult.WasSuccessful)
+                {
+                    return NotFound();
+                }
+                result.Data = filterResult.Value;
+                result.Status = true;
+                return Ok(result);
+            }
+            catch (Exception e)
+            {
+                return InternalServerError();
+            }
         }
 
         [Route("Insert")]
@@ -86,11 +118,11 @@ namespace MTA.SERVICE.API.Api.NV
             }
         }
 
-        [HttpGet]
+        [HttpDelete]
         [Route("DeleteItem/{code}")]
         public async Task<IHttpActionResult> Delete(string code)
         {
-            var dataDelete = _service.Repository.DbSet.Where(x => x.Ma_Dm.Equals(code)).FirstOrDefault();
+            var dataDelete = _service.FindById(code);
             if (dataDelete == null)
             {
                 return NotFound();
@@ -152,6 +184,18 @@ namespace MTA.SERVICE.API.Api.NV
             return Ok(lstResult);
         }
 
+        [HttpGet]
+        [Route("GetMediaForByCode/{code}")]
+        public async Task<IHttpActionResult> GetMediaForByCode(string code)
+        {
+            Media data = new Media();
+            if (code != null)
+            {
+                data = _service.Repository.DbSet.Where(x => x.Ma_Dm == code).FirstOrDefault();              
+            }
+            return Ok(data);
+        }
+
         [Route("Upload")]
         [AllowAnonymous]
         [HttpPost]
@@ -169,6 +213,31 @@ namespace MTA.SERVICE.API.Api.NV
                 result.Status = false;
                 result.Message = e.Message;
                 return Ok(result);
+            }
+        }
+
+        [HttpGet]
+        [Route("getNewInstance")]
+        public IHttpActionResult GetNewInstance()
+        {
+            string ma = _service.Repository.DbSet.OrderByDescending(x => x.Ma_Dm).Select(x => x.Ma_Dm).FirstOrDefault();
+            if (ma == null)
+            {
+                ma = "MD_1";
+                return Ok(ma);
+            }
+            else
+            {
+                string[] str = ma.Split('_');
+                try
+                {
+                    int i = Convert.ToInt16(str[1]);
+                    return Ok("MD_" + (++i).ToString());
+                }
+                catch (Exception ex)
+                {
+                    return NotFound();
+                }
             }
         }
     }
