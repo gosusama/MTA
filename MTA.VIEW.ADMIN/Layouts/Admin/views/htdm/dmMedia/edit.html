@@ -1,0 +1,67 @@
+﻿<div>
+    <div class="modal-header">
+        <h3 class="modal-title">{{title()}}  {{lbl.lblCreate}}</h3>
+        <div class="button-close" ng-click="cancel()">
+            <i class="glyphicon glyphicon-remove x-close"></i>
+        </div>
+    </div>
+    <div class="modal-body">
+        <form role="form" name="_form">
+            <div class="row form-group">
+                <div class="col-lg-6">
+                    <label>Mã media</label><span style="color: red"> (1*)</span>
+                    <input type="text" class="form-control" ng-model="target.Ma" name="_title" maxlength="50" disabled required>
+                    <span style="color:red" ng-show="_form._title.$dirty && _form._title.$invalid">
+                        <span ng-show="_form._title.$error.required">Không được để trống</span>
+                    </span>
+                </div>
+                <!--<div class="col-lg-6">
+                    <label>Mã Cha</label>
+                    <input type="text" class="form-control" ng-model="target.maCha" name="_macha" ng-maxlength="200" ng-blur="selected(target.maCha)">
+                    <span style="color:red" ng-show="_form._macha.$invalid">
+                        <span>Nhập quá kí tự</span>
+                    </span>
+                </div>-->
+            </div>
+
+            <div class="row form-group">
+                <div class="col-lg-6">
+                    <label>Tên Media</label>
+                    <input type="text" id="tenMedia" class="form-control" ng-model="target.ten_Media" maxlength="100">
+                </div>
+                <div class="col-lg-6">
+                    <label>Loại Media</label><span style="color: red"> (2*)</span>
+                    <select class="form-control" ng-init="target.loai_Media = 1" ng-model="target.loai_Media" ng-change="optionSelect(target.loai_Media)" ng-options="opt.Value as opt.Text for opt in tempData('typeMedia')"></select>
+                </div>
+            </div>
+            <div class="row form-group">
+                <div class="col-lg-6" ng-show="target.loai_Media === 2">
+                    <label>Url Video</label>
+                    <input type="text" id="linkVideo" ng-disabled="!(target.loai_Media === 2)" class="form-control" ng-model="linkVideo" maxlength="100" disabled>
+                </div>
+            </div>
+            <div ng-show="target.loai_Media === 1" style="margin:10px 220px 0px 220px;">
+                <div style="width: 200px; height: 150px; overflow: hidden;" class="img-thumbnail">
+                    <img rel="popover" ng-src="{{target.link}}" width="200" height="150" title={{target.ten_Media}} />
+                </div>
+                <div style="width: 200px; height: 50px; text-align: center; padding: 8px;">
+                    <button class="btn btn-primary" type="button" disabled style="max-width:170px;min-width:170px;">
+                        {{target.ten_Media}}
+                    </button>
+                </div>
+            </div>
+            <div ng-show="target.loai_Media === 3">
+                <div class="row form-group" style="margin-left:15px;margin-top:10px;">
+                    <label style="float:left;">Tệp đính kèm : </label>
+                    <div class="preview" style="float: left; border-radius: 5px;padding-left:10px;">
+                        <a href="{{target.link}}" target="_blank">{{target.ten_Media}}</a>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button prevent-default type="submit" class="btn btn-primary" ng-disabled="_form.$invalid" ng-click="save()">{{config.label.btnSubmit}}</button>
+        <button prevent-default class="btn btn-default" ng-click="cancel()">{{config.label.btnCancel}}</button>
+    </div>
+</div>

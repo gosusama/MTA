@@ -107,6 +107,19 @@
             },
             moduleUrl: controlUrl + "dmNghienCuuController"
         },
+        {
+            name: 'dmMedia',
+            url: '/Media',
+            parent: 'layout',
+            abstract: false,
+            views: {
+                'viewMain@root': {
+                    templateUrl: layoutUrl + "dmMedia/index.html",
+                    controller: "dmMediaController as ctrl"
+                }
+            },
+            moduleUrl: controlUrl + "dmMediaController"
+        },
     ];
     return states;
 });

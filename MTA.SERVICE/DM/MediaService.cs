@@ -36,29 +36,60 @@ namespace MTA.SERVICE.NV
                 }
                 try
                 {
-                    for (int i = 0; i < request.Files.Count; i++)
+                    if(request.Files.Count > 1)
+                    {
+                        for (int i = 0; i < request.Files.Count; i++)
+                        {
+                            result = "";
+                            HttpPostedFile file = request.Files[i];
+                            List<string> tmp = file.FileName.Split('.').ToList();
+                            string extension = tmp[1];
+                            string name = request.Form["flag"];
+                            //file.ContentType
+                            string fileName = string.Format("{0}_{1}{2}{3}.{4}", name, DateTime.Now.Minute, DateTime.Now.Second,
+                                                                                            DateTime.Now.Millisecond, extension);
+                            file.SaveAs(path + fileName);
+                            result += path + fileName;
+                            Media instance = new Media()
+                            {
+                                Ma_Dm = i.ToString() + "-" + getNewCode(),
+                                Id = Guid.NewGuid().ToString(),
+                                MaCha = ma_Dm,
+                                Ten_Media = fileName,
+                                DoUuTien = 100,
+                                Loai_Media = Convert.ToByte(request.Form["loai_Media"]),
+                                Link = result,
+                                UnitCode = unitCode,
+                                ICreateDate = DateTime.Now,
+                                AnhBia = request.Form["anhBia["+i+"]"] == "true" ? 10 : 0
+                            };
+                            UnitOfWork.Repository<Media>().Insert(instance);
+                        }
+                    }
+                    else if(request.Files.Count == 1)
                     {
                         result = "";
-                        HttpPostedFile file = request.Files[i];
+                        HttpPostedFile file = request.Files[0];
                         List<string> tmp = file.FileName.Split('.').ToList();
                         string extension = tmp[1];
-                        string[] name = request.Form["ten_Media[" + i + "]"].Split('.');
+                        string name = request.Form["flag"];
                         //file.ContentType
-                        string fileName = string.Format("{0}_{1}{2}{3}.{4}", name[0], DateTime.Now.Minute, DateTime.Now.Second,
+                        string fileName = string.Format("{0}_{1}{2}{3}.{4}", name, DateTime.Now.Minute, DateTime.Now.Second,
                                                                                         DateTime.Now.Millisecond, extension);
                         file.SaveAs(path + fileName);
                         result += path + fileName;
                         Media instance = new Media()
                         {
-                            Ma_Dm = i.ToString() + "-" + getNewCode(),
+                            Ma_Dm = getNewCode(),
                             Id = Guid.NewGuid().ToString(),
                             MaCha = ma_Dm,
                             Ten_Media = fileName,
                             DoUuTien = 100,
-                            Loai_Media = Convert.ToByte(request.Form["loaiMedia"]),
+                            Loai_Media = Convert.ToByte(request.Form["loai_Media"]),
                             Link = result,
                             UnitCode = unitCode,
                             ICreateDate = DateTime.Now,
+                            AnhBia = request.Form["anhBia[0]"] == "true" ? 10 : 0 
                         };
                         UnitOfWork.Repository<Media>().Insert(instance);
                     }

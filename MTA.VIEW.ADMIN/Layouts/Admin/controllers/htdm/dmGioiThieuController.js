@@ -1,6 +1,6 @@
-﻿define(['ui-bootstrap','controllers/nv/mediaController'], function () {
+﻿define(['ui-bootstrap','controllers/htdm/dmMediaController'], function () {
     'use strict';
-    var app = angular.module('dmGioiThieu_Module', ['ui.bootstrap', 'mediaModule']);
+    var app = angular.module('dmGioiThieu_Module', ['ui.bootstrap', 'dmMediaModule']);
 
     app.factory('dmGioiThieu_Service', ['$http', 'configService', function ($http, configService) {
         var serviceUrl = configService.rootUrlWebApi + '/DM/GioiThieu';
@@ -24,6 +24,9 @@
             },
             checkExistByCodeParent: function (code) {
                 return $http.get(serviceUrl + '/checkExist/' + code);
+            },
+            GetMediaForByCode: function (code) {
+                return $http.get(serviceUrl + '/GetMediaForByCode/' + code);
             }
         }
         return result;
@@ -244,9 +247,10 @@
             };
             function saveImage() {
                 $scope.target.file = $scope.lstFile;
-                $scope.target.loaiMedia = 0;
+                $scope.target.loai_Media == 1;
+                $scope.target.flag = 'Anh';
                 upload.upload({
-                    url: configService.rootUrlWebApi + '/NV/Media/Upload',
+                    url: configService.rootUrlWebApi + '/DM/Media/Upload',
                     data: $scope.target
                 }).then(function (response) {
                     if (response.status) {
@@ -281,8 +285,8 @@
             };
         }]);
 
-    app.controller('dmGioiThieuDetailsController', ['$scope', '$uibModalInstance', '$location', '$http', 'configService', 'dmGioiThieu_Service', 'tempDataService', '$filter', '$uibModal', '$log', 'ngNotify', 'targetData','mediaService','$sce',
-        function ($scope, $uibModalInstance, $location, $http, configService, service, tempDataService, $filter, $uibModal, $log, ngNotify, targetData, mediaService, $sce) {
+    app.controller('dmGioiThieuDetailsController', ['$scope', '$uibModalInstance', '$location', '$http', 'configService', 'dmGioiThieu_Service', 'tempDataService', '$filter', '$uibModal', '$log', 'ngNotify', 'targetData','$sce','dmMediaService',
+        function ($scope, $uibModalInstance, $location, $http, configService, service, tempDataService, $filter, $uibModal, $log, ngNotify, targetData, $sce , mediaService) {
             $scope.config = angular.copy(configService);
             $scope.tempData = tempDataService.tempData;
             $scope.target = angular.copy(targetData);
@@ -307,7 +311,7 @@
             };            
         }]);
 
-    app.controller('dmGioiThieuDeleteController', ['$scope', '$uibModalInstance', '$location', '$http', 'configService', 'dmGioiThieu_Service', 'tempDataService', '$filter', '$uibModal', '$log', 'ngNotify', 'targetData', 'mediaService', '$timeout',
+    app.controller('dmGioiThieuDeleteController', ['$scope', '$uibModalInstance', '$location', '$http', 'configService', 'dmGioiThieu_Service', 'tempDataService', '$filter', '$uibModal', '$log', 'ngNotify', 'targetData', 'dmMediaService', '$timeout',
        function ($scope, $uibModalInstance, $location, $http, configService, service, tempDataService, $filter, $uibModal, $log, ngNotify, targetData,mediaService,$timeout) {
            $scope.config = angular.copy(configService);
            $scope.tempData = tempDataService.tempData;
@@ -336,7 +340,7 @@
            };
        }]);
 
-    app.controller('dmGioiThieuEditController', ['$scope', '$uibModalInstance', '$location', '$http', 'configService', 'dmGioiThieu_Service', 'tempDataService', '$filter', '$uibModal', '$log', 'ngNotify', 'targetData', 'mediaService', 'Upload','$timeout',
+    app.controller('dmGioiThieuEditController', ['$scope', '$uibModalInstance', '$location', '$http', 'configService', 'dmGioiThieu_Service', 'tempDataService', '$filter', '$uibModal', '$log', 'ngNotify', 'targetData', 'dmMediaService', 'Upload', '$timeout',
     function ($scope, $uibModalInstance, $location, $http, configService, service, tempDataService, $filter, $uibModal, $log, ngNotify, targetData ,mediaService , upload,$timeout) {
         $scope.config = angular.copy(configService);
         $scope.tempData = tempDataService.tempData;
@@ -412,9 +416,10 @@
         };
         function saveImage() {
             $scope.target.file = $scope.lstFile;
-            $scope.target.loaiMedia = 0;
+            $scope.target.loai_Media == 1;
+            $scope.target.flag = 'Anh';
             upload.upload({
-                url: configService.rootUrlWebApi + '/NV/Media/Upload',
+                url: configService.rootUrlWebApi + '/DM/Media/Upload',
                 data: $scope.target
             }).then(function (response) {
                 if (response.status) {
