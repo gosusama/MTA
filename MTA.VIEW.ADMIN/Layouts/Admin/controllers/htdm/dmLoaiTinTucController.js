@@ -1,9 +1,9 @@
-﻿define(['ui-bootstrap', 'controllers/htdm/dmMediaController'], function () {
+﻿define(['ui-bootstrap'], function () {
     'use strict';
-    var app = angular.module('dmTinTuc_Module', ['ui.bootstrap', 'dmMediaModule']);
+    var app = angular.module('dmLoaiTinTuc_Module', ['ui.bootstrap']);
 
-    app.factory('dmTinTuc_Service', ['$http', 'configService', function ($http, configService) {
-        var serviceUrl = configService.rootUrlWebApi + '/DM/TinTuc';
+    app.factory('dmLoaiTinTuc_Service', ['$http', 'configService', function ($http, configService) {
+        var serviceUrl = configService.rootUrlWebApi + '/DM/LoaiTinTuc';
         var result = {
             post: function (data) {
                 console.log('data', data);
@@ -25,13 +25,13 @@
         return result;
     }]);
     /* controller list */
-    app.controller('dmTinTucController', ['$scope', '$location', '$http', 'configService', 'dmTinTuc_Service', 'tempDataService', '$filter', '$uibModal', '$log', 'securityService', 'toaster',
+    app.controller('dmLoaiTinTucController', ['$scope', '$location', '$http', 'configService', 'dmLoaiTinTuc_Service', 'tempDataService', '$filter', '$uibModal', '$log', 'securityService', 'toaster',
         function ($scope, $location, $http, configService, service, tempDataService, $filter, $uibModal, $log, securityService, toaster) {
             $scope.config = angular.copy(configService);
             $scope.paged = angular.copy(configService.pageDefault);
             $scope.filtered = angular.copy(configService.paramDefault);
             $scope.tempData = tempDataService.tempData;
-            console.log('TinTuc');
+            console.log('LoaiTinTuc');
             function filterData() {
                 $scope.isLoading = true;
                 var postdata = { paged: $scope.paged, filtered: $scope.filtered };
@@ -48,7 +48,7 @@
             };
             filterData();
             //function loadAccessList() {
-            //    securityService.getAccessList('auTinTuc').then(function (successRes) {
+            //    securityService.getAccessList('auLoaiTinTuc').then(function (successRes) {
             //        if (successRes && successRes.status === 200) {
             //            $scope.accessList = successRes.data;
             //            if (!$scope.accessList.view) {
@@ -99,8 +99,8 @@
                 var modalInstance = $uibModal.open({
                     backdrop: 'static',
                     size: 'lg',
-                    templateUrl: configService.buildUrl('htdm/dmTinTuc', 'addNew'),
-                    controller: 'dmTinTucCreateController',
+                    templateUrl: configService.buildUrl('htdm/dmLoaiTinTuc', 'addNew'),
+                    controller: 'dmLoaiTinTucCreateController',
                     resolve: {}
                 });
                 modalInstance.result.then(function (updatedData) {
@@ -115,8 +115,8 @@
                 console.log('target', target);
                 var modalInstance = $uibModal.open({
                     backdrop: 'static',
-                    templateUrl: configService.buildUrl('htdm/dmTinTuc', 'edit'),
-                    controller: 'dmTinTucEditController',
+                    templateUrl: configService.buildUrl('htdm/dmLoaiTinTuc', 'edit'),
+                    controller: 'dmLoaiTinTucEditController',
                     resolve: {
                         targetData: function () {
                             return target;
@@ -135,8 +135,8 @@
                 console.log('target', target);
                 var modalInstance = $uibModal.open({
                     backdrop: 'static',
-                    templateUrl: configService.buildUrl('htdm/dmTinTuc', 'delete'),
-                    controller: 'dmTinTucDeleteController',
+                    templateUrl: configService.buildUrl('htdm/dmLoaiTinTuc', 'delete'),
+                    controller: 'dmLoaiTinTucDeleteController',
                     resolve: {
                         targetData: function () {
                             return target;
@@ -153,8 +153,8 @@
             $scope.details = function (target) {
                 var modalInstance = $uibModal.open({
                     backdrop: 'static',
-                    templateUrl: configService.buildUrl('htdm/dmTinTuc', 'details'),
-                    controller: 'dmTinTucDetailsController',
+                    templateUrl: configService.buildUrl('htdm/dmLoaiTinTuc', 'details'),
+                    controller: 'dmLoaiTinTucDetailsController',
                     resolve: {
                         targetData: function () {
                             return target;
@@ -170,7 +170,7 @@
 
         }]);
 
-    app.controller('dmTinTucCreateController', ['$scope', '$location', '$http', 'configService', 'dmTinTuc_Service', 'tempDataService', '$filter', '$uibModal', '$log', 'securityService', 'toaster', 'ngNotify', '$uibModalInstance', 'userService', '$timeout', 'Upload',
+    app.controller('dmLoaiTinTucCreateController', ['$scope', '$location', '$http', 'configService', 'dmLoaiTinTuc_Service', 'tempDataService', '$filter', '$uibModal', '$log', 'securityService', 'toaster', 'ngNotify', '$uibModalInstance', 'userService', '$timeout', 'Upload',
         function ($scope, $location, $http, configService, service, tempDataService, $filter, $uibModal, $log, securityService, toaster, ngNotify, $uibModalInstance, userService, $timeout, upload) {
             $scope.config = angular.copy(configService);
             $scope.tempData = tempDataService.tempData;
@@ -178,11 +178,10 @@
             $scope.lstFile = [];
             $scope.lstImagesSrc = [];
             $scope.isLoading = false;
-            $scope.title = function () { return 'Thêm mới danh mục tin tức'; };
+            $scope.title = function () { return 'Thêm mới danh mục đào tạo'; };
             $scope.target.ngayTao = new Date();
             $scope.target.manguoitao = userService.GetCurrentUser();
             $scope.target.ten_Media = [];
-            $scope.target.loai_Dm = "-1";
             function filterData() {
                 service.getNewInstance().then(function (response) {
                     if (response && response.status == 200) {
@@ -191,36 +190,7 @@
                 });
             }
             filterData();
-            $scope.listDanhMuc = [
-                {
-                    value: '0',
-                    text: "Tin tức sự kiện"
-                },
-                {
-                    value: '1',
-                    text: "Thông báo"
-                },
-                {
-                    value: '2',
-                    text: "Tin tức đào tạo"
-                },
-                {
-                    value: '3',
-                    text: "Tin tức sinh viên"
-                },
-                {
-                    value: '4',
-                    text: "Tin tức tuyển sinh"
-                },
-                {
-                    value: '5',
-                    text: "Tin tức sinh viên"
-                },
-                {
-                    value: '6',
-                    text: "Tin tức hợp tác"
-                }
-            ];
+
             $scope.uploadFile = function (input) {
                 console.log(input.files);
                 if (input.files && input.files.length > 0) {
@@ -289,63 +259,21 @@
             };
         }]);
 
-    app.controller('dmTinTucDetailsController', ['$scope', '$uibModalInstance', '$location', '$http', 'configService', 'dmTinTuc_Service', 'tempDataService', '$filter', '$uibModal', '$log', 'ngNotify', 'targetData', 'dmMediaService', '$sce',
-        function ($scope, $uibModalInstance, $location, $http, configService, service, tempDataService, $filter, $uibModal, $log, ngNotify, targetData, dmMediaService, $sce) {
+    app.controller('dmLoaiTinTucDetailsController', ['$scope', '$uibModalInstance', '$location', '$http', 'configService', 'dmLoaiTinTuc_Service', 'tempDataService', '$filter', '$uibModal', '$log', 'ngNotify', 'targetData', '$sce',
+        function ($scope, $uibModalInstance, $location, $http, configService, service, tempDataService, $filter, $uibModal, $log, ngNotify, targetData, $sce) {
             $scope.config = angular.copy(configService);
             $scope.tempData = tempDataService.tempData;
             $scope.target = angular.copy(targetData);
-            console.log('$scope.target', $scope.target);
             $scope.isLoading = false;
-            function filterData() {
-                dmMediaService.getImgForByCodeParent($scope.target.ma_Dm).then(function (response) {
-                    console.log('response', response);
-                    if (response.data && response.status == 200) {
-                        $scope.lstImagesSrc = response.data;
-                    }
-                });
-            };
-            $scope.listDanhMuc = [
-                {
-                    value: '0',
-                    text: "Tin tức sự kiện"
-                },
-                {
-                    value: '1',
-                    text: "Thông báo"
-                },
-                {
-                    value: '2',
-                    text: "Tin tức đào tạo"
-                },
-                {
-                    value: '3',
-                    text: "Tin tức sinh viên"
-                },
-                {
-                    value: '4',
-                    text: "Tin tức tuyển sinh"
-                },
-                {
-                    value: '5',
-                    text: "Tin tức sinh viên"
-                },
-                {
-                    value: '6',
-                    text: "Tin tức hợp tác"
-                }
-            ];
-            $scope.trustAsHtml = function (string) {
-                return $sce.trustAsHtml(string);
-            };
-            filterData();
-            $scope.title = function () { return 'Thông tin danh mục tin tức'; };
+            $scope.title = function () { return 'Thông tin danh mục đào tạo'; };
+            
             $scope.cancel = function () {
                 $uibModalInstance.close();
             };
         }]);
 
-    app.controller('dmTinTucEditController', ['$scope', '$uibModalInstance', '$location', '$http', 'configService', 'dmTinTuc_Service', 'tempDataService', '$filter', '$uibModal', '$log', 'ngNotify', 'targetData', 'dmMediaService', '$timeout', 'Upload',
-    function ($scope, $uibModalInstance, $location, $http, configService, service, tempDataService, $filter, $uibModal, $log, ngNotify, targetData, dmMediaService, $timeout, upload) {
+    app.controller('dmLoaiTinTucEditController', ['$scope', '$uibModalInstance', '$location', '$http', 'configService', 'dmLoaiTinTuc_Service', 'tempDataService', '$filter', '$uibModal', '$log', 'ngNotify', 'targetData', 'Upload', '$timeout',
+    function ($scope, $uibModalInstance, $location, $http, configService, service, tempDataService, $filter, $uibModal, $log, ngNotify, targetData, upload, $timeout) {
         $scope.config = angular.copy(configService);
         $scope.tempData = tempDataService.tempData;
         $scope.target = angular.copy(targetData);
@@ -353,109 +281,11 @@
         $scope.lstFile = [];
         $scope.lstImagesSrc = [];
         $scope.lstImages = [];
-        var temp = {};
         $scope.isEdit = false;
-        $scope.title = function () { return 'Cập nhật danh mục tin tức'; };
-        $scope.listDanhMuc = [
-                {
-                    value: '0',
-                    text: "Tin tức sự kiện"
-                },
-                {
-                    value: '1',
-                    text: "Thông báo"
-                },
-                {
-                    value: '2',
-                    text: "Tin tức đào tạo"
-                },
-                {
-                    value: '3',
-                    text: "Tin tức sinh viên"
-                },
-                {
-                    value: '4',
-                    text: "Tin tức tuyển sinh"
-                },
-                {
-                    value: '5',
-                    text: "Tin tức sinh viên"
-                },
-                {
-                    value: '6',
-                    text: "Tin tức hợp tác"
-                }
-        ];
-        function filterData() {
-            dmMediaService.getImgForByCodeParent($scope.target.ma_Dm).then(function (response) {
-                console.log('response', response);
-                if (response.data && response.status == 200) {
-                    $scope.lstImages = angular.copy(response.data);
-                    $scope.temp = angular.copy(response.data);
-                }
-            });
-        }
-        filterData();
-        $scope.uploadFile = function (input) {
-            $scope.isEdit = true;
-            if (input.files && input.files.length > 0) {
-                angular.forEach(input.files, function (file) {
-                    if (file.size < 3072000) {
-                        $scope.lstFile.push(file);
-                        $timeout(function () {
-                            var fileReader = new FileReader();
-                            fileReader.readAsDataURL(file);
-                            fileReader.onload = function (e) {
-                                $timeout(function () {
-                                    $scope.lstImagesSrc.push(e.target.result);
-                                });
-                            }
-                        });
-                    }
-                    else {
-                        ngNotify.set("Kích thước ảnh quá lớn !", { duration: 3000, type: 'error' });
-                    }
-                });
-            }
-        };
-        $scope.deleteImage = function (index) {
-            $scope.lstImagesSrc.splice(index, 1);
-            $scope.lstFile.splice(index, 1);
-            if ($scope.lstFile.length < 1) {
-                angular.element("#file-input-upload").val(null);
-            }
-        };
-        $scope.deleteImageOld = function (index) {
-            temp = $scope.lstImages[index].ma_Dm;
-            $scope.lstImages.splice(index, 1);         
-        };
-        function saveImage() {
-            $scope.target.file = $scope.lstFile;
-            $scope.target.loaiMedia = 0;
-            upload.upload({
-                url: configService.rootUrlWebApi + '/NV/Media/UpLoad',
-                data: $scope.target
-            }).then(function (response) {
-                if (response.status) {
-                }
-                else {
-                    toaster.pop('error', "Lỗi:", "Không lưu được ảnh! Có thể đã trùng!");
-                }
-            });
-        }
+        var temp = {};
+        $scope.title = function () { return 'Cập nhật danh mục đào tạo'; };
+       
         $scope.save = function () {
-            console.log('$scope.lstFile.length', $scope.lstFile.length);
-            if ($scope.temp.length != $scope.lstImages.length) {
-                dmMediaService.deleteByCode(temp).then(function (res) {
-                    if (res && res.status === 200) {
-                        saveImage();
-                    }
-                });
-            }
-            else {
-                saveImage();
-            }
-
             service.update($scope.target).then(function (successRes) {
                 console.log('successRes', successRes);
                 if (successRes && successRes.status === 200 && successRes.data.status) {
@@ -475,30 +305,13 @@
         };
     }]);
 
-    app.controller('dmTinTucDeleteController', ['$scope', '$uibModalInstance', '$location', '$http', 'configService', 'dmTinTuc_Service', 'tempDataService', '$filter', '$uibModal', '$log', 'targetData', 'ngNotify', 'dmMediaService',
-    function ($scope, $uibModalInstance, $location, $http, configService, service, tempDataService, $filter, $uibModal, $log, targetData, ngNotify, dmMediaService) {
+    app.controller('dmLoaiTinTucDeleteController', ['$scope', '$uibModalInstance', '$location', '$http', 'configService', 'dmLoaiTinTuc_Service', 'tempDataService', '$filter', '$uibModal', '$log', 'targetData', 'ngNotify',
+    function ($scope, $uibModalInstance, $location, $http, configService, service, tempDataService, $filter, $uibModal, $log, targetData, ngNotify) {
         $scope.config = angular.copy(configService);
         $scope.target = angular.copy(targetData);
         $scope.isLoading = false;
-        $scope.title = function () { return 'Xoá tin tức'; };
-        $scope.save = function () {
-            service.deleteItem($scope.target).then(function (reponse) {
-                if (reponse && reponse.status === 200) {
-                    dmMediaService.deleteAllForCodeParent($scope.target.ma_Dm).then(function (res) {
-                        if (res && res.status === 200) {
-                            ngNotify.set('Xóa thành công', { type: 'success' });
-                            $uibModalInstance.close($scope.target);
-                        }
-                    });
-
-                } else {
-                    ngNotify.set(reponse.data.message, { duration: 3000, type: 'error' });
-                }
-            },
-                 function (errorRes) {
-                     console.log('errorRes', errorRes);
-                 });
-        }
+        $scope.title = function () { return 'Xoá đào tạo'; };
+        
         $scope.cancel = function () {
             $uibModalInstance.close();
         };

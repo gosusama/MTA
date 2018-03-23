@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MTA.SERVICE.NV;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -11,6 +12,6 @@ namespace MTA.SERVICE.API.Api.NV
     [Authorize]
     public class NvTuyenSinhController : ApiController
     {
-        private readonly 
+        private readonly INvTuyenSinhService _service;
     }
 }

@@ -1,6 +1,6 @@
-﻿define(['ui-bootstrap', 'controllers/nv/mediaController'], function () {
+﻿define(['ui-bootstrap', 'controllers/htdm/dmMediaController'], function () {
     'use strict';
-    var app = angular.module('dmDaoTao_Module', ['ui.bootstrap', 'mediaModule']);
+    var app = angular.module('dmDaoTao_Module', ['ui.bootstrap', 'dmMediaModule']);
 
     app.factory('dmDaoTao_Service', ['$http', 'configService', function ($http, configService) {
         var serviceUrl = configService.rootUrlWebApi + '/DM/DaoTao';
@@ -274,15 +274,15 @@
             };
         }]);
 
-    app.controller('dmDaoTaoDetailsController', ['$scope', '$uibModalInstance', '$location', '$http', 'configService', 'dmDaoTao_Service', 'tempDataService', '$filter', '$uibModal', '$log', 'ngNotify', 'targetData', 'mediaService', '$sce',
-        function ($scope, $uibModalInstance, $location, $http, configService, service, tempDataService, $filter, $uibModal, $log, ngNotify, targetData, mediaService, $sce) {
+    app.controller('dmDaoTaoDetailsController', ['$scope', '$uibModalInstance', '$location', '$http', 'configService', 'dmDaoTao_Service', 'tempDataService', '$filter', '$uibModal', '$log', 'ngNotify', 'targetData', 'dmMediaService', '$sce',
+        function ($scope, $uibModalInstance, $location, $http, configService, service, tempDataService, $filter, $uibModal, $log, ngNotify, targetData, dmMediaService, $sce) {
             $scope.config = angular.copy(configService);
             $scope.tempData = tempDataService.tempData;
             $scope.target = angular.copy(targetData);
             $scope.isLoading = false;
             $scope.title = function () { return 'Thông tin danh mục đào tạo'; };
             function filterData() {
-                mediaService.getImgForByCodeParent($scope.target.ma_Dm).then(function (response) {
+                dmMediaService.getImgForByCodeParent($scope.target.ma_Dm).then(function (response) {
                     console.log('response', response);
                     if (response.data && response.status == 200) {
                         $scope.lstImagesSrc = response.data;
@@ -312,8 +312,8 @@
             };
         }]);
 
-    app.controller('dmDaoTaoEditController', ['$scope', '$uibModalInstance', '$location', '$http', 'configService', 'dmDaoTao_Service', 'tempDataService', '$filter', '$uibModal', '$log', 'ngNotify', 'targetData', 'mediaService', 'Upload', '$timeout',
-    function ($scope, $uibModalInstance, $location, $http, configService, service, tempDataService, $filter, $uibModal, $log, ngNotify, targetData, mediaService, upload, $timeout) {
+    app.controller('dmDaoTaoEditController', ['$scope', '$uibModalInstance', '$location', '$http', 'configService', 'dmDaoTao_Service', 'tempDataService', '$filter', '$uibModal', '$log', 'ngNotify', 'targetData', 'dmMediaService', 'Upload', '$timeout',
+    function ($scope, $uibModalInstance, $location, $http, configService, service, tempDataService, $filter, $uibModal, $log, ngNotify, targetData, dmMediaService, upload, $timeout) {
         $scope.config = angular.copy(configService);
         $scope.tempData = tempDataService.tempData;
         $scope.target = angular.copy(targetData);
@@ -325,7 +325,7 @@
         var temp = {};
         $scope.title = function () { return 'Cập nhật danh mục đào tạo'; };
         function filterData() {
-            mediaService.getImgForByCodeParent($scope.target.ma_Dm).then(function (response) {
+            dmMediaService.getImgForByCodeParent($scope.target.ma_Dm).then(function (response) {
                 console.log('response', response);
                 if (response.data && response.status == 200) {
                     $scope.lstImages = angular.copy(response.data);
@@ -398,7 +398,7 @@
         $scope.save = function () {
             console.log('$scope.lstFile.length', $scope.lstFile.length);
             if ($scope.temp.length != $scope.lstImages.length) {
-                mediaService.deleteByCode(temp).then(function (res) {
+                dmMediaService.deleteByCode(temp).then(function (res) {
                     if (res && res.status === 200) {
                         saveImage();
                     }
@@ -427,8 +427,8 @@
         };
     }]);
 
-    app.controller('dmDaoTaoDeleteController', ['$scope', '$uibModalInstance', '$location', '$http', 'configService', 'dmDaoTao_Service', 'tempDataService', '$filter', '$uibModal', '$log', 'targetData', 'ngNotify', 'mediaService',
-    function ($scope, $uibModalInstance, $location, $http, configService, service, tempDataService, $filter, $uibModal, $log, targetData, ngNotify, mediaService) {
+    app.controller('dmDaoTaoDeleteController', ['$scope', '$uibModalInstance', '$location', '$http', 'configService', 'dmDaoTao_Service', 'tempDataService', '$filter', '$uibModal', '$log', 'targetData', 'ngNotify', 'dmMediaService',
+    function ($scope, $uibModalInstance, $location, $http, configService, service, tempDataService, $filter, $uibModal, $log, targetData, ngNotify, dmMediaService) {
         $scope.config = angular.copy(configService);
         $scope.target = angular.copy(targetData);
         $scope.isLoading = false;
@@ -436,7 +436,7 @@
         $scope.save = function () {
             service.deleteItem($scope.target).then(function (reponse) {
                 if (reponse && reponse.status === 200) {
-                    mediaService.deleteAllForCodeParent($scope.target.ma_Dm).then(function (res) {
+                    dmMediaService.deleteAllForCodeParent($scope.target.ma_Dm).then(function (res) {
                         if (res && res.status === 200) {
                             ngNotify.set('Xóa thành công', { type: 'success' });
                             $uibModalInstance.close($scope.target);

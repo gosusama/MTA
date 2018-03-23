@@ -35,6 +35,7 @@ namespace MTA.ENTITY
         public virtual DbSet<Dm_VanBan> DM_VANBAN { get; set; }
         public virtual DbSet<Media> MEDIA { get; set; }
         public virtual DbSet<Dm_NghienCuu> DM_NghienCuu {get;set;}
+        public virtual DbSet<Dm_LoaiTinTuc> DM_LoaiTinTuc { get; set; }
         //
     }
 }

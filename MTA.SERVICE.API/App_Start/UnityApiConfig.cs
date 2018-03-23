@@ -72,6 +72,9 @@ namespace MTA.SERVICE.API.App_Start
             container.RegisterType<IRepository<Dm_NghienCuu>, Repository<Dm_NghienCuu>>(new HierarchicalLifetimeManager());
             container.RegisterType<IDmNghienCuuService, DmNghienCuuService>(new HierarchicalLifetimeManager());
 
+            container.RegisterType<IRepository<Dm_LoaiTinTuc>, Repository<Dm_LoaiTinTuc>>(new HierarchicalLifetimeManager());
+            container.RegisterType<IDmLoaiTinTucService, DmLoaiTinTucService>(new HierarchicalLifetimeManager());
+
             config.DependencyResolver = new UnityResolver(container);
         }
     }

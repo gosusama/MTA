@@ -120,6 +120,19 @@
             },
             moduleUrl: controlUrl + "dmMediaController"
         },
+        {
+            name: 'dmLoaiTinTuc',
+            url: '/dmLoaiTinTuc',
+            parent: 'layout',
+            abstract: false,
+            views: {
+                'viewMain@root': {
+                    templateUrl: layoutUrl + "dmLoaiTinTuc/index.html",
+                    controller: "dmLoaiTinTucController as ctrl"
+                }
+            },
+            moduleUrl: controlUrl + "dmLoaiTinTucController"
+        },
     ];
     return states;
 });
