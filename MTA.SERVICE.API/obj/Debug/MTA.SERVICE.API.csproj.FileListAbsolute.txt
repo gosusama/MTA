@@ -235,9 +235,6 @@ D:\MTA\MTA\MTA.SERVICE.API\obj\Debug\MTA.SERVICE.API.csprojResolveAssemblyRefere
 D:\MTA\MTA\MTA.SERVICE.API\obj\Debug\MTA.SERVICE.API.dll
 D:\MTA\MTA\MTA.SERVICE.API\obj\Debug\MTA.SERVICE.API.pdb
 D:\MTA\MTA\MTA.SERVICE.API\bin\System.Linq.Dynamic.dll
-D:\MTA.WEB\MTA\MTA.SERVICE.API\obj\Debug\MTA.SERVICE.API.csprojResolveAssemblyReference.cache
-D:\MTA.WEB\MTA\MTA.SERVICE.API\obj\Debug\MTA.SERVICE.API.dll
-D:\MTA.WEB\MTA\MTA.SERVICE.API\obj\Debug\MTA.SERVICE.API.pdb
 D:\MTA.WEB\MTA\MTA.SERVICE.API\bin\ApplicationInsights.config
 D:\MTA.WEB\MTA\MTA.SERVICE.API\bin\roslyn\csc.exe
 D:\MTA.WEB\MTA\MTA.SERVICE.API\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
@@ -315,3 +312,6 @@ D:\MTA.WEB\MTA\MTA.SERVICE.API\bin\System.Web.Http.xml
 D:\MTA.WEB\MTA\MTA.SERVICE.API\bin\System.Web.Http.Owin.xml
 D:\MTA.WEB\MTA\MTA.SERVICE.API\bin\Newtonsoft.Json.xml
 D:\MTA.WEB\MTA\MTA.SERVICE.API\bin\System.Web.Http.WebHost.xml
+D:\MTA.WEB\MTA\MTA.SERVICE.API\obj\Debug\MTA.SERVICE.API.csprojResolveAssemblyReference.cache
+D:\MTA.WEB\MTA\MTA.SERVICE.API\obj\Debug\MTA.SERVICE.API.dll
+D:\MTA.WEB\MTA\MTA.SERVICE.API\obj\Debug\MTA.SERVICE.API.pdb

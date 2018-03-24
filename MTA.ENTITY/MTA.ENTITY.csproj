@@ -59,6 +59,7 @@
     <Compile Include="Authorize\AU_NGUOIDUNG_QUYEN.cs" />
     <Compile Include="Authorize\AU_NHOMQUYEN.cs" />
     <Compile Include="Authorize\AU_NHOMQUYEN_CHUCNANG.cs" />
+    <Compile Include="BaseEntity.cs" />
     <Compile Include="Common\GrantGroupObj.cs" />
     <Compile Include="Common\GrantInfoObj.cs" />
     <Compile Include="Common\UserInfo.cs" />
@@ -69,16 +70,27 @@
     <Compile Include="EntityBase.cs" />
     <Compile Include="HelperHash.cs" />
     <Compile Include="IDataContext.cs" />
+    <Compile Include="IDContext.cs" />
     <Compile Include="IObjectState.cs" />
     <Compile Include="Migrations\201803110359356_init.cs" />
     <Compile Include="Migrations\201803110359356_init.Designer.cs">
       <DependentUpon>201803110359356_init.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201803211409345_updateMedia.cs" />
+    <Compile Include="Migrations\201803211409345_updateMedia.Designer.cs">
+      <DependentUpon>201803211409345_updateMedia.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201803231515288_update-23-3.cs" />
+    <Compile Include="Migrations\201803231515288_update-23-3.Designer.cs">
+      <DependentUpon>201803231515288_update-23-3.cs</DependentUpon>
     </Compile>
     <Compile Include="MTADbContext.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="NV\Dm_DaoTao.cs" />
     <Compile Include="NV\Dm_GioiThieu.cs" />
     <Compile Include="NV\Dm_HopTac.cs" />
+    <Compile Include="NV\Dm_LoaiTinTuc.cs" />
+    <Compile Include="NV\Dm_NghienCuu.cs" />
     <Compile Include="NV\Dm_TinTuc.cs" />
     <Compile Include="NV\Dm_TraLoi.cs" />
     <Compile Include="NV\Dm_TuyenSinh.cs" />
@@ -102,6 +114,12 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201803110359356_init.resx">
       <DependentUpon>201803110359356_init.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201803211409345_updateMedia.resx">
+      <DependentUpon>201803211409345_updateMedia.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201803231515288_update-23-3.resx">
+      <DependentUpon>201803231515288_update-23-3.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

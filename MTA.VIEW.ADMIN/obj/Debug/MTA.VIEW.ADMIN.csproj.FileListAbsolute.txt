@@ -121,6 +121,7 @@ D:\MTA.WEB\MTA\MTA.VIEW.ADMIN\bin\MTA.VIEW.ADMIN.dll.config
 D:\MTA.WEB\MTA\MTA.VIEW.ADMIN\bin\MTA.VIEW.ADMIN.dll
 D:\MTA.WEB\MTA\MTA.VIEW.ADMIN\bin\MTA.VIEW.ADMIN.pdb
 D:\MTA.WEB\MTA\MTA.VIEW.ADMIN\bin\Antlr3.Runtime.dll
+D:\MTA.WEB\MTA\MTA.VIEW.ADMIN\bin\CKFinder.dll
 D:\MTA.WEB\MTA\MTA.VIEW.ADMIN\bin\Microsoft.AI.Agent.Intercept.dll
 D:\MTA.WEB\MTA\MTA.VIEW.ADMIN\bin\Microsoft.AI.DependencyCollector.dll
 D:\MTA.WEB\MTA\MTA.VIEW.ADMIN\bin\Microsoft.AI.PerfCounterCollector.dll

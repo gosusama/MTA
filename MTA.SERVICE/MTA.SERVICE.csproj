@@ -55,6 +55,10 @@
     <Reference Include="System.Runtime.Caching" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Web" />
+    <Reference Include="System.Web.Http, Version=5.2.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.4\lib\net45\System.Web.Http.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -78,6 +82,7 @@
     <Compile Include="Authorize\AuNhomQuyen\AuNhomQuyenService.cs" />
     <Compile Include="Authorize\AuNhomQuyen\AuNhomQuyenVm.cs" />
     <Compile Include="Authorize\SharedService.cs" />
+    <Compile Include="Authorize\Utils\CustomerAuthorize.cs" />
     <Compile Include="AutoMapperConfig.cs" />
     <Compile Include="BuildQuery\IConverter.cs" />
     <Compile Include="BuildQuery\Implimentations\QueryBuilder.cs" />
@@ -101,6 +106,18 @@
     <Compile Include="BuildQuery\Types\FilterMethod.cs" />
     <Compile Include="BuildQuery\Types\OrderMethod.cs" />
     <Compile Include="DataDto.cs" />
+    <Compile Include="DM\DmDaoTaoService.cs" />
+    <Compile Include="DM\DmDaoTaoVm.cs" />
+    <Compile Include="DM\DmGioiThieuService.cs" />
+    <Compile Include="DM\DmGioiThieuVm.cs" />
+    <Compile Include="DM\DmLoaiTinTucService.cs" />
+    <Compile Include="DM\DmLoaiTinTucVm.cs" />
+    <Compile Include="DM\DmNghienCuuService.cs" />
+    <Compile Include="DM\DmNghienCuuVm.cs" />
+    <Compile Include="DM\DmTinTucService.cs" />
+    <Compile Include="DM\DmTinTucVm.cs" />
+    <Compile Include="DM\MediaService.cs" />
+    <Compile Include="DM\MediaVM.cs" />
     <Compile Include="Helper\ChoiceObj.cs" />
     <Compile Include="Helper\ClassHelper.cs" />
     <Compile Include="Helper\JObjectClient.cs" />
@@ -113,6 +130,8 @@
     <Compile Include="IRepository.cs" />
     <Compile Include="IService.cs" />
     <Compile Include="IUnitOfWork.cs" />
+    <Compile Include="NV\NvTuyenSinhService.cs" />
+    <Compile Include="NV\NvTuyenSinhVm.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository.cs" />
@@ -136,10 +155,7 @@
       <Name>MTA.ENTITY</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Authorize\Utils\" />
-    <Folder Include="NV\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
