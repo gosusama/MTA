@@ -14,6 +14,7 @@ using MTA.SERVICE.NV;
 using Newtonsoft.Json.Linq;
 using MTA.ENTITY.Authorize;
 using MTA.SERVICE.BuildQuery;
+using System.Web;
 
 namespace MTA.SERVICE.API.Api.DM
 {
@@ -100,14 +101,47 @@ namespace MTA.SERVICE.API.Api.DM
                 result.Message = "Id không hợp lệ";
                 return Ok(result);
             }
-
             try
             {
                 var item = _service.Update(instance);
                 _service.UnitOfWork.Save();
                 result.Status = true;
-                result.Message = "Sửa thành công";
-                result.Data = item;
+                result.Message = "Sửa thành công !";
+                return Ok(result);
+            }
+            catch (Exception e)
+            {
+                result.Status = false;
+                result.Message = e.Message;
+                return Ok(result);
+            }
+        }
+
+        [Route("Update")]
+        [AllowAnonymous]
+        [HttpPost]
+        public async Task<IHttpActionResult> Update()
+        {
+            var result = new TransferObj<string>();
+            try
+            {
+                HttpRequest request = HttpContext.Current.Request;
+                if (request.Form["link_Old"] != "")
+                {
+                    Media instance = _service.FindById(request.Form["id"]);
+                    result.Status = _service.UpdateMedia(request, instance);
+                }
+                else
+                {
+                    Media instance = _service.FindById(request.Form["id"]);
+                    instance.Ten_Media = request.Form["ten_Media"];
+                    instance.IUpdateDate = DateTime.Now;
+                    instance.AnhBia = Convert.ToInt16(request.Form["anhBia"]);
+                    _service.Update(instance);
+                    _service.UnitOfWork.SaveAsync();
+                    result.Message = "Sửa thành công !";
+                    result.Status = true;
+                }
                 return Ok(result);
             }
             catch (Exception e)
@@ -215,7 +249,7 @@ namespace MTA.SERVICE.API.Api.DM
                 return Ok(result);
             }
         }
-
+        
         [HttpGet]
         [Route("getNewInstance")]
         public IHttpActionResult GetNewInstance()

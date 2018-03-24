@@ -15,6 +15,7 @@ namespace MTA.SERVICE.NV
     {
         bool Upload(string unitCode);
         bool DeleteFile(string path);
+        bool UpdateMedia(HttpRequest request, Media instance);
     }
     public class MediaService : DataInfoServiceBase<Media>, IMediaService
     {
@@ -73,6 +74,7 @@ namespace MTA.SERVICE.NV
                         List<string> tmp = file.FileName.Split('.').ToList();
                         string extension = tmp[1];
                         string name = request.Form["flag"];
+                        string name_Media = request.Form["ten_Media"];
                         //file.ContentType
                         string fileName = string.Format("{0}_{1}{2}{3}.{4}", name, DateTime.Now.Minute, DateTime.Now.Second,
                                                                                         DateTime.Now.Millisecond, extension);
@@ -83,7 +85,7 @@ namespace MTA.SERVICE.NV
                             Ma_Dm = getNewCode(),
                             Id = Guid.NewGuid().ToString(),
                             MaCha = ma_Dm,
-                            Ten_Media = fileName,
+                            Ten_Media = name_Media == null ? fileName : name_Media,
                             DoUuTien = 100,
                             Loai_Media = Convert.ToByte(request.Form["loai_Media"]),
                             Link = result,
@@ -136,6 +138,53 @@ namespace MTA.SERVICE.NV
             catch (Exception e)
             {
                 return false;
+            }
+        }
+        public bool UpdateMedia(HttpRequest request, Media instance)
+        {
+            string result = "";
+            try
+            {
+                string path = WebConfigurationManager.AppSettings["rootPhysical"] + "\\Upload\\";
+                
+                var ma_Dm = request.Form["ma_Dm"];
+                path += ma_Dm + "\\";
+                if (!Directory.Exists(path))
+                {
+                    Directory.CreateDirectory(path);
+                }
+                try
+                {
+                    DeleteFile(request.Form["link_Old"]);
+                    result = "";
+                    HttpPostedFile file = request.Files[0];
+                    List<string> tmp = file.FileName.Split('.').ToList();
+                    string extension = tmp[1];
+                    string name = request.Form["flag"];
+                    string name_Media = request.Form["ten_Media"];
+                    //file.ContentType
+                    string fileName = string.Format("{0}_{1}{2}{3}.{4}", name, DateTime.Now.Minute, DateTime.Now.Second,
+                                                                                    DateTime.Now.Millisecond, extension);
+                    file.SaveAs(path + fileName);
+                    result += path + fileName;
+                    instance.Ten_Media = request.Form["ten_Media"];
+                    instance.IUpdateDate = DateTime.Now;
+                    instance.AnhBia = Convert.ToInt16(request.Form["anhBia"]);
+                    instance.AnhBia = request.Form["anhBia"] == "10" ? 10 : 0;
+                    instance.Link = result;
+                    UnitOfWork.Repository<Media>().Update(instance);
+                    UnitOfWork.SaveAsync();
+                    return true;
+                }
+                catch (Exception ex)
+                {
+                    return false;
+                    throw ex;
+                }
+            }
+            catch (Exception e)
+            {
+                throw e;
             }
         }
     }

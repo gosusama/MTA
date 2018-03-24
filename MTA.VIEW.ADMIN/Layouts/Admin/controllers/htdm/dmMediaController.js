@@ -23,6 +23,9 @@
             deleteByCode: function (params) {
                 return $http.delete(serviceUrl + '/DeleteItem/' + params.id, params);
             },
+            update: function (params) {
+                return $http.put(serviceUrl + '/edit/' + params.id, params)
+            }
         };
         return result;
     }]);
@@ -104,7 +107,7 @@
                    resolve: {}
                });
                modalInstance.result.then(function (updatedData) {
-                   $scope.refresh();
+                   filterData();
                }, function () {
                    $log.info('Modal dismissed at: ' + new Date());
                });
@@ -192,6 +195,7 @@
                 });
             }
             filterData();
+            $scope.isDisable_btnUpload = false;
 
             $scope.optionSelect = function (index) {
                 if (index == 1) {
@@ -234,6 +238,9 @@
                                 fileReader.onload = function (e) {
                                     $timeout(function () {
                                         $scope.lstFilesSrc.push(e.target.result);
+                                        if ($scope.target.loai_Media === 1) {
+                                            $scope.isDisable_btnUpload = true;
+                                        }
                                     });
                                 }
                             });
@@ -248,6 +255,7 @@
             $scope.deleteFile = function (index) {
                 $scope.lstFilesSrc.splice(index, 1);
                 $scope.lstFile.splice(index, 1);
+                $scope.isDisable_btnUpload = false;
                 if ($scope.lstFile.length < 1) {
                     angular.element("#file-input-upload").val(null);
                 }
@@ -258,7 +266,6 @@
                 if ($scope.target.loai_Media == 1) {
                     $scope.target.flag = 'Anh';
                     $scope.target.anhBia = $scope.anh_Bia;
-                    console.log($scope.anh_Bia);
                 }
                 else {
                     $scope.target.flag = 'Tep';
@@ -268,6 +275,7 @@
                     data: $scope.target
                 }).then(function (response) {
                     if (response.status) {
+                        $uibModalInstance.close($scope.target);
                     }
                     else {
                         toaster.pop('error', "Lỗi:", "Không lưu được file! Có thể đã trùng!");
@@ -280,7 +288,10 @@
                     saveFile();
                 }               
                 else {
+                    $scope.target.ma_Dm = $scope.target.Ma;
+                    $scope.target.link = $scope.linkVideo;
                     service.post($scope.target).then(function (successRes) {
+                        console.log('$scope.target',$scope.target);
                         if (successRes && successRes.status === 201 && successRes.data.status) {
                             ngNotify.set(successRes.data.message, { type: 'success' });
                             $uibModalInstance.close($scope.target);
@@ -304,6 +315,7 @@
             $scope.tempData = tempDataService.tempData;
             $scope.target = angular.copy(targetData);
             $scope.isLoading = false;
+            $scope.target.Ma = angular.copy(targetData.ma_Dm);
             $scope.title = function () { return 'Thông tin media'; };
 
             $scope.cancel = function () {
@@ -334,17 +346,133 @@
                $uibModalInstance.close();
            };
        }]);
-    app.controller('dmMediaEditController', ['$scope', '$uibModalInstance', '$location', '$http', 'configService', 'dmMediaService', 'tempDataService', '$filter', '$uibModal', '$log', 'ngNotify', 'targetData', '$sce',
-        function ($scope, $uibModalInstance, $location, $http, configService, service, tempDataService, $filter, $uibModal, $log, ngNotify, targetData, $sce) {
+    app.controller('dmMediaEditController', ['$scope', '$uibModalInstance', '$location', '$http', 'configService', 'dmMediaService', 'tempDataService', '$filter', '$uibModal', '$log', 'ngNotify', 'targetData', '$sce','$timeout','Upload',
+        function ($scope, $uibModalInstance, $location, $http, configService, service, tempDataService, $filter, $uibModal, $log, ngNotify, targetData, $sce,$timeout,upload) {
             $scope.config = angular.copy(configService);
             $scope.tempData = tempDataService.tempData;
             $scope.target = angular.copy(targetData);
+            $scope.lstFile = [];
+            $scope.lstFilesSrc = [];
             $scope.isLoading = false;
             $scope.title = function () { return 'Sửa thông tin media'; };
+            $scope.target.Ma = angular.copy(targetData.ma_Dm);
+            $scope.isDeleted = false;
+            var linkTemp = "";           
+            console.log('$scope.target', $scope.target);
 
+            if ($scope.target.loai_Media == 1) {
+                $scope.acceptFile = 'image/*';
+            }
+            else if ($scope.target.loai_Media == 3) {
+                $scope.acceptFile = 'application/pdf,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel';
+            }
+
+            if($scope.target.link!= null && $scope.target.loai_Media != 2){
+                $scope.isDisable = true;
+            }
+            else {
+                $scope.isDisable = false;
+            }
+
+            if ($scope.target.loai_Media == 2) {
+                $scope.linkVideo = $scope.target.link;
+            }
+
+            $scope.deleteFile = function () {
+                linkTemp = angular.copy($scope.target.link);
+                $scope.target.link = null;
+                $scope.target.ten_Media = null;
+                $scope.target.anhBia = 0;
+                $scope.isDeleted = true;
+                $scope.isDisable = false;
+            }
+            
             $scope.cancel = function () {
                 $uibModalInstance.close();
             };
+
+            $scope.uploadFile = function (input) {
+                if (input.files && input.files.length > 0) {
+                    var i = 0;
+                    angular.forEach(input.files, function (file) {
+                        if (file.size < 3072000) {
+                            $scope.lstFile.push(file);
+                            $timeout(function () {
+                                var fileReader = new FileReader();
+                                fileReader.readAsDataURL(file);
+                                fileReader.onload = function (e) {
+                                    $timeout(function () {
+                                        $scope.lstFilesSrc.push(e.target.result);
+                                        if ($scope.target.loai_Media === 1) {
+                                            $scope.isDisable_btnUpload = true;
+                                        }
+                                    });
+                                }
+                            });
+                        }
+                        else {
+                            ngNotify.set("Kích thước file quá lớn !", { duration: 3000, type: 'error' });
+                        }
+                    });
+                }
+            };
+
+            $scope.deleteFileNew = function (index) {
+                $scope.lstFilesSrc.splice(index, 1);
+                $scope.lstFile.splice(index, 1);
+                $scope.isDisable_btnUpload = false;
+                if ($scope.lstFile.length < 1) {
+                    angular.element("#file-input-upload").val(null);
+                }
+            };
+
+            $scope.save = function () {
+                if ($scope.target.loai_Media == 2) {
+                    $scope.target.ma_Dm = $scope.target.Ma;
+                    $scope.target.link = $scope.linkVideo;
+                    service.update($scope.target).then(function (successRes) {
+                        console.log('successRes', successRes);
+                        if (successRes && successRes.status === 200 && successRes.data.status) {
+                            ngNotify.set(successRes.data.message, { type: 'success' });
+                            $uibModalInstance.close($scope.target);
+                        } else {
+                            ngNotify.set(successRes.data.message, { duration: 3000, type: 'error' });
+                        }
+                    },
+                    function (errorRes) {
+                        console.log('errorRes', errorRes);
+                    });
+                }
+                else {
+                    $scope.target.anhBia = $scope.anhBia
+                    $scope.target.link_Old = linkTemp;
+                    $scope.target.ma_Dm = $scope.target.Ma;
+                    $scope.target.file = $scope.lstFile;
+                    if ($scope.target.loai_Media == 1) {
+                        $scope.target.flag = 'Anh';
+                        if ($scope.target.link_Old != "") {
+                            $scope.target.anhBia = $scope.anh_Bia[0];
+                        }
+                    }
+                    else {
+                        $scope.target.flag = 'Tep';
+                    }
+
+                    upload.upload({
+                        url: configService.rootUrlWebApi + '/DM/Media/Update',
+                        data: $scope.target
+                    }).then(function (response) {
+                        if (response.status) {
+                            $uibModalInstance.close($scope.target);
+                            ngNotify.set(response.data.message, { type: 'success' });
+                        }
+                        else {
+                            toaster.pop('error', "Lỗi:", "Không lưu được file! Có thể đã trùng!");
+                        }
+                    });
+                }
+            }
+
         }]);
     return app;
 });

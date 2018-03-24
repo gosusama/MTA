@@ -377,7 +377,6 @@
                 angular.forEach(input.files, function (file) {
                     if (file.size < 3072000) {
                         $scope.lstFile.push(file);
-                        console.log($scope.lstFile);
                         $scope.target.ten_Media[i++] = file.name;
                         $timeout(function () {
                             var fileReader = new FileReader();

@@ -27,20 +27,31 @@
             <div class="row form-group">
                 <div class="col-lg-6">
                     <label>Tên Media</label>
-                    <input type="text" id="tenMedia" class="form-control" ng-model="target.ten_Media" maxlength="100">
+                    <input type="text" id="tenMedia" class="form-control" ng-model="target.ten_Media" name="_ten_Media" ng-maxlength="100">
+                    <span style="color:red" ng-show="_form._ten_Media.$invalid">
+                        <span>Nhập quá kí tự</span>
+                    </span>
                 </div>
                 <div class="col-lg-6">
                     <label>Loại Media</label><span style="color: red"> (2*)</span>
-                    <select class="form-control" ng-init="target.loai_Media = 1" ng-model="target.loai_Media" ng-change="optionSelect(target.loai_Media)" ng-options="opt.Value as opt.Text for opt in tempData('typeMedia')"></select>
+                    <select class="form-control" ng-model="target.loai_Media" ng-change="optionSelect(target.loai_Media)" ng-options="opt.Value as opt.Text for opt in tempData('typeMedia')" disabled></select>
                 </div>
             </div>
             <div class="row form-group">
                 <div class="col-lg-6" ng-show="target.loai_Media === 2">
                     <label>Url Video</label>
-                    <input type="text" id="linkVideo" ng-disabled="!(target.loai_Media === 2)" class="form-control" ng-model="linkVideo" maxlength="100" disabled>
+                    <input type="text" id="linkVideo" ng-disabled="!(target.loai_Media === 2)" class="form-control" ng-model="linkVideo" maxlength="100" >
                 </div>
             </div>
-            <div ng-show="target.loai_Media === 1" style="margin:10px 220px 0px 220px;">
+            <div class="row form-group">
+                <div class="col-lg-6">
+                    <label>Thêm media</label><span style="color: red"> (3*)</span>
+                    <div style="width:350px;float:left;">
+                        <input ng-disabled="target.loai_Media === 2 || isDisable || lstFilesSrc.length==1" id="file-input-upload" onchange="angular.element(this).scope().uploadFile(this)" accept="{{acceptFile}}" class="form-control" text="Chọn ảnh" type="file" placeholder="Tải ảnh" multiple />
+                    </div>
+                </div>
+            </div>
+            <div ng-show="target.loai_Media === 1 && !isDeleted" style="margin:10px 220px 0px 220px;">
                 <div style="width: 200px; height: 150px; overflow: hidden;" class="img-thumbnail">
                     <img rel="popover" ng-src="{{target.link}}" width="200" height="150" title={{target.ten_Media}} />
                 </div>
@@ -49,19 +60,56 @@
                         {{target.ten_Media}}
                     </button>
                 </div>
+                <div style="width: 200px; height: 50px; text-align: center; padding: 8px;">
+                    <button class="form-control btn btn-primary" style="margin: auto" ng-click="deleteFile()">Xóa ảnh</button>
+                    <label style="float:left;margin-top:10px;">Ảnh bìa : </label>
+                    <div class="checkbox" style="float:left;margin-left:15px;">
+                        <label>
+                            <input type="checkbox" ng-model="anhBia" ng-checked="target.anhBia==10" ng-true-value={{10}} ng-false-value={{0}}>
+                        </label>
+                    </div>
+                </div>
             </div>
-            <div ng-show="target.loai_Media === 3">
+            <div ng-show="target.loai_Media === 3 && !isDeleted && lstFilesSrc.length<=1">
                 <div class="row form-group" style="margin-left:15px;margin-top:10px;">
                     <label style="float:left;">Tệp đính kèm : </label>
                     <div class="preview" style="float: left; border-radius: 5px;padding-left:10px;">
                         <a href="{{target.link}}" target="_blank">{{target.ten_Media}}</a>
                     </div>
                 </div>
+                <div style="width: 200px; height: 50px; text-align: center; padding: 8px;">
+                    <button class="form-control btn btn-primary" style="margin: auto" ng-click="deleteFile()">Xóa tệp</button>
+                </div>
+            </div>
+            <div ng-show="target.loai_Media === 1 && lstFilesSrc.length>0">
+                    <div style="width: 200px; height: 150px; overflow: hidden;" class="img-thumbnail">
+                        <img rel="popover" ng-src="{{lstFilesSrc[0]}}" width="200" height="150" />
+                    </div>
+                    <div style="width: 200px; height: 50px; text-align: center; padding: 8px;">
+                        <button class="form-control btn btn-primary" style="margin: auto" ng-click="deleteFileNew(0)">Xóa ảnh</button>
+                        <label style="float:left;margin-top:10px;">Ảnh bìa : </label>
+                        <div class="checkbox" style="float:left;margin-left:15px;">
+                            <label>
+                                <input type="checkbox" ng-model="anh_Bia[0]" ng-true-value={{10}} ng-false-value={{0}}>
+                            </label>
+                        </div>
+                    </div>
+            </div>
+            <div ng-show="target.loai_Media === 3">
+                <div class="preview" ng-repeat="item in lstFile track by $index" style="float: left; margin: 5px; border-radius: 5px; background-color:white;">
+                    <div style="max-width: 400px; overflow: hidden; margin-top:5px;margin-left:20px;">
+                        <span class="glyphicon glyphicon-folder-open" style="float: left;padding-top:5px;">&nbsp;&nbsp;</span>
+                        <p style="float: left;font-size:15px;">{{item.name}}</p>
+                    </div>
+                    <div style="width: 200px; text-align: center; padding: 8px;">
+                        <button class="form-control btn btn-primary" style="margin: auto" ng-click="deleteFileNew($index)">Xóa tệp</button>
+                    </div>
+                </div>
             </div>
         </form>
     </div>
     <div class="modal-footer">
-        <button prevent-default type="submit" class="btn btn-primary" ng-disabled="_form.$invalid" ng-click="save()">{{config.label.btnSubmit}}</button>
+        <button prevent-default type="submit" class="btn btn-primary" ng-disabled="!_form.$dirty" ng-click="save()">{{config.label.btnSubmit}}</button>
         <button prevent-default class="btn btn-default" ng-click="cancel()">{{config.label.btnCancel}}</button>
     </div>
 </div>
