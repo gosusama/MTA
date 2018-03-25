@@ -8,13 +8,13 @@ using System.Threading.Tasks;
 
 namespace MTA.SERVICE.DM
 {
-    public interface IDmLoaiTinTucService : IDataInfoService<Dm_LoaiTinTuc>
+    public interface IDmLoaiDaoTaoService : IDataInfoService<Dm_LoaiDaoTao>
     {
     }
 
-    public class DmLoaiTinTucService : DataInfoServiceBase<Dm_LoaiTinTuc>, IDmLoaiTinTucService
+    public class DmLoaiDaoTaoService : DataInfoServiceBase<Dm_LoaiDaoTao>, IDmLoaiDaoTaoService
     {
-        public DmLoaiTinTucService(IUnitOfWork unitOfWork) : base(unitOfWork)
+        public DmLoaiDaoTaoService(IUnitOfWork unitOfWork) : base(unitOfWork)
         {
 
         }
