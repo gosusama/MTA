@@ -4,6 +4,7 @@
 
     app.factory('dmLoaiTinTuc_Service', ['$http', 'configService', function ($http, configService) {
         var serviceUrl = configService.rootUrlWebApi + '/DM/LoaiTinTuc';
+        var selectedData = [];
         var result = {
             post: function (data) {
                 console.log('data', data);
@@ -20,7 +21,22 @@
             },
             getNewInstance: function () {
                 return $http.get(serviceUrl + '/getNewInstance');
-            }
+            },
+            dmLoaiTinTucCtl_GetSelectDataByUnitCode_page: function (data) {
+                return $http.post(serviceUrl + '/dmLoaiTinTucCtl_GetSelectDataByUnitCode_page', data);
+            },
+            filterLoaiTinTuc: function (ma_LoaiTinTuc) {
+                return $http.post(serviceUrl + '/FilterLoaiTinTuc/' + ma_LoaiTinTuc);
+            },
+            getSelectData: function () {
+                return selectedData;
+            },
+            setSelectData: function (array) {
+                selectedData = array;
+            },
+            clearSelectData: function () {
+                selectedData = [];
+            },
         }
         return result;
     }]);
@@ -79,7 +95,7 @@
                 $scope.paged.currentPage = pageNo;
                 filterData();
             };
-            $scope.sortType = 'ma_Dm';
+            $scope.sortType = 'ma_LoaiTinTuc';
             $scope.sortReverse = false;
             $scope.doSearch = function () {
                 $scope.paged.currentPage = 1;
@@ -175,71 +191,20 @@
             $scope.config = angular.copy(configService);
             $scope.tempData = tempDataService.tempData;
             $scope.target = {};
-            $scope.lstFile = [];
-            $scope.lstImagesSrc = [];
             $scope.isLoading = false;
-            $scope.title = function () { return 'Thêm mới danh mục đào tạo'; };
+            $scope.title = function () { return 'Thêm mới danh mục loại tin tức'; };
             $scope.target.ngayTao = new Date();
-            $scope.target.manguoitao = userService.GetCurrentUser();
-            $scope.target.ten_Media = [];
             function filterData() {
                 service.getNewInstance().then(function (response) {
                     if (response && response.status == 200) {
-                        $scope.target.ma_Dm = response.data;
+                        $scope.target.ma_LoaiTinTuc = response.data;
                     }
                 });
             }
             filterData();
 
-            $scope.uploadFile = function (input) {
-                console.log(input.files);
-                if (input.files && input.files.length > 0) {
-                    angular.forEach(input.files, function (file) {
-                        if (file.size < 3072000) {
-                            $scope.lstFile.push(file);
-                            $timeout(function () {
-                                var fileReader = new FileReader();
-                                fileReader.readAsDataURL(file);
-                                fileReader.onload = function (e) {
-                                    $timeout(function () {
-                                        $scope.lstImagesSrc.push(e.target.result);
-                                    });
-                                }
-                            });
-                        }
-                        else {
-                            ngNotify.set("Kích thước ảnh quá lớn !", { duration: 3000, type: 'error' });
-                        }
-                    });
-                }
-            };
-            $scope.deleteImage = function (index) {
-                $scope.lstImagesSrc.splice(index, 1);
-                $scope.lstFile.splice(index, 1);
-                if ($scope.lstFile.length < 1) {
-                    angular.element("#file-input-upload").val(null);
-                }
-            };
-            function saveImage() {
-                $scope.target.file = $scope.lstFile;
-                $scope.target.loaiMedia = 0;
-                upload.upload({
-                    url: configService.rootUrlWebApi + '/NV/Media/UpLoad',
-                    data: $scope.target
-                }).then(function (response) {
-                    if (response.status) {
-                    }
-                    else {
-                        toaster.pop('error', "Lỗi:", "Không lưu được ảnh! Có thể đã trùng!");
-                    }
-                });
-            }
-            $scope.save = function () {
-                if ($scope.lstFile && $scope.lstFile.length) {
-                    saveImage();
-                }
-                console.log($scope.target);
 
+            $scope.save = function () {
                 service.post($scope.target).then(function (successRes) {
 
                     if (successRes && successRes.status === 201 && successRes.data.status) {
@@ -264,9 +229,10 @@
             $scope.config = angular.copy(configService);
             $scope.tempData = tempDataService.tempData;
             $scope.target = angular.copy(targetData);
+            console.log(' $scope.target', $scope.target);
             $scope.isLoading = false;
-            $scope.title = function () { return 'Thông tin danh mục đào tạo'; };
-            
+            $scope.title = function () { return 'Thông tin danh mục loại tin tức'; };
+
             $scope.cancel = function () {
                 $uibModalInstance.close();
             };
@@ -283,8 +249,8 @@
         $scope.lstImages = [];
         $scope.isEdit = false;
         var temp = {};
-        $scope.title = function () { return 'Cập nhật danh mục đào tạo'; };
-       
+        $scope.title = function () { return 'Cập nhật danh mục loại tin tức'; };
+
         $scope.save = function () {
             service.update($scope.target).then(function (successRes) {
                 console.log('successRes', successRes);
@@ -310,12 +276,140 @@
         $scope.config = angular.copy(configService);
         $scope.target = angular.copy(targetData);
         $scope.isLoading = false;
-        $scope.title = function () { return 'Xoá đào tạo'; };
-        
+        $scope.title = function () { return 'Xoá loại tin tức'; };
+        $scope.save = function () {
+            service.deleteItem($scope.target).then(function (successRes) {
+                if (successRes && successRes.status === 200) {
+                    ngNotify.set('Xóa thành công', { type: 'success' });
+                    $uibModalInstance.close($scope.target);
+                } else {
+                    ngNotify.set(successRes.data.message, { duration: 3000, type: 'error' });
+                }
+            },
+                function (errorRes) {
+                    console.log('errorRes', errorRes);
+                });
+        };
         $scope.cancel = function () {
             $uibModalInstance.close();
         };
 
     }]);
+
+    app.controller('dmLoaiTinTucSelectDataController', ['$scope', '$uibModalInstance', '$location', '$http', 'configService', 'dmLoaiTinTuc_Service', 'tempDataService', '$filter', '$uibModal', '$log', 'ngNotify', 'filterObject', 'serviceSelectData',
+        function ($scope, $uibModalInstance, $location, $http, configService, service, tempDataService, $filter, $uibModal, $log, ngNotify, filterObject, serviceSelectData) {
+            $scope.config = angular.copy(configService);;
+            $scope.paged = angular.copy(configService.pageDefault);
+            $scope.filtered = angular.copy(configService.filterDefault);
+            $scope.filtered = angular.extend($scope.filtered, filterObject);
+            angular.extend($scope.filtered, filterObject);
+            var lstTemp = [];
+            $scope.modeClickOneByOne = true;
+            $scope.title = function () { return 'Danh sách loại tin tức'; };
+            $scope.selecteItem = function (item) {
+                $uibModalInstance.close(item);
+            }
+            $scope.isLoading = false;
+            $scope.sortType = 'ma_LoaiTinTuc'; // set the default sort type
+            $scope.sortReverse = false;  // set the default sort order
+            function filterData() {
+                if (serviceSelectData) {
+                    $scope.modeClickOneByOne = false;
+                }
+                var postdata = {};
+                if ($scope.modeClickOneByOne) {
+                    $scope.isLoading = true;
+                    postdata = { paged: $scope.paged, filtered: $scope.filtered };
+                    service.dmLoaiTinTucCtl_GetSelectDataByUnitCode_page(postdata).then(function (response) {
+                        $scope.isLoading = false;
+                        if (response && response.status == 200 && response.data && response.data.status) {
+                            $scope.data = response.data.data.data;
+                            angular.extend($scope.paged, response.data);
+                        }
+                    });
+                } else {
+                    $scope.listSelectedData = serviceSelectData.getSelectData();
+                    lstTemp = angular.copy($scope.listSelectedData);
+                    $scope.isLoading = true;
+                    postdata = { paged: $scope.paged, filtered: $scope.filtered };
+                    service.dmLoaiTinTucCtl_GetSelectDataByUnitCode_page(postdata).then(function (response) {
+                        $scope.isLoading = false;
+                        if (response && response.status == 200 && response.data && response.data.status) {
+                            $scope.data = response.data.data.data;
+                            angular.forEach($scope.data, function (v, k) {
+                                var isSelected = $scope.listSelectedData.some(function (element, index, array) {
+                                    if (!element) return false;
+                                    if (typeof element === 'string')
+                                        return element == v.value;
+                                    return element.value == v.value;
+                                });
+                                if (isSelected) {
+                                    $scope.data[k].selected = true;
+                                }
+                            });
+                            angular.extend($scope.paged, response.data);
+                        }
+                    });
+                }
+            };
+
+            filterData();
+            $scope.setPage = function (pageNo) {
+                $scope.paged.currentPage = pageNo;
+                filterData();
+            };
+            $scope.doSearch = function () {
+                $scope.paged.currentPage = 1;
+                filterData();
+            };
+            $scope.pageChanged = function () {
+                filterData();
+            };
+            $scope.refresh = function () {
+                $scope.setPage($scope.paged.currentPage);
+            };
+            $scope.doCheck = function (item) {
+                if (item) {
+                    var isSelected = $scope.listSelectedData.some(function (element, index, array) {
+                        return element.id == item.id;
+                    });
+                    if (item.selected) {
+                        if (!isSelected) {
+                            $scope.listSelectedData.push(item);
+                        }
+                    } else {
+                        if (isSelected) {
+                            $scope.listSelectedData.splice(item, 1);
+                        }
+                    }
+                } else {
+                    angular.forEach($scope.data, function (v, k) {
+
+                        $scope.data[k].selected = $scope.all;
+                        var isSelected = $scope.listSelectedData.some(function (element, index, array) {
+                            if (!element) return false;
+                            return element.id == v.id;
+                        });
+
+                        if ($scope.all) {
+                            if (!isSelected) {
+                                $scope.listSelectedData.push($scope.data[k]);
+                            }
+                        } else {
+                            if (isSelected) {
+                                $scope.listSelectedData.splice($scope.data[k], 1);
+                            }
+                        }
+                    });
+                }
+            };
+            $scope.save = function () {
+                $uibModalInstance.close($scope.listSelectedData);
+            };
+            $scope.cancel = function () {
+                service.setSelectData(lstTemp);
+                $uibModalInstance.close();
+            };
+        }]);
     return app;
 });

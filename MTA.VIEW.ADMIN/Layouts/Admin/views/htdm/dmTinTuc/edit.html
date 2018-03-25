@@ -36,11 +36,19 @@
                             <input type="text" class="form-control" ng-model="target.ten_Dm">
                         </div>
                         <div class="col-md-5">
-                            <label>Loại danh mục</label><span style="color: red">(*)</span>&nbsp;&nbsp;&nbsp;
-                            <select class="form-control" ng-model="target.loai_Dm" " required>
-                                <option type="number" value="-1" selected="selected">-Chọn loại danh mục-</option>
-                                <option type="number" ng-repeat="opt in listDanhMuc" value="{{opt.value}}">{{opt.text}}</option>
-                            </select>
+                            <div class="row">
+                                <div class="col-6 col-md-6">
+                                    <label>Loại danh mục</label><span style="color: red">(*)</span>&nbsp;&nbsp;&nbsp;
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6 col-md-8">
+                                    <input type="text" class="form-control" tabindex="1" ng-model="target.loai_Dm" placeholder="Ví dụ LTT1,LTT2" ng-blur="changeMaLoaiTinTuc(target.loai_Dm);">
+                                </div>
+                                <div class="col-6 col-md-2">
+                                    <button type="button" class="btn btn-primary" ng-click="selectLoaiTinTuc()">Loại tin tức</button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </uib-tab>

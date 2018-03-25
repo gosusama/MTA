@@ -8,7 +8,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
-
+using BTS.API.SERVICE.Helper;
+using AutoMapper;
 
 namespace MTA.SERVICE.API.Api.HTDM
 {
@@ -150,6 +151,72 @@ namespace MTA.SERVICE.API.Api.HTDM
                     return NotFound();
                 }
             }
+        }
+
+        [Route("dmLoaiTinTucCtl_GetSelectDataByUnitCode_page")]
+        public async Task<IHttpActionResult> dmLoaiTinTucCtl_GetSelectDataByUnitCode_page(JObject jsonData)
+        {
+            var result = new TransferObj();
+            var postData = ((dynamic)jsonData);
+            var filtered = ((JObject)postData.filtered).ToObject<FilterObj<DmLoaiTinTucVm.Search>>();
+            var paged = ((JObject)postData.paged).ToObject<PagedObj<Dm_LoaiTinTuc>>();
+            var _ParentUnitCode = _service.GetParentUnitCode();
+            var query = new QueryBuilder
+            {
+                Take = paged.ItemsPerPage,
+                Skip = paged.FromItem - 1,
+                Filter = new QueryFilterLinQ()
+                {
+                    Property = ClassHelper.GetProperty(() => new Dm_LoaiTinTuc().UnitCode),
+                    Method = BuildQuery.Query.Types.FilterMethod.StartsWith,
+                    Value = _ParentUnitCode
+                }
+            };
+            try
+            {
+                var filterResult = _service.Filter(filtered, query);
+                if (!filterResult.WasSuccessful)
+                {
+                    return NotFound();
+                }
+
+                result.Data = Mapper.Map<PagedObj<Dm_LoaiTinTuc>, PagedObj<ChoiceObj>>
+                    (filterResult.Value);
+                result.Status = true;
+                return Ok(result);
+            }
+            catch (Exception e)
+            {
+                return InternalServerError();
+            }
+        }
+
+        [HttpGet]
+        [Route("FilterLoaiTinTuc/{ma_LoaiTinTuc}")]
+        [ResponseType(typeof(Dm_LoaiTinTuc))]
+        public Dm_LoaiTinTuc FilterLoaiTinTuc(string ma_LoaiTinTuc)
+        {
+            var loaiTinTuc = new Dm_LoaiTinTuc();
+            if (string.IsNullOrEmpty(ma_LoaiTinTuc))
+            {
+                loaiTinTuc = null;
+            }
+            else
+            {
+                ma_LoaiTinTuc = ma_LoaiTinTuc.ToUpper();
+                ma_LoaiTinTuc = ma_LoaiTinTuc.Trim();
+                var unitCode = _service.GetCurrentUnitCode();
+                loaiTinTuc = _service.Repository.DbSet.Where(x => x.Ma_LoaiTinTuc == ma_LoaiTinTuc).FirstOrDefault(x => x.UnitCode == unitCode);
+                if (loaiTinTuc != null)
+                {
+                    return loaiTinTuc;
+                }
+                else
+                {
+                    loaiTinTuc = null;
+                }
+            }
+            return loaiTinTuc;
         }
     }
 }

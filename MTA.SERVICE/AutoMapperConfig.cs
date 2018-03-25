@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
+using BTS.API.SERVICE.Helper;
 using MTA.ENTITY;
+using MTA.ENTITY.NV;
 using MTA.SERVICE.BuildQuery;
 using System;
 using System.Web;
@@ -19,20 +21,27 @@ namespace MTA.SERVICE
         }
         public static void MD()
         {
-            
+            // dm loại tin tức
+            Mapper.CreateMap<Dm_LoaiTinTuc, ChoiceObj>()
+            .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
+            .ForMember(dest => dest.Value, opt => opt.MapFrom(src => src.Ma_LoaiTinTuc))
+            .ForMember(dest => dest.Text, opt => opt.MapFrom(src => string.Format("[{0}]-{1}", src.Ma_LoaiTinTuc, src.Ten_LoaiTinTuc)))
+            .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.Ten_LoaiTinTuc))
+            .ForMember(dest => dest.Selected, opt => opt.UseValue(false))
+            .ForMember(dest => dest.OldSelected, opt => opt.UseValue(true));
         }
         public static void Nv()
         {
-            
+
         }
         public static void Dcl()
         {
-            
+
         }
         public static void Authorize()
         {
             //Au Người dùng
-          
+
         }
         public static IMappingExpression<TSource, TDestination> IgnoreDataInfoSelfMapping<TSource, TDestination>(
            this IMappingExpression<TSource, TDestination> map)

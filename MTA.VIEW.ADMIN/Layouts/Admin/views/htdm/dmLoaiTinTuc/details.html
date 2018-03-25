@@ -1,0 +1,35 @@
+﻿<style>
+    .img-preview {
+        border: 1px solid #000;
+        border-radius: 5px;
+        height: 150px;
+        width: auto;
+        margin: 0 10px;
+    }
+</style>
+<div>
+    <div class="modal-header">
+        <h3 class="modal-title">{{title()}}  {{lbl.lblCreate}}</h3>
+        <div class="button-close" ng-click="cancel()">
+            <i class="glyphicon glyphicon-remove x-close"></i>
+        </div>
+    </div>
+    <div style="width:100% ; background: #F3F3F3; margin-top:5px;">
+        <form role="form" name="_form">
+            <div class="row form-group" style="margin-top:5px;">
+                <div class="col-md-1"></div>
+                <div class="col-md-5">
+                    <label>Mã loại tin tức</label><span style="color: red">(*)</span>
+                    <input class="form-control" ng-model="target.ma_LoaiTinTuc" disabled>
+                </div>
+                <div class="col-md-5">
+                    <label>Tên loại tin tức</label><span style="color: red">(*)</span>&nbsp;&nbsp;&nbsp;
+                    <input class="form-control" ng-model="target.ten_LoaiTinTuc" disabled>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button prevent-default class="btn btn-default" ng-click="cancel()">{{config.label.btnCancel}}</button>
+    </div>
+</div>
